@@ -4,8 +4,8 @@ class Solution:
         Notice those keywords: sorted, median
         Think about binary search.
 
-        We divide all elements in {A, B} into two parts, ensure that both are equal length, 
-        and left part is always greater than right part. 
+        Divide all elements in {A, B} into two parts, ensure that both are equal length, 
+        and left part is always smaller than right part. 
         Then median = (max(left_part) + min(right_part))/2.
         https://leetcode.com/problems/median-of-two-sorted-arrays/discuss/2481/Share-my-O(log(min(mn))-solution-with-explanation
 
