@@ -1,0 +1,8 @@
+If finding an existing value in the sequence, use 
+    l, h = 0, len(a) - 1
+    while l < h
+If finding a position of a value in the sequence (the value may not exist), use
+    l, h = 0, len(a)
+    while l < h
+
+Always test your code on a two-element set, to ensure that it doesn't stuck by round-down.

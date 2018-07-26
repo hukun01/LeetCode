@@ -14,20 +14,24 @@ class Solution:
         :rtype: float
         """
         m, n = len(nums1), len(nums2)
+        # m must be smaller or equal to n, so j can be non-negative.
         if m > n:
             m, n, nums1, nums2 = n, m, nums2, nums1
-            
-        iMin, iMax, halfLen = 0, m, (m + n + 1) // 2
-        while iMin <= iMax:
-            i = (iMin + iMax) // 2
+
+        # Pay close attention to the below 2 lines: 
+        # the search space for i must be [0, m], 
+        # and l <= h to make sure we never break the while loop!
+        l, h, halfLen = 0, m, (m + n + 1) // 2
+        while l <= h:
+            i = (l + h) // 2
             j = halfLen - i
             if i > 0 and nums1[i - 1] > nums2[j]:
                 # nums1[i - 1] is too big, decrease i
-                iMax = i - 1
+                h = i - 1
             # when j > 0, i could be m, so we must check i < m
             elif i < m and nums2[j - 1] > nums1[i]:
                 # nums2[j - 1] is too big, decrease j => increase i
-                iMin = i + 1
+                l = i + 1
             else:
                 # i is good, 
                 # find out the max in the left part
