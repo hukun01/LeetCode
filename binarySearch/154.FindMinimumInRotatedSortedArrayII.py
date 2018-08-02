@@ -1,7 +1,8 @@
 class Solution:
     def findMin(self, nums):
         """
-        Keywords: sorted.
+        When nums[m] == nums[h], we don't know which side 
+        the min could be in, so have to do a linear scan.
 
         :type nums: List[int]
         :rtype: int
@@ -9,10 +10,11 @@ class Solution:
         l, h = 0, len(nums) - 1
         while l < h:
             m = (l + h) // 2
-            # compare middle with h instead of l to avoid stuck due to round-down
             if nums[m] > nums[h]:
                 l = m + 1
+            elif nums[m] == nums[h]:
+                break 
             else:
                 h = m
         
-        return nums[l]
+        return min(nums[l:h+1])

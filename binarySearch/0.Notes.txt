@@ -1,8 +1,9 @@
-If finding an existing value in the sequence, use 
-    l, h = 0, len(a) - 1
-    while l < h
-If finding a position of a value in the sequence (the value may not exist), use
-    l, h = 0, len(a)
-    while l < h
+Binary search:
+1. Define search space
+2. Define predicate p and target x so that p(a) < p(x) <= p(b) for a < x <= b
 
-Always test your code on a two-element set, to ensure that it doesn't stuck by round-down.
+Always test your code on empty, one-element, and two-element sets, to ensure that it doesn't stuck by round-down.
+
+There can be 2 types of search spaces:
+1. Index space - where values[index] grow with the index monotonically
+2. Value space - where the values[index] doesn't grow monotonically, so we need to find the target value by verifying each candidate, and discard half of the value space each time.

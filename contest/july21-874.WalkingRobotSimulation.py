@@ -22,7 +22,7 @@ class Solution:
                 di -= 1
             else:
                 di = di % 4
-                for i in range(c):
+                for _ in range(c):
                     if (p[0] + dx[di], p[1] + dy[di]) not in obSet:
                         p[0] += dx[di]
                         p[1] += dy[di]
