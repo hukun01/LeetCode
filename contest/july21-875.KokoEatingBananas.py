@@ -1,13 +1,15 @@
 class Solution:
     def minEatingSpeed(self, piles, H):
         """
+        Another instance for binary searching the value spaces.
+        
         :type piles: List[int]
         :type H: int
         :rtype: int
         """
         def possible(piles, k, H):
-            # Use (p-1) // k to get a smaller division result, and +1 to it to make a ceiling.
-            return sum((p - 1) // k + 1 for p in piles) <= H
+            # Alternatively, use (p-1) // k to get a smaller division result, and +1 to it to make a ceiling.
+            return sum(math.ceil(p / k) for p in piles) <= H
         
         l, h = 1, max(piles)
         while l < h:

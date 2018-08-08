@@ -1,0 +1,17 @@
+Morris traversal
+InOrder:
+1. Use root as cur;
+2. If cur.left is null, output cur.val and cur = cur.right;
+3. If cur.left is not null, find the next node of the left subtree - next:
+    3.1. if next.right is null, means first time traverse, save the cur info by next.right = cur;
+    3.2. if next.right == cur, means left subtree is finished, and we just got back to cur, 
+    so output cur, and reset next.right = null, and go to the right subtree - cur = cur.right
+4. Do above until cur == null
+
+PreOrder:
+Same as InOrder, except that *  output cur at 3.1 not 3.2.
+
+PostOrder:
+Largely similar to InOrder, but need a dummy node and need to reverse the ouput at 3.2
+
+PostOrder traversal has an advantage over the other two traversals - it knows when the traversal is going up. This can be critical in some problems.
