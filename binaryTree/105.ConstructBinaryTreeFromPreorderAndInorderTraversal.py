@@ -12,7 +12,7 @@ class Solution:
         :type inorder: List[int]
         :rtype: TreeNode
         """
-        """ Recursive approach:
+        """ 1/3 Recursive approach:
         def buildTree(preorder, pLeft, pRight, inorder, iLeft, iRight, inorderDict):
             if pLeft > pRight:
                 return None
@@ -28,7 +28,21 @@ class Solution:
         inorderDict = { k : v for v, k in enumerate(inorder) }
         return buildTree(preorder, 0, len(preorder) - 1, inorder, 0, len(inorder) - 1, inorderDict)
         """
-        """ Iterative approach:
+        """ 2/3 Another recursive without the map!
+        Each recursive call gets told where to stop, and it tells its subcalls where to stop. 
+        It gives its own root value as stopper to its left subcall, 
+        and gives its parent`s stopper as stopper to its right subcall.
+
+        def build(stop):
+            if inorder and inorder[0] != stop:
+                root = TreeNode(preorder.pop(0))
+                root.left = build(root.val)
+                inorder.pop(0)
+                root.right = build(stop)
+                return root
+        return build(None)
+        """
+        """ 3/3 Iterative approach:
         """
         if not preorder:
             return None
@@ -48,7 +62,7 @@ class Solution:
                 # 1. the last node 
                 # 2. or one of the last nodes' ancestors
                 # Pop the stack until we either run out of ancestors or 
-                # the node at the top of the stack is at the right of the new node
+                # the node at the top of the stack is at the right of the new node in inorder.
                 while stack and inorderMap[val] > inorderMap[stack[-1].val]:
                     parent = stack.pop()
                 parent.right = node

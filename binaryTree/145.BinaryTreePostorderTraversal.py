@@ -35,15 +35,15 @@ class Solution:
                 node = cur.left
                 while node.right != cur and node.right:
                     node = node.right
-                if node.right:
+                if not node.right:
+                    node.right = cur
+                    cur = cur.left
+                else:
                     node.right = None
                     reverseLinkedList(cur.left)
                     accessLinkedList(node, values)
                     reverseLinkedList(node)
                     cur = cur.right
-                else:
-                    node.right = cur
-                    cur = cur.left
             else:
                 cur = cur.right
         return values

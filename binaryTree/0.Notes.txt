@@ -9,7 +9,7 @@ InOrder:
 4. Do above until cur == null
 
 PreOrder:
-Same as InOrder, except that *  output cur at 3.1 not 3.2.
+Same as InOrder, except that * output cur at 3.1 not 3.2.
 
 PostOrder:
 Largely similar to InOrder, but need a dummy node and need to reverse the ouput at 3.2
