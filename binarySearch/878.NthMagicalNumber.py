@@ -23,7 +23,7 @@ class Solution:
         lcm = A * B // a
         while l < h:
             m = (l + h) // 2
-            if m // A + m // B - m // (lcm) < N: 
+            if m // A + m // B - m // lcm < N: 
                 l = m + 1
             else: 
                 h = m

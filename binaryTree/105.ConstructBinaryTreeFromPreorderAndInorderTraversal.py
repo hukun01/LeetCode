@@ -32,6 +32,8 @@ class Solution:
         Each recursive call gets told where to stop, and it tells its subcalls where to stop. 
         It gives its own root value as stopper to its left subcall, 
         and gives its parent`s stopper as stopper to its right subcall.
+        Essentially, this is the same as above - using preorder to locate the root value, and 
+        using inorder to locate the left and right subtrees.
 
         def build(stop):
             if inorder and inorder[0] != stop:
@@ -62,7 +64,9 @@ class Solution:
                 # 1. the last node 
                 # 2. or one of the last nodes' ancestors
                 # Pop the stack until we either run out of ancestors or 
-                # the node at the top of the stack is at the right of the new node in inorder.
+                # the node at the top of the stack is at the right of the new node in inorder,
+                # then the current node we have is the last node at the left of new node in inorder,
+                # meaning that the new node is the direct right child of the current node, based on inorder.
                 while stack and inorderMap[val] > inorderMap[stack[-1].val]:
                     parent = stack.pop()
                 parent.right = node

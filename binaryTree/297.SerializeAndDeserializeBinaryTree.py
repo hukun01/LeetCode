@@ -55,18 +55,18 @@ class Codec:
         :rtype: TreeNode
         """
         """ 1/2 Recursive: the key is to pop the value list in every call.
-        def buildTree(nodes):
-            strVal = nodes.popleft()
+        def buildTree(values):
+            strVal = values.popleft()
             if strVal == "#":
                 return None
             else:
                 node = TreeNode(int(strVal))
-                node.left = buildTree(nodes)
-                node.right = buildTree(nodes)
+                node.left = buildTree(values)
+                node.right = buildTree(values)
                 return node
             
-        nodes = collections.deque(data.split(','))
-        return buildTree(nodes)
+        values = collections.deque(data.split(','))
+        return buildTree(values)
         """
         """ 2/2 Iterative: Same as the string building process, build nodes in level order.
         """

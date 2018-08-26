@@ -11,23 +11,21 @@ class Solution:
         :type m: int
         :rtype: int
         """
-        def isPossible(nums, m, threshold):
-            count = 0
-            i = 0
-            while i < len(nums) and count <= m:
-                runningSum, j = 0, i
-                while j < len(nums) and runningSum + nums[j] <= threshold:
-                    runningSum += nums[j]
-                    j += 1
-                i = j
-                count += 1
-                
+        def canSplitWith(threshold):
+            count = 1
+            runningSum = 0
+            for num in nums:
+                if runningSum + num <= threshold:
+                    runningSum += num
+                else:
+                    runningSum = num
+                    count += 1
             return count <= m
         
         l, h = max(nums), sum(nums)
         while l < h:
             mid = (l + h) // 2
-            if isPossible(nums, m, mid):
+            if canSplitWith(mid):
                 h = mid
             else:
                 l = mid + 1

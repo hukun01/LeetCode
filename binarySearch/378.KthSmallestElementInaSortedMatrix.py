@@ -22,12 +22,12 @@ class Solution:
             Time complexity is O(n * log(max - min)), space complexity is O(1)
         """
         def countSmaller(upperBound):
-            count, j = 0, 0
-            # each time j moves to left or up, so the runtime would be (row + col), aka, O(n)
-            for i in reversed(range(len(matrix))):
-                while j < len(matrix) and matrix[i][j] <= upperBound:
-                    j += 1
-                count += j
+            count, j = 0, len(matrix[0]) - 1
+            # each time j moves to left or down, so the runtime would be (row + col), aka, O(n)
+            for i in range(len(matrix)):
+                while j >= 0 and matrix[i][j] > upperBound:
+                    j -= 1
+                count += j + 1
             return count
         l, h = matrix[0][0], matrix[-1][-1]
         while l < h:

@@ -11,9 +11,9 @@ class Solution:
         
         The worst case defines the upper bound, 
         which is like [1,1,1,...,big_num], in which most of the hours are wasted,
-        except the ones with big_num, so we use *total to estimate the *big_num, and ignore the 
-        tiny numbers.
-        Thus, the upper bound should be math.ceil(sum(piles) / (H - len(piles) + 1)).
+        except the only one with big_num, so we use *total to estimate the *big_num, 
+        and ignore the tiny numbers, but pretending that we've spent the hours on the tiny numbers.
+        Thus, the upper bound should be math.ceil(sum(piles) / (H - (len(piles) - 1))).
         
         :type piles: List[int]
         :type H: int

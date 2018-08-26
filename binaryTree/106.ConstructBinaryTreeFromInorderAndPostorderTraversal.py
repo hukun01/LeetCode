@@ -16,7 +16,7 @@ class Solution:
         :type postorder: List[int]
         :rtype: TreeNode
         """
-        """ Recursive approach:
+        """ 1/3 Recursive approach:
         def buildTree(inorder, iLeft, iRight, postorder, pLeft, pRight, inorderDict):
             if iLeft > iRight:
                 return None
@@ -32,24 +32,38 @@ class Solution:
         inorderDict = { k : v for v, k in enumerate(inorder) }
         return buildTree(inorder, 0, len(inorder) - 1, postorder, 0, len(postorder) - 1, inorderDict)
         """
+        """ 2/3 Another recursive without the map!
+        Very similar to #105, except that we build the right subtree first based on postorder, and stop at left.
+
+        def build(stop):
+            if inorder and inorder[-1] != stop:
+                root = TreeNode(postorder.pop())
+                root.right = build(root.val)
+                inorder.pop()
+                root.left = build(stop)
+                return root
+        return build(None)
+        """
+
         """ Iterative approach:
         """
         if not postorder:
             return None
-        inorderMap = { k : v for v, k in enumerate(inorder) }
-        postorder = postorder[::-1] # become [root, rightSubTree, leftSubTree]
-        root = TreeNode(postorder[0])
+        inorderMap = { value : index for index, value in enumerate(inorder) }
+        root = TreeNode(postorder.pop())
         stack = [root]
-        for val in postorder[1:]:
-            node = TreeNode(val)
-            if inorderMap[val] < inorderMap[stack[-1].val]:
+        while postorder:
+            node = TreeNode(postorder.pop())
+            if inorderMap[node.val] < inorderMap[stack[-1].val]:
                 # The new node is at the left of the last node, in inorder,
                 # so it must be the left child of either:
                 # 1. the last node 
                 # 2. or one of the last nodes' ancestors
                 # Pop the stack until we either run out of ancestors or 
-                # the node at the top of the stack is at the left of the new node
-                while stack and inorderMap[val] < inorderMap[stack[-1].val]:
+                # the node at the top of the stack is at the left of the new node in inorder,
+                # then the current node we have is the last node at the right of new node in inorder,
+                # meaning that the new node is the direct left child of the current node, based on inorder.
+                while stack and inorderMap[node.val] < inorderMap[stack[-1].val]:
                     parent = stack.pop()
                 parent.left = node
             else:
