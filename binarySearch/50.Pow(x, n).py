@@ -5,7 +5,7 @@ class Solution:
         :type n: int
         :rtype: float
         """
-        """ Recursive:
+        """ 1/2 Recursive:
         if n == 0:
             return 1
         if n < 0:
@@ -17,7 +17,7 @@ class Solution:
         return self.myPow(x*x, n // 2)
         """
 
-        """ Iterative
+        """ 2/2 Iterative
         x^n => (x^2)^(n // 2) if x is even,
         otherwise x^n => x * (x^2)^(n // 2)
         """

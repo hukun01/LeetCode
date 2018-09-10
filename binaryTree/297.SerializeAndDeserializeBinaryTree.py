@@ -72,20 +72,20 @@ class Codec:
         """
         if not data:
             return None
-        values = data.split(',')
-        root = TreeNode(int(values[0]))
+        values = collections.deque(data.split(','))
+        root = TreeNode(int(values.popleft()))
         nodeQueue = collections.deque([root])
-        i = 1
-        while i < len(values):
+        while values:
             parent = nodeQueue.popleft()
-            if values[i] != "#":
-                parent.left = TreeNode(int(values[i]))
+            val = values.popleft()
+            if val != "#":
+                parent.left = TreeNode(int(val))
                 nodeQueue.append(parent.left)
-            i += 1
-            if i < len(values) and values[i] != "#":
-                parent.right = TreeNode(int(values[i]))
-                nodeQueue.append(parent.right)
-            i += 1
+            if values:
+                val = values.popleft()
+                if val != "#":
+                    parent.right = TreeNode(int(val))
+                    nodeQueue.append(parent.right)
         return root
                 
 # Your Codec object will be instantiated and called as such:

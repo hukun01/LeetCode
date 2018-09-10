@@ -34,6 +34,7 @@ class Solution:
         """
         """ 2/3 Another recursive without the map!
         Very similar to #105, except that we build the right subtree first based on postorder, and stop at left.
+        Note that the stop value and if condition changed.
 
         def build(stop):
             if inorder and inorder[-1] != stop:

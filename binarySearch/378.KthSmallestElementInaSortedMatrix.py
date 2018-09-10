@@ -5,8 +5,9 @@ class Solution:
         :type k: int
         :rtype: int
         """
-        """ 1/2 Heap method. Remember the heapq stuffs in Py.
-            Time complexity is O(k * log n), space complexity is O(n)
+        """ 1/2 Heap method. Remember the heapq stuffs in Py. 
+        IMPORTANT: in the tuple we store in the heap, value needs to come first, aka, use (priority, task) tuples
+        Time complexity is O(k * log n), space complexity is O(n)
         
         # Init a heap with the first row
         heap = [(val, 0, j) for j, val in enumerate(matrix[0])]
