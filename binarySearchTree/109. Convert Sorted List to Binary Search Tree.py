@@ -37,7 +37,7 @@ class Solution:
         O(N) time, O(logN) space (not counting TreeNode creation space)
         """
         def inorder(left, right): # left and right are used as boundary to tell when to end
-            if left > right:
+            if left > right: # no equal here!
                 return None
             mid = left + (right - left) // 2
             leftNode = inorder(left, mid - 1) # cache the left node first!
@@ -47,9 +47,9 @@ class Solution:
             node = node.next # critical to move to the next!
             root.right = inorder(mid + 1, right)
             return root
-        size = 0
+        nodeCount = 0
         node = head
         while head:
-            size += 1
+            nodeCount += 1
             head = head.next
-        return inorder(0, size - 1)
+        return inorder(1, nodeCount) # Use 1 as the left bound as the node count.

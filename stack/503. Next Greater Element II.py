@@ -13,6 +13,7 @@ class Solution:
         for i in range(len(nums) * 2):
             i = i % len(nums)
             while stack and nums[stack[-1]] < nums[i]:
-                ans[stack.pop()] = nums[i]
+                idx = stack.pop()
+                ans[idx] = nums[i]
             stack.append(i)
         return ans

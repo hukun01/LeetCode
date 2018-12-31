@@ -27,8 +27,8 @@ class Solution:
         """
         """
         2/2: DFS recursive approach with getDepth, return -1 to indicate the tree is not balanced.
-        The getDepth() here actually bears two info, one is the actual depth if return non-negative value,
-        another is to show that the tree is not balanced by returning -1.
+        The getDepth() here actually bears two messages, one is the actual depth if return non-negative value,
+        another is to indicate that the tree is not balanced by returning -1.
         """
         def getDepth(root):
             if not root:

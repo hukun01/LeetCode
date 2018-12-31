@@ -10,8 +10,8 @@ class Solution:
     # @param root, a tree link node
     # @return nothing
     def connect(self, root):
-        """ The key is to use a dummy node at the start of a level,
-        and have another dummy node to cache the first child node in the next level.
+        """ The key is to use a dummy node at the start of each level,
+        and have ANOTHER dummy node to cache the first child node in the next level.
         """
         while root:
             cur = temp = TreeLinkNode(0)

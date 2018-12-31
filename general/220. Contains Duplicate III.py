@@ -6,8 +6,9 @@ class Solution:
         :type t: int
         :rtype: bool
 
-        This is still a sliding window stuff, but specifically with buckets.
-        Use buckets with dict to collect the nearby values, remember to use (t + 1) in case t == 0.
+        This is a sliding window stuff, but specifically with buckets.
+        Buckets are built based on values; a sliding window is built for keeping the index nearby.
+        Remember to use (t + 1) as the bucket size, to handle the case: t == 0.
         """
         if k < 0 or t < 0: # we are asked for absolute diff, so t < 0 wouldn't work.
             return False
@@ -26,7 +27,7 @@ class Solution:
             # We always update the bucket with the latest (right most) value.
             bucket[bucketId] = num
 
-            if i >= k:
+            if i - k >= 0:
                 expired = nums[i - k] // w
                 bucket.pop(expired)
 

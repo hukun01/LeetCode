@@ -13,44 +13,44 @@ class Solution:
         :type nums2: List[int]
         :rtype: float
         """
-        m, n = len(nums1), len(nums2)
-        # m must be smaller or equal to n, so j can be non-negative.
+        A, B = nums1, nums2
+        m, n = len(A), len(B)
+        # m must be smaller or equal to n, so later b can be non-negative.
         if m > n:
-            m, n, nums1, nums2 = n, m, nums2, nums1
-
+            A, B, m, n = B, A, n, m
+        halfLen = (m + n + 1) // 2
+        
         # Pay close attention to the below 2 lines: 
         # the search space for i must be [0, m], 
         # and l <= h to make sure we never break the while loop!
-        l, h, halfLen = 0, m, (m + n + 1) // 2
+        l, h = 0, m
         while l <= h:
-            i = (l + h) // 2
-            j = halfLen - i
-            if i > 0 and nums1[i - 1] > nums2[j]:
-                # nums1[i - 1] is too big, decrease i
-                h = i - 1
-            # when j > 0, i could be m, so we must check i < m
-            elif i < m and nums2[j - 1] > nums1[i]:
-                # nums2[j - 1] is too big, decrease j => increase i
-                l = i + 1
+            a = l + (h - l) // 2
+            b = halfLen - a
+            if a > 0 and A[a - 1] > B[b]:
+                h = a - 1
+            elif a < m and B[b - 1] > A[a]:
+                # B[b - 1] is too big, to decrease b, we can increase a
+                l = a + 1
             else:
-                # i is good, 
+                # a is good, 
                 # find out the max in the left part
-                if i == 0:
-                    leftMax = nums2[j - 1]
-                elif j == 0:
-                    leftMax = nums1[i - 1]
+                if a == 0:
+                    leftMax = B[b - 1]
+                elif b == 0:
+                    leftMax = A[a - 1]
                 else:
-                    leftMax = max(nums1[i - 1], nums2[j - 1])
-                
+                    leftMax = max(A[a - 1], B[b - 1])
+                    
                 if (m + n) % 2 == 1:
                     return leftMax
                 
                 # find out the min in the right part
-                if i == m:
-                    rightMin = nums2[j]
-                elif j == n:
-                    rightMin = nums1[i]
+                if a == m:
+                    rightMin = B[b]
+                elif b == n:
+                    rightMin = A[0]
                 else:
-                    rightMin = min(nums2[j], nums1[i])
+                    rightMin = min(A[a], B[b])
                     
                 return (leftMax + rightMin) / 2

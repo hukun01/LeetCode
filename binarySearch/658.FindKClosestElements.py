@@ -14,8 +14,10 @@ class Solution(object):
         l, h = 0, len(arr) - k
         while l < h:
             m = (l + h) // 2
-            if x - arr[m] > arr[m + k] - x:
+            if abs(arr[m] - x) > abs(arr[m + k] - x):
                 l = m + 1
             else:
+                # If there is a tie, the smaller elements are always preferred.
+                # Hence we reduce h.
                 h = m
         return arr[l:l + k]

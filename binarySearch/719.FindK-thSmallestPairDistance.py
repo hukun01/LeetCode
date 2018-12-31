@@ -1,9 +1,10 @@
 class Solution:
     def smallestDistancePair(self, nums, k):
         """
-        Another instance for binary searching the value spaces.
+        Another instance for binary searching the value spaces. 
+        Make sure to sort the list if it's not sorted, so to make the pairs counting run in linear time.
 
-        Total runtime is O(n * log(max - min))
+        Total runtime is the bigger one between O(n * log(max - min)) and O(n * log(n))
 
         :type nums: List[int]
         :type k: int

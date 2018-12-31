@@ -1,5 +1,8 @@
 class MaxStack:
-    """ Overall time complexity to sort N numbers: O(N^2), because each popMax() takes O(N)
+    """ 
+    Push pairs (currentValue, currentMax) to the stack
+
+    Overall time complexity to sort N numbers: O(N^2), because each popMax() takes O(N)
     """
     def __init__(self):
         """

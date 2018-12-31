@@ -5,19 +5,17 @@ class Solution:
         :type nums2: List[int]
         :rtype: List[int]
 
+        Since nums1 is a subset of nums2, we just need to traverse nums2 for the below logic.
         We use a stack to keep a decreasing sub-sequence, 
-        whenever we see a number x greater than stack.peek(),
-        we pop all elements less than x and for all the popped ones, 
-        their next greater element is x.
+        whenever we see a number n greater than stack.peek(),
+        we pop all elements less than n, and for all the popped ones, 
+        their next greater element is n.
         We use a dict to cache this result.
         """
         stack = []
-        nextDict = {}
+        nextGreaters = {}
         for n in nums2:
             while stack and stack[-1] < n:
-                nextDict[stack.pop()] = n
+                nextGreaters[stack.pop()] = n
             stack.append(n)
-        ans = []
-        for n in nums1:
-            ans.append(nextDict[n] if n in nextDict else -1)
-        return ans
+        return [nextGreaters.get(n, -1) for n in nums1]
