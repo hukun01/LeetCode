@@ -18,6 +18,10 @@ class Solution:
         # m must be smaller or equal to n, so later b can be non-negative.
         if m > n:
             A, B, m, n = B, A, n, m
+        
+        # we have to ensure: a + b == m - a + n - b (or: m - a + n - b + 1), both (m + n) and (m + n + 1) works,
+        # we just prefer (m + n + 1) so we return leftMax if the (m + n) is odd;
+        # note that if we use (m + n) as the length here, we return rightMin if the length is odd.
         halfLen = (m + n + 1) // 2
         
         # Pay close attention to the below 2 lines: 
@@ -49,7 +53,7 @@ class Solution:
                 if a == m:
                     rightMin = B[b]
                 elif b == n:
-                    rightMin = A[0]
+                    rightMin = A[a]
                 else:
                     rightMin = min(A[a], B[b])
                     

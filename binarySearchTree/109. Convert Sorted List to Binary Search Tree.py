@@ -40,11 +40,19 @@ class Solution:
             if left > right: # no equal here!
                 return None
             mid = left + (right - left) // 2
-            leftNode = inorder(left, mid - 1) # cache the left node first!
+            
+            # build the left sub tree, note that we don't include mid here
+            leftNode = inorder(left, mid - 1)
+
+            # build the root, and link to the left sub tree
             nonlocal node
             root = TreeNode(node.val)
             root.left = leftNode
+
+            # whenever we are done building the left sub tree, the head will point to the middle node 
             node = node.next # critical to move to the next!
+
+            # build the right sub tree
             root.right = inorder(mid + 1, right)
             return root
         nodeCount = 0
