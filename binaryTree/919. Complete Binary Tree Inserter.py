@@ -16,31 +16,37 @@ class CBTInserter:
         Since the tree is complete, we can find its parent in O(1) time, so to make 
         insertion easy.
         """
-        self._tree = [root]
-        for node in self._tree:
+        self.nodes = []
+        if not root:
+            return
+        self.nodes.append(root)
+        for node in self.nodes:
             if node.left:
-                self._tree.append(node.left)
+                self.nodes.append(node.left)
             if node.right:
-                self._tree.append(node.right)
+                self.nodes.append(node.right)
                 
     def insert(self, v):
         """
         :type v: int
         :rtype: int
         """
-        self._tree.append(TreeNode(v))
-        N = len(self._tree)
-        if N % 2 == 0:
-            self._tree[(N - 2) // 2].left = self._tree[-1]
+        newNode = TreeNode(v)
+        self.nodes.append(newNode)
+        idx = len(self.nodes) - 1
+        parentIdx = (idx - 1) // 2
+        parentNode = self.nodes[parentIdx]
+        if idx % 2 == 1:
+            parentNode.left = newNode
         else:
-            self._tree[(N - 2) // 2].right = self._tree[-1]
-        return self._tree[(N - 2) // 2].val
-            
+            parentNode.right = newNode
+        return parentNode.val
+
     def get_root(self):
         """
         :rtype: TreeNode
         """
-        return self._tree[0]
+        return self.nodes[0]
 
 
 # Your CBTInserter object will be instantiated and called as such:

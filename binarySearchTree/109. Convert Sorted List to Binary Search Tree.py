@@ -49,7 +49,9 @@ class Solution:
             root = TreeNode(node.val)
             root.left = leftNode
 
-            # whenever we are done building the left sub tree, the head will point to the middle node 
+            # every time when we create a new TreeNode which uses node.val, we move the node to the next.
+            # whenever we are done building the left sub tree, we should have created (mid - left - 1) nodes,
+            # then the head will point to the middle node 
             node = node.next # critical to move to the next!
 
             # build the right sub tree
