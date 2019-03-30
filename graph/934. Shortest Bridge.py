@@ -4,7 +4,7 @@ class Solution:
         :type A: List[List[int]]
         :rtype: int
 
-        Regular DFS and BFS. When doing DFS, store all positions in the queue for later BFS.
+        Regular DFS and BFS (like level-order traversal). When doing DFS, store all positions in the queue for later BFS.
         Either use a set to record the visited positions, or mark the positions as -1.
         """
         rows = len(A)
