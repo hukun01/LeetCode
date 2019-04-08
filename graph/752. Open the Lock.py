@@ -7,38 +7,35 @@ class Solution:
         2. We need to restrict the range of the possible lock slots: [0, 9].
         3. We need to keep expanding deadendSet so we keep shrinking our search space.
         """
-        deadendSet = set(deadends)
+        def updateString(string, index, num):
+            li = list(string)
+            li[index] = str(num % 10)
+            return ''.join(li)
+        
+        deads = set(deadends)
         start = "0000"
-        if start in deadendSet:
-            return -1
-        
-        queue = collections.deque([start])
-        step = 0
-        def updateString(string, idx, delta):
-            chars = list(string)
-            val = int(chars[idx])
-            val = (val + delta) % 10
-            chars[idx] = str(val)
-            return ''.join(chars)
-        
-        def foundTarget(string):
-            if string == target:
-                return True
-            if string not in deadendSet:
-                queue.append(string)
-                deadendSet.add(string)
-            return False
-        
-        while queue:
-            step += 1
-            for _ in range(len(queue)):
-                current = queue.popleft()
+        begin = set([start])
+        end = set([target])
+        steps = 0
+        while begin and end:
+            if len(begin) > len(end):
+                x = begin
+                begin = end
+                end = x
+            
+            temp = set()
+            for s in begin:
+                if s in end:
+                    return steps
+                if s in deads:
+                    continue
+                deads.add(s)
                 for i in range(4):
-                    up = updateString(current, i, 1)
-                    if foundTarget(up):
-                        return step
-                    down = updateString(current, i, -1)
-                    if foundTarget(down):
-                        return step
-                        
+                    s1 = updateString(s, i, int(s[i]) + 1)
+                    s2 = updateString(s, i, int(s[i]) - 1)
+                    temp.add(s1)
+                    temp.add(s2)
+            steps += 1
+            begin = temp
+            
         return -1
