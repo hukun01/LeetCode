@@ -22,10 +22,8 @@ class Solution:
             for d in dirs:
                 newR = r + d[0]
                 newC = c + d[1]
-                if not (0 <= newR < rows and 0 <= newC < cols
-                        and matrix[newR][newC] > matrix[r][c] + 1):
-                    continue
-                queue.append((newR, newC))
-                matrix[newR][newC] = matrix[r][c] + 1
+                if 0 <= newR < rows and 0 <= newC < cols and matrix[newR][newC] > matrix[r][c] + 1:
+                    queue.append((newR, newC))
+                    matrix[newR][newC] = matrix[r][c] + 1
         
         return matrix

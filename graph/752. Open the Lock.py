@@ -13,29 +13,25 @@ class Solution:
             return ''.join(li)
         
         deads = set(deadends)
-        start = "0000"
-        begin = set([start])
+        begin = set(["0000"])
         end = set([target])
         steps = 0
         while begin and end:
             if len(begin) > len(end):
-                x = begin
-                begin = end
-                end = x
+                begin, end = end, begin
             
-            temp = set()
-            for s in begin:
-                if s in end:
-                    return steps
-                if s in deads:
+            nextLevel = set()
+            for lock in begin:
+                if lock in deads:
                     continue
-                deads.add(s)
+                if lock in end:
+                    return steps
+                deads.add(lock)
                 for i in range(4):
-                    s1 = updateString(s, i, int(s[i]) + 1)
-                    s2 = updateString(s, i, int(s[i]) - 1)
-                    temp.add(s1)
-                    temp.add(s2)
+                    for way in [1, -1]:
+                        newLock = updateString(lock, i, int(lock[i]) + way )
+                        nextLevel.add(newLock)
             steps += 1
-            begin = temp
+            begin = nextLevel
             
         return -1
