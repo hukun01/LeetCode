@@ -25,10 +25,10 @@ class Solution:
             x = 1 / x
             n = -n
 
-        pow = 1
+        ans = 1
         while n > 0:
             if n % 2 == 1:
-                pow *= x
+                ans *= x
             x *= x
             n //= 2
-        return pow
+        return ans

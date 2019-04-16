@@ -6,6 +6,7 @@ class Solution:
         :rtype: int
         """
         """ 1/2 Heap method. Remember the heapq stuffs in Py. 
+        The heap approach is like merge sorted arrays.
         IMPORTANT: in the tuple we store in the heap, value needs to come first, aka, use (priority, task) tuples
         Time complexity is O(k * log n), space complexity is O(n)
         
@@ -19,7 +20,7 @@ class Solution:
                 heapq.heappush(heap, (matrix[i + 1][j], i + 1, j))
         return answer
         """
-        """ 2/2 Another instance for binary searching the value spaces.
+        """ 2/2 Another instance for binary searching the *value* spaces.
             Time complexity is O(n * log(max - min)), space complexity is O(1)
         """
         def countSmaller(upperBound):

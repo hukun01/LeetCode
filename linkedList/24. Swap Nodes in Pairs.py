@@ -7,6 +7,7 @@
 class Solution:
     def swapPairs(self, head: ListNode) -> ListNode:
         '''
+        Use below notation for clear view of the lists swap. And use x,y = y,x to swap.
         pre->(a->b)->c  =>  pre->(b->a)->(c->null)
         '''
         dummy = pre = ListNode(0)

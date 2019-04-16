@@ -4,7 +4,7 @@ class Solution:
         :type s: str
         :rtype: int
 
-        Sliding window technique with dictionary and two indices.
+        Sliding window technique with dictionary { char: index } and two indices.
         """
         letters = {}
         ans, lastIdx = 0, 0
