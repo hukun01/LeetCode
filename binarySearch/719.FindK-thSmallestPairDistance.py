@@ -1,5 +1,5 @@
 class Solution:
-    def smallestDistancePair(self, nums, k):
+    def smallestDistancePair(self, nums: List[int], k: int) -> int:
         """
         Another instance for binary searching the value spaces. 
         Make sure to sort the list if it's not sorted, so to make the pairs counting run in linear time.
@@ -20,7 +20,11 @@ class Solution:
             return count
             
         nums.sort()
-        l, h = 0, nums[-1] - nums[0]
+        h = nums[-1] - nums[0]
+        l = float('inf')
+        for i in range(1, len(nums)):
+            l = min(l, nums[i] - nums[i - 1])
+        
         while l < h:
             m = (l + h) // 2
             if countPairs(nums, m) < k:
