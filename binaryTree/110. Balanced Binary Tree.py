@@ -6,7 +6,7 @@
 #         self.right = None
 
 class Solution:
-    def isBalanced(self, root):
+        def isBalanced(self, root: TreeNode) -> bool:
         """
         :type root: TreeNode
         :rtype: bool
@@ -30,17 +30,12 @@ class Solution:
         The getDepth() here actually bears two messages, one is the actual depth if return non-negative value,
         another is to indicate that the tree is not balanced by returning -1.
         """
-        def getDepth(root):
-            if not root:
+        def getDepth(node):
+            if not node:
                 return 0
-            left = getDepth(root.left)
-            if left == -1:
+            left = getDepth(node.left)
+            right = getDepth(node.right)
+            if left == -1 or right == -1 or abs(left - right) > 1:
                 return -1
-            right = getDepth(root.right)
-            if right == -1:
-                return -1
-            if abs(left - right) <= 1:
-                return max(left, right) + 1
-            else:
-                return -1
+            return max(left, right) + 1
         return getDepth(root) != -1

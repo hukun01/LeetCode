@@ -17,18 +17,15 @@ class Solution(object):
         Based on this, if we found non-Null results from both sides, 
         then the result is the current root. Otherwise would be the non-Null result.
         
-        if root in (None, p, q):
+        if root in [None, p, q]:
             return root
         left = self.lowestCommonAncestor(root.left, p, q)
         right = self.lowestCommonAncestor(root.right, p, q)
         if left and right:
             return root
-        elif left:
-            return left
-        else:
-            return right
+        return left or right
         """
-        """ 2/2 Iterative: We need to find the node chains that contain p and q, respectively, 
+        """ 2/2 Iterative: We need to build the two node chains that contain p and q, respectively, 
         so we have a way to track back to their ancestors. After we find both chains, 
         the first common node in two chains is the lowest common ancestor.
         """
