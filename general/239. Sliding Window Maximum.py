@@ -1,5 +1,5 @@
 class Solution:
-    def maxSlidingWindow(self, nums, k):
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
         """
         :type nums: List[int]
         :type k: int
@@ -12,15 +12,15 @@ class Solution:
         3. the leftmost one in the deque will be the max in the sliding window.
         """
         ans = []
-        queue = collections.deque()
-        for i in range(len(nums)):
+        q = collections.deque()
+        for i, n in enumerate(nums):
             # Before adding new number, remove existing numbers that are smaller than it, 
             # because they are impossible to be the max after adding this new number.
-            while queue and nums[queue[-1]] <= nums[i]:
-                queue.pop()
-            queue.append(i)
-            if i >= k - 1:
-                ans.append(nums[queue[0]])
-            if queue and i - queue[0] >= k - 1:
-                queue.popleft()
+            while q and nums[q[-1]] < n:
+                q.pop()
+            if q and i - k >= q[0]:
+                q.popleft()
+            q.append(i)
+            if i + 1 >= k:
+                ans.append(nums[q[0]])
         return ans

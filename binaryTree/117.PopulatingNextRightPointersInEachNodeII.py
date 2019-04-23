@@ -1,20 +1,20 @@
-# Definition for binary tree with next pointer.
-# class TreeLinkNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-#         self.next = None
-
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val, left, right, next):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
 class Solution:
-    # @param root, a tree link node
-    # @return nothing
-    def connect(self, root):
+    def connect(self, root: 'Node') -> 'Node':
         """ The key is to use a dummy node at the start of each level,
         and have ANOTHER dummy node to cache the first child node in the next level.
         """
+        cached = root
         while root:
-            cur = temp = TreeLinkNode(0)
+            cur = temp = Node(0, None, None, None)
             while root:
                 if root.left:
                     cur.next = root.left
@@ -24,3 +24,4 @@ class Solution:
                     cur = cur.next
                 root = root.next
             root = temp.next
+        return cached
