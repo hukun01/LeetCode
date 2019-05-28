@@ -6,7 +6,7 @@
 #         self.right = None
 
 class Solution:
-    def isValidBST(self, root):
+    def isValidBST(self, root: TreeNode) -> bool:
         """
         The key is to keep track of the previous node.
         

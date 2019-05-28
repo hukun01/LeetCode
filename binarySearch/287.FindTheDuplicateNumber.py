@@ -4,8 +4,8 @@ class Solution:
         2 solutions:
         1. Binary search:
         search space: [1, n]
-        predicate: There must be an X where the count of numbers that are less than n 
-        is less than X for all n that are less than X
+        predicate: For a number X in nums, if the count of numbers that are less
+        than X is greater than X, then the duplicate number must be less than X.
         
         2. Linked list - from the index to value mappings, there must be a cycle.
         Find the cycle entry point in a linked list

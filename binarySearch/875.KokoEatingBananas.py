@@ -23,7 +23,7 @@ class Solution:
         l, h = math.ceil(total / H), math.ceil(total / (H - len(piles) + 1))
         while l < h:
             m = l + (h - l) // 2
-            if sum(math.ceil(pile / K) for pile in piles) <= H:
+            if sum(math.ceil(pile / m) for pile in piles) <= H:
                 h = m
             else:
                 l = m + 1
