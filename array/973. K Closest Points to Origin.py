@@ -1,13 +1,12 @@
 class Solution:
     def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
-        
         dist = lambda i: points[i][0] ** 2 + points[i][1] ** 2
         # partially sort A[i:j + 1] so that the first K elements are less than the right part
         def sort(i, j, K):
             if i >= j:
                 return
             m = partition(i, j)
-            if K < m - i + 1:
+            if K < m - i + 1: # K is an absolute number, while m is an index
                 sort(i, m - 1, K)
             elif K > m - i + 1:
                 sort(m + 1, j, K - (m - i + 1))

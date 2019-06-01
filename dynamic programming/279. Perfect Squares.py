@@ -14,7 +14,7 @@ class Solution:
         """
         """
         queue = collections.deque([0])
-        visited = set([0])
+        visited = set()
         level = 0
         while queue:
             size = len(queue)
@@ -30,11 +30,11 @@ class Solution:
                         visited.add(newNum)
                     j += 1
             level += 1
-        return 0
+        raise ValueError("No solution found.")
         """
         """ 
         2/2 Regular DP: State transition: 
-        nums[i] = min(nums[i - 1] + 1, nums[i - 4] + 1, ..., nums[i - j*j] + 1),
+        nums[i] = 1 + min(nums[i - 1], nums[i - 4], ..., nums[i - j*j]),
         where j * j <= i
         """
         nums = [float('inf') for i in range(n + 1)]

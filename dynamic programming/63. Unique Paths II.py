@@ -1,9 +1,5 @@
 class Solution:
-    def uniquePathsWithObstacles(self, obstacleGrid):
-        """
-        :type obstacleGrid: List[List[int]]
-        :rtype: int
-        """
+    def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
         pathCount = [0 for _ in obstacleGrid[0]]
         pathCount[0] = 1
         

@@ -16,6 +16,5 @@ class Solution:
                 if (-n-x) in seen:
                     # (-n-x) falls into [n, x]
                     answers.add((n, -n-x, x))
-                else:
-                    seen.add(x)
+                seen.add(x)
         return list(map(list, answers))
