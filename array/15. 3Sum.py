@@ -7,14 +7,14 @@ class Solution:
         Also need to dedup before using the current number.
         '''
         nums.sort()
-        answers = set()
-        for i, n in enumerate(nums[:-2]):
-            if i >= 1 and n == nums[i - 1]:
+        answer = set()
+        for i, a in enumerate(nums[:-2]):
+            if i > 0 and nums[i] == nums[i-1]:
                 continue
             seen = set()
-            for x in nums[i+1:]:
-                if (-n-x) in seen:
-                    # (-n-x) falls into [n, x]
-                    answers.add((n, -n-x, x))
-                seen.add(x)
-        return list(map(list, answers))
+            for c in nums[i+1:]:
+                b = 0 - a - c # b will fall into [a, c] if b can be part of an answer
+                if b in seen:
+                    answer.add((a, b, c))
+                seen.add(c)
+        return list(map(list, answer))

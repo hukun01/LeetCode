@@ -40,7 +40,7 @@ class Codec:
                 # values.append("#")
                 nullCount += 1
                 continue
-            [values.append("#") for _ in range(nullCount)]
+            values.extend(["#" for _ in range(nullCount)])
             nullCount = 0
             values.append(str(node.val))
             queue.append(node.left)

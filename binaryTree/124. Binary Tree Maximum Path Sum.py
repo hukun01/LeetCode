@@ -12,7 +12,7 @@ class Solution:
         and while we are exploring, we update the global maxPath by combining the 2 subtrees
         and the current value.
         It's important to return 0 if the current max path is less than 0, so we can do the 
-        combining without worrying about the negative sums.
+        combining without worrying about the negative subtree sums.
         '''
         answer = -float('inf')
         def dfs(node):
