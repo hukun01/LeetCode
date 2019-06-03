@@ -1,5 +1,5 @@
 class Solution(object):
-    def search(self, nums, target):
+    def search(self, nums: List[int], target: int) -> int:
         """
         Use infinity to mask the side we don't need to check.
         Let's say nums looks like this: [12, 13, 14, 15, 0, 1, 2, 3].
@@ -8,10 +8,6 @@ class Solution(object):
 
         If target is let's say 2, then we adjust nums to this:
         [-inf, -inf, -inf, -inf, 0, 1, 2, 3]
-        
-        :type nums: List[int]
-        :type target: int
-        :rtype: int
         """
         l, h = 0, len(nums) - 1
         while l <= h:
