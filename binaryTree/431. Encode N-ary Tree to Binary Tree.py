@@ -14,7 +14,11 @@ class TreeNode(object):
         self.right = None
 """
 class Codec:
-
+    '''
+    Convert the current Node to a TreeNode;
+    Convert the first Node child into the TreeNode's right child (rc), 
+    and convert the rest of the Node children (rc's siblings) into rc's left child.
+    '''
     def encode(self, root):
         """Encodes an n-ary tree to a binary tree.
         
