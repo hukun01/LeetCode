@@ -8,7 +8,7 @@ class Node:
 class LRUCache:
 
     def __init__(self, capacity: int):
-        self.c = capacity
+        self.capacity = capacity
         self.dict = dict()
         self.head = Node(0, 0)
         self.tail = Node(0, 0)
@@ -16,12 +16,12 @@ class LRUCache:
         self.tail.prev = self.head
         
     def _addToHead(self, node):
-        cachedNext = self.head.next
+        self.dict[node.key] = node
+        
+        node.next = self.head.next
+        self.head.next.prev = node
         self.head.next = node
         node.prev = self.head
-        cachedNext.prev = node
-        node.next = cachedNext
-        self.dict[node.key] = node
 
     def _remove(self, key):
         if key not in self.dict:
@@ -41,7 +41,7 @@ class LRUCache:
         
     def put(self, key: int, value: int) -> None:
         if key not in self.dict:
-            if len(self.dict) == self.c:
+            if len(self.dict) == self.capacity:
                 self._remove(self.tail.prev.key)
         else:
             self._remove(key)
