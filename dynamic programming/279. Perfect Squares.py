@@ -15,7 +15,7 @@ class Solution:
         """
         queue = collections.deque([0])
         visited = set()
-        level = 0
+        level = 1
         while queue:
             size = len(queue)
             for i in range(size):
@@ -24,7 +24,7 @@ class Solution:
                 while cur + j * j <= n:
                     newNum = cur + j * j
                     if newNum == n:
-                        return level + 1
+                        return level
                     if newNum not in visited:
                         queue.append(newNum)
                         visited.add(newNum)
@@ -37,11 +37,10 @@ class Solution:
         nums[i] = 1 + min(nums[i - 1], nums[i - 4], ..., nums[i - j*j]),
         where j * j <= i
         """
-        nums = [float('inf') for i in range(n + 1)]
-        nums[0] = 0
+        nums = [i for i in range(n + 1)]
         for i in range(1, n + 1):
             j = 1
-            while j * j <= i:
-                nums[i] = min(nums[i], nums[i - j * j] + 1)
+            while j*j <= i:
+                nums[i] = min(nums[i], nums[i - j*j] + 1)
                 j += 1
         return nums[-1]
