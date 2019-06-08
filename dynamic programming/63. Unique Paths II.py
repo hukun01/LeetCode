@@ -1,6 +1,10 @@
 class Solution:
     def uniquePathsWithObstacles(self, obstacleGrid: List[List[int]]) -> int:
-        pathCount = [0 for _ in obstacleGrid[0]]
+        """
+        Need to use an external row and colum to cover the cases in which the first row/column has obstacle.
+        Then we can optimize this to use a one-dimension array with column size.
+        """
+        pathCount = [0] * len(obstacleGrid[0])
         pathCount[0] = 1
         
         for row in obstacleGrid:

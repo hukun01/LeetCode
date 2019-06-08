@@ -3,23 +3,19 @@ class Solution:
         '''
         DFS with memoization
         '''
-        def findWays(nums, index, runningSum, S, mappings):
-            if index == len(nums):
+        def dfs(start, runningSum, seen):
+            if start == len(nums):
                 if runningSum == S:
                     return 1
-                else:
-                    return 0
-
+                return 0
+                
             # this is used to mark the starting index and runningSum and 
             # the number of possible ways from here
-            mark = str(index) + "->" + str(runningSum)
-            if mark in mappings:
-                return mappings[mark]
-            
-            num = nums[index]
-            waysIfAdd = findWays(nums, index + 1, runningSum + num, S, mappings)
-            waysIfMinus = findWays(nums, index + 1, runningSum - num, S, mappings)
-            mappings[mark] = waysIfAdd + waysIfMinus
-            return waysIfAdd + waysIfMinus
-                
-        return findWays(nums, 0, 0, S, dict())
+            mark = str(start) + "->" + str(runningSum)
+            if mark not in seen:
+                waysIfAdd = dfs(start + 1, runningSum - nums[start], seen)
+                waysIfMinus = dfs(start + 1, runningSum + nums[start], seen)
+                seen[mark] = waysIfAdd + waysIfMinus
+            return seen[mark]
+        
+        return dfs(0, 0, dict())

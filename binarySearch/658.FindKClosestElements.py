@@ -1,15 +1,10 @@
 class Solution(object):
-    def findClosestElements(self, arr, k, x):
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
         """
         Binary-search for where the resulting elements start in the array. 
         It's the first index i so that arr[i] is better than arr[i+k] 
         (with "better" meaning closer to or equally close to x). 
         Then just return the k elements starting there.
-        
-        :type arr: List[int]
-        :type k: int
-        :type x: int
-        :rtype: List[int]
         """
         l, h = 0, len(arr) - k
         while l < h:

@@ -15,15 +15,14 @@ class Solution:
                     matrix[r][c] = float('inf')
                 else:
                     queue.append((r, c))
-        
-        dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
         while queue:
             r, c = queue.popleft()
-            for d in dirs:
+            for d in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
                 newR = r + d[0]
                 newC = c + d[1]
                 if 0 <= newR < rows and 0 <= newC < cols and matrix[newR][newC] > matrix[r][c] + 1:
                     queue.append((newR, newC))
                     matrix[newR][newC] = matrix[r][c] + 1
-        
+
         return matrix

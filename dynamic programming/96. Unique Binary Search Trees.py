@@ -6,9 +6,11 @@ class Solution:
         is the root of BST, and the sequence ranges from 1 to n.
 
         G(n) = F(1, n) + F(2, n) + ... + F(n, n)
-        We have G(0)=1, G(1)=1. 
-
         F(i, n) = G(i-1) * G(n-i), 1 <= i <= n 
+        Combining the above, we have
+        G(n) = G(0) * G(n-1) + G(1) * G(n-2) + ... + G(n-1) * G(0)
+
+        And we have G(0)=1, G(1)=1
 
         In terms of calculation, we need to start with the lower number, 
         since the value of G(n) depends on the values of G(0) … G(n-1).

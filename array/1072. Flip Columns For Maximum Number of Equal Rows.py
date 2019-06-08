@@ -6,5 +6,6 @@ class Solution:
         '''
         counter = collections.Counter()
         for row in matrix:
-            counter[tuple(col ^ row[0] for col in row)] += 1
+            pattern = tuple(col ^ row[0] for col in row)
+            counter[pattern] += 1
         return max(counter.values())

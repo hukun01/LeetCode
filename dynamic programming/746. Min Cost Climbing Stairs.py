@@ -1,9 +1,6 @@
 class Solution:
-    def minCostClimbingStairs(self, cost):
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
         """
-        :type cost: List[int]
-        :rtype: int
-
         This is the same as the 70. Climbing Stairs, but the trick is to return the min of 
         the cost at (i-2th stair, i-1th stair), because both a and b reaches the top.
         """
