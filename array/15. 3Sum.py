@@ -9,7 +9,7 @@ class Solution:
         nums.sort()
         answer = set()
         for i, a in enumerate(nums[:-2]):
-            if i > 0 and nums[i] == nums[i-1]:
+            if i > 0 and a == nums[i-1]:
                 continue
             seen = set()
             for c in nums[i+1:]:

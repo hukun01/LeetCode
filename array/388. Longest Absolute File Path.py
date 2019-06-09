@@ -8,13 +8,13 @@ class Solution:
         the depth is the number of tabs in each string piece.
         It's ok to override it as we just need to visit each piece once.
         '''
-        maxlen = 0
-        pathlen = {0: 0}
+        pathLens = { -1: 0 }
+        maxLen = 0
         for line in input.splitlines():
             name = line.lstrip('\t')
             depth = len(line) - len(name)
             if '.' in name:
-                maxlen = max(maxlen, pathlen[depth] + len(name))
+                maxLen = max(maxLen, pathLens[depth-1] + len(name))
             else:
-                pathlen[depth + 1] = pathlen[depth] + len(name) + 1
-        return maxlen
+                pathLens[depth] = pathLens[depth-1] + len(name) + 1
+        return maxLen

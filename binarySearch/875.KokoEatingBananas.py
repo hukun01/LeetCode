@@ -1,5 +1,5 @@
 class Solution:
-    def minEatingSpeed(self, piles, H):
+    def minEatingSpeed(self, piles: List[int], H: int) -> int:
         """
         Another instance for binary searching the value spaces.
         
@@ -14,10 +14,6 @@ class Solution:
         except the only one with big_num, so we use *total to estimate the *big_num, 
         and ignore the tiny numbers, but pretending that we've spent the hours on the tiny numbers.
         Thus, the upper bound should be math.ceil(sum(piles) / (H - (len(piles) - 1))).
-        
-        :type piles: List[int]
-        :type H: int
-        :rtype: int
         """
         total = sum(piles)
         l, h = math.ceil(total / H), math.ceil(total / (H - len(piles) + 1))
