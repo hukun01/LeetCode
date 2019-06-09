@@ -19,5 +19,6 @@ class Solution:
         nums[0] = nums[1] = 1
         for i in range(2, n + 1):
             for j in range(1, i + 1):
-                nums[i] += nums[j - 1] * nums[i - j]
+                fi = nums[j - 1] * nums[i - j]
+                nums[i] += fi
         return nums[n]
