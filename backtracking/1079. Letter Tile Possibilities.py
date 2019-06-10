@@ -1,5 +1,8 @@
 class Solution:
     def numTilePossibilities(self, tiles: str) -> int:
+        '''
+        It's critical to keep the word-count for all characters.
+        '''
         letters = collections.Counter(tiles)
         def dfs():
             total = 0
