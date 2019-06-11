@@ -7,6 +7,8 @@ class Solution:
         pop 'b' and then 'c'.
         
         Use a counter to tell whether a char appears later in the string again.
+        
+        Use a set to tell whether we already added the char to the answer.
         '''
         counter = collections.Counter(s)
         visited = set()

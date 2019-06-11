@@ -8,6 +8,9 @@
 class Solution:
     def sufficientSubset(self, root: TreeNode, limit: int) -> TreeNode:
         '''
+        This is a recursive function that returns the node, if the node is sufficient, 
+        otherwise returns None.
+        
         If the root is leaf, we compare the limit and root.val, and return root
         if it's sufficient, otherwise return None.
 
