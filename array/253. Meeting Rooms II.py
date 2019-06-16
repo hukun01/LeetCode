@@ -9,8 +9,8 @@ class Solution:
         
         if newStart >= currentEnd, that means the meeting with currentEnd has ended, 
         we have one empty room, the new meeting can happen in this empty room, so no need 
-        to increase the total number of rooms. Also, as newStart >= currentEnd, the time 
-        has passed, so we need to move to the next end time.
+        to increase the total number of rooms, and we will go to the next room start time. 
+        Also, as newStart >= currentEnd, the time has passed, so we need to move to the next end time.
         '''
         starts = sorted([i[0] for i in intervals])
         ends = sorted([i[1] for i in intervals])

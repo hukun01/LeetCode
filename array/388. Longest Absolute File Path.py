@@ -5,7 +5,7 @@ class Solution:
         that return a copy of the string with leading characters removed.
 
         The major logic is to use a dict to store the { depth : pathLen }, and
-        the depth is the number of tabs in each string piece.
+        the depth is the number of leading tabs in each string piece.
         It's ok to override it as we just need to visit each piece once.
         '''
         pathLens = { -1: 0 }

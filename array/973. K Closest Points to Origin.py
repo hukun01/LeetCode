@@ -12,19 +12,20 @@ class Solution:
                 sort(pivotIdx + 1, end, k)
 
         dist = lambda i: points[i][0] ** 2 + points[i][1] ** 2
-        # partition on a random m such that points[i] <= points[m] <= points[j], and i < m < j
-        def partition(i, j):
-            m = random.randint(i, j)
-            points[j], points[m] = points[m], points[j]
-            pivot = dist(j)
-            storedIdx = i
-            for i in range(i, j): # excluding j
+        # partition on a random pivotIdx such that 
+        # points[start] <= points[pivotIdx] <= points[end], and start < pivotIdx < end
+        def partition(start, end):
+            pivotIdx = random.randint(start, end)
+            pivot = dist(pivotIdx)
+            points[end], points[m] = points[m], points[end]
+            storedIdx = start
+            for i in range(start, end): # excluding end
                 if dist(i) < pivot:
                     points[storedIdx], points[i] = points[i], points[storedIdx]
                     storedIdx += 1
-            points[j], points[storedIdx] = points[storedIdx], points[j]
+            points[end], points[storedIdx] = points[storedIdx], points[end]
             
-            return storedIdx # do NOT return m!
+            return storedIdx # do NOT return pivotIdx!
 
         sort(0, len(points) - 1, K)
         return points[:K]
