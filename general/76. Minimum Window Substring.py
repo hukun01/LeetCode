@@ -16,7 +16,6 @@ class Solution:
         need = collections.Counter(t)
         missing = len(t)
         i = start = end = 0
-        size = float('inf')
         # j is base-1 index so that s[i:j] is valid
         for j, c in enumerate(s, 1):
             if need[c] > 0:
