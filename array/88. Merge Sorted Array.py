@@ -3,8 +3,7 @@ class Solution:
         """
         The key is to have concise logic. 
 
-        Note that we don't need to keep validating BOTH nums1 and nums2's indices, 
-        because if nums2 is exhausted, then the rest of nums1 is already sorted; 
+        Note that if nums2 is exhausted, then the rest of nums1 is already sorted; 
         if nums1 is exhausted, then we just need to copy the rest of nums2 into the free space in nums1.
         
         Also, the major index that we use to populate nums1 would be updated when we update m or n.

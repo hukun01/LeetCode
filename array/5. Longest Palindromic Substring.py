@@ -9,8 +9,8 @@ class Solution:
                 right += 1
             return s[left+1: right]
         answer = ""
-        for i, c in enumerate(s):
-            even = extend(i, i)
-            odd = extend(i, i+1)
+        for i in range(len(s)):
+            odd = extend(i, i)
+            even = extend(i, i+1)
             answer = max(answer, even, odd, key=len)
         return answer
