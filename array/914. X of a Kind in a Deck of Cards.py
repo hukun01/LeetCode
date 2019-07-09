@@ -1,9 +1,6 @@
 class Solution:
-    def hasGroupsSizeX(self, deck):
+    def hasGroupsSizeX(self, deck: List[int]) -> bool:
         """
-        :type deck: List[int]
-        :rtype: bool
-        
         Kind of brute force, but surprisingly good in terms of time and space.
 
         Use a Counter object to help the term-frequency part, (note that Counter is a subclass of Dict)
