@@ -9,43 +9,39 @@ class LRUCache:
 
     def __init__(self, capacity: int):
         self.capacity = capacity
-        self.dict = dict()
+        self.nodes = dict()
         self.head = Node(0, 0)
         self.tail = Node(0, 0)
         self.head.next = self.tail
         self.tail.prev = self.head
         
     def _addToHead(self, node):
-        self.dict[node.key] = node
+        self.nodes[node.key] = node
         
         node.next = self.head.next
         self.head.next.prev = node
         self.head.next = node
         node.prev = self.head
-
-    def _remove(self, key):
-        if key not in self.dict:
-            return
-        node = self.dict[key]
-        node.prev.next = node.next
+        
+    def _remove(self, node: Node):
+        self.nodes.pop(node.key)
         node.next.prev = node.prev
-        self.dict.pop(key)
+        node.prev.next = node.next
 
     def get(self, key: int) -> int:
-        if key not in self.dict:
+        if key not in self.nodes:
             return -1
-        value = self.dict[key].val
-        self._remove(key)
-        self._addToHead(Node(key, value))
-        return value
+        node = self.nodes[key]
+        self._remove(node)
+        self._addToHead(node)
+        return node.val
         
     def put(self, key: int, value: int) -> None:
-        if key not in self.dict:
-            if len(self.dict) == self.capacity:
-                self._remove(self.tail.prev.key)
-        else:
-            self._remove(key)
-            
+        if key in self.nodes:
+            self._remove(self.nodes[key])
+        elif len(self.nodes) == self.capacity:
+            self._remove(self.tail.prev)
+
         self._addToHead(Node(key, value))
 
 

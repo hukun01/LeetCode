@@ -12,10 +12,8 @@
 #         self.right = None
 
 class Solution:
-    def sortedListToBST(self, head):
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
         """
-        :type head: ListNode
-        :rtype: TreeNode
         """
         """ 1/2 Convert the list to an array, and build BST from there
         O(N) time, O(N) space for the array (not counting TreeNode creation space)

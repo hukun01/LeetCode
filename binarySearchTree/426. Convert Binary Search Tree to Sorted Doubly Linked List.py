@@ -8,6 +8,29 @@ class Node:
 """
 class Solution:
     def treeToDoublyList(self, root: 'Node') -> 'Node':
+        '''
+        Recursive - inorder traversal
+
+        head = prev = None
+        def inorder(node):
+            if not node:
+                return
+            inorder(node.left)
+            nonlocal prev, head
+            if prev:
+                prev.right = node
+                node.left = prev
+            prev = node
+            if not head:
+                head = prev
+            inorder(node.right)
+            
+        inorder(root)
+        if head:
+            head.left = prev
+            prev.right = head
+        return head
+        '''
         if not root:
             return None
         stack = []
