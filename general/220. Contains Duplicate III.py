@@ -5,7 +5,9 @@ class Solution:
         Buckets are built based on values; a sliding window is built for keeping the index nearby.
         Remember to use (t + 1) as the bucket size, to handle the case: t == 0.
         """
-        if k < 0 or t < 0: # we are asked for absolute diff, so t < 0 wouldn't work.
+        # we are asked for [distinct] indicies, so k <= 0 wouldn't work
+        # we are asked for absolute diff, so t < 0 wouldn't work.
+        if k <= 0 or t < 0:
             return False
 
         bucket = {}

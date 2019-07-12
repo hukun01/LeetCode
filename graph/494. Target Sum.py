@@ -13,8 +13,8 @@ class Solution:
             # the number of possible ways from here
             mark = str(start) + "->" + str(runningSum)
             if mark not in seen:
-                waysIfAdd = dfs(start + 1, runningSum - nums[start], seen)
-                waysIfMinus = dfs(start + 1, runningSum + nums[start], seen)
+                waysIfAdd = dfs(start + 1, runningSum + nums[start], seen)
+                waysIfMinus = dfs(start + 1, runningSum - nums[start], seen)
                 seen[mark] = waysIfAdd + waysIfMinus
             return seen[mark]
         
