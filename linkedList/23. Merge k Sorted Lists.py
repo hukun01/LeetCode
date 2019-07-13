@@ -11,9 +11,9 @@ class Solution:
         Tuple comparison breaks for (priority, task) pairs if the priorities are 
         equal and the tasks do not have a default comparison order.
 
-        Also note that this tuple is not the 2-element tuple, it's anything in parenthesis.
-        Hence, make a triplet (node.val, index, node), such that the same (node.val, index)
-        combination will never collide within the heapq.
+        Also note that this tuple is not only the 2-element tuple, it's anything in parenthesis.
+        Hence, make a triplet (node.val, index, node), such that there is no two (node.val, index)
+        combination that can collide within the heapq.
         '''
         heap = []
         for i, head in enumerate(lists):

@@ -5,17 +5,14 @@
 #         self.next = None
 
 class Solution:
-    def reverseList(self, head):
+    def reverseList(self, head: ListNode) -> ListNode:
         """
         Use a dummy head to make code concise.
-        
-        :type head: ListNode
-        :rtype: ListNode
         """
-        prevHead = None
+        prev = None
         while head:
-            recordNext = head.next
-            head.next = prevHead
-            prevHead = head
-            head = recordNext
-        return prevHead
+            cachedNext = head.next
+            head.next = prev
+            prev = head
+            head = cachedNext
+        return prev
