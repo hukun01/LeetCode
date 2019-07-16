@@ -7,22 +7,26 @@ class Solution:
            store the 0s to a queue for later traversal.
         2. When updating a neighbor cell, use the current cell's value + 1.
         '''
-        rows, cols = len(matrix), len(matrix[0])
         queue = collections.deque()
-        for r in range(rows):
-            for c in range(cols):
-                if matrix[r][c] != 0:
-                    matrix[r][c] = float('inf')
+        rows = len(matrix)
+        cols = len(matrix[0])
+        for row in range(rows):
+            for col in range(cols):
+                if matrix[row][col] > 0:
+                    matrix[row][col] = float('inf')
                 else:
-                    queue.append((r, c))
-
+                    queue.append((row, col))
+        
+        dirs = ((0, 1), (0, -1), (1, 0), (-1, 0))
         while queue:
-            r, c = queue.popleft()
-            for d in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
-                newR = r + d[0]
-                newC = c + d[1]
-                if 0 <= newR < rows and 0 <= newC < cols and matrix[newR][newC] > matrix[r][c] + 1:
-                    queue.append((newR, newC))
-                    matrix[newR][newC] = matrix[r][c] + 1
-
+            row, col = queue.popleft()
+            for d in dirs:
+                newRow = row + d[0]
+                newCol = col + d[1]
+                if newRow < 0 or newRow >= rows or newCol < 0 or newCol >= cols:
+                    continue
+                if matrix[newRow][newCol] <= matrix[row][col] + 1:
+                    continue
+                matrix[newRow][newCol] = matrix[row][col] + 1
+                queue.append((newRow, newCol))
         return matrix
