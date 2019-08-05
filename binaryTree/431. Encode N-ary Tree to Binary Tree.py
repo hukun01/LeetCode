@@ -18,6 +18,8 @@ class Codec:
     Convert the current Node to a TreeNode;
     Convert the first Node child into the TreeNode's right child (rc), 
     and convert the rest of the Node children (rc's siblings) into rc's left child.
+    
+    Essentially, let rc manage its unbounded siblings with its left child chain.
     '''
     def encode(self, root):
         """Encodes an n-ary tree to a binary tree.

@@ -5,7 +5,8 @@ class Solution:
         appears later in the string again, the last char can be removed and added 
         later. E.g., stack = "bc", and remaining string is "abc" then 'a' can 
         pop 'b' and then 'c'.
-        We use a stack because we are only interested in the most recent chars.
+        We use a stack because we are only interested in the most recent chars. 
+        We are interested in the most recent chars because we want to keep the relative order.
         
         Use a counter to tell whether a char appears later in the string again.
         

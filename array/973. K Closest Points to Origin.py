@@ -1,15 +1,18 @@
 class Solution:
     def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+        '''
+        1/2 Use quick select
+        '''
         # The search space within the array is changing for each round - but the list,
         # is still the same size. Thus, k does not need to be updated with each round.
-        def sort(start, end, k):
+        def sort(start, end):
             if start >= end:
                 return
             pivotIdx = partition(start, end)
-            if pivotIdx > k:
-                sort(start, pivotIdx - 1, k)
-            elif pivotIdx < k:
-                sort(pivotIdx + 1, end, k)
+            if pivotIdx > K:
+                sort(start, pivotIdx - 1)
+            elif pivotIdx < K:
+                sort(pivotIdx + 1, end)
 
         dist = lambda i: points[i][0] ** 2 + points[i][1] ** 2
         # partition on a random pivotIdx such that 
@@ -17,7 +20,7 @@ class Solution:
         def partition(start, end):
             pivotIdx = random.randint(start, end)
             pivot = dist(pivotIdx)
-            points[end], points[m] = points[m], points[end]
+            points[end], points[pivotIdx] = points[pivotIdx], points[end]
             storedIdx = start
             for i in range(start, end): # excluding end
                 if dist(i) < pivot:
@@ -27,5 +30,16 @@ class Solution:
             
             return storedIdx # do NOT return pivotIdx!
 
-        sort(0, len(points) - 1, K)
+        sort(0, len(points) - 1)
         return points[:K]
+        '''
+        2/2 Use Heap
+
+        dist = lambda i: points[i][0] ** 2 + points[i][1] ** 2
+        ans = []
+        for i, point in enumerate(points):
+            heapq.heappush(ans, (-dist(i), point))
+            if len(ans) > K:
+                heapq.heappop(ans)
+        return [a[1] for a in ans]
+        '''
