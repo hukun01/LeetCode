@@ -18,9 +18,9 @@ class Solution:
             # because they are impossible to be the max after adding this new number.
             while q and nums[q[-1]] < n:
                 q.pop()
-            if q and i - k >= q[0]:
-                q.popleft()
             q.append(i)
             if i + 1 >= k:
                 ans.append(nums[q[0]])
+            if i - k >= q[0]:
+                q.popleft()
         return ans
