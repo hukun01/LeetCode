@@ -1,10 +1,5 @@
 class Solution:
-    def kthSmallest(self, matrix, k):
-        """
-        :type matrix: List[List[int]]
-        :type k: int
-        :rtype: int
-        """
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
         """ 1/2 Heap method. Remember the heapq stuffs in Py. 
         The heap approach is like merge sorted arrays.
         IMPORTANT: in the tuple we store in the heap, value needs to come first, aka, use (priority, task) tuples

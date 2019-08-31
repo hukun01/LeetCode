@@ -3,8 +3,8 @@ class Solution:
         '''
         Two key points:
         1. sort by interval[0] is sufficient, no need to sort the second element in an interval
-        2. the current[1] could be greater than the next[1], because current[0] < next[0], 
-           such as [1,4] and [2, 3] should be merged into [1, 4]
+        2. when current[0] < next[0], it's possible that current[1] > next[1], such as [1,4] and [2, 3]
+        should be merged into [1, 4]
         '''
         answer = []
         for i in sorted(intervals, key = lambda x: x[0]):

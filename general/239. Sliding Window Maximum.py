@@ -19,8 +19,8 @@ class Solution:
             while q and nums[q[-1]] < n:
                 q.pop()
             q.append(i)
-            if i + 1 >= k:
-                ans.append(nums[q[0]])
             if i - k >= q[0]:
                 q.popleft()
+            if i + 1 >= k:
+                ans.append(nums[q[0]])
         return ans

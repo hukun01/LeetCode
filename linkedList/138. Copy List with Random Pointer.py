@@ -43,17 +43,15 @@ class Solution:
         return cached
         '''
     def copyRandomList(self, head: 'Node') -> 'Node':
-        mappings = dict()
-        curr = head
-        while curr:
-            clone = Node(curr.val, None, None)
-            mappings[curr] = clone
-            curr = curr.next
-        curr = head
-        while curr:
-            clone = mappings[curr]
-            clone.next = mappings[curr.next] if curr.next else None
-            clone.random = mappings[curr.random] if curr.random else None
-            curr = curr.next
-        return mappings[head] if mappings else None
+        mapping = {None: None}
+        node = head
+        while node:
+            mapping[node] = Node(node.val, None, None)
+            node = node.next
+        node = head
+        while node:
+            mapping[node].next = mapping[node.next]
+            mapping[node].random = mapping[node.random]
+            node = node.next
+        return mapping[head]
         '''

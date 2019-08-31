@@ -9,8 +9,9 @@ class Solution:
         When counting neighbors, we check whether the cell >= 2, if so, that 
         means we added 2 to it, so we subtract 2 from it, and use the result as
         the neighbor.
-        2 means it was 0, now it's 1.
-        3 means it was 1, now it's still 1.
+        1 means it is 1, next round it'll be 0.
+        2 means it is 0, next round it'll be 1.
+        3 means it is 1, next round it'll be 1.
         Note that for cell that dies in the next round, we do NOT want to set it to 0 during the process!
 
         At the end, we need to go through the board and set every cell to 1 if it's >= 2,
