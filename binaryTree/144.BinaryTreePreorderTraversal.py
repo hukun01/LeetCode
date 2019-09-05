@@ -6,11 +6,7 @@
 #         self.right = None
 
 class Solution:
-    def preorderTraversal(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[int]
-        """
+    def preorderTraversal(self, root: TreeNode) -> List[int]:
         """ 1/2 Iterative with stack
         stack = [root]
         values = []
