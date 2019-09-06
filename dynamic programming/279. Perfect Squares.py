@@ -1,46 +1,14 @@
 class Solution:
-    def numSquares(self, n):
-        """
-        :type n: int
-        :rtype: int
-        
-        1/2
-        BFS, each node is a number, starting from 0, an edge exists to a newNode
-        if there is a node + a square number == newNode.
-        Time for BFS is |V| + |E|, in this case, there are  N vertices, the number of 
-        edges is tricky, but to estimate, since the edge space is sparse, we can 
-        use N as well, so overall, the time is O(N).
-        This is faster than regular DP, which is O(sqrt(N)*N))
-        """
-        """
-        queue = collections.deque([0])
-        visited = set()
-        level = 1
-        while queue:
-            size = len(queue)
-            for i in range(size):
-                cur = queue.popleft()
-                j = 1
-                while cur + j * j <= n:
-                    newNum = cur + j * j
-                    if newNum == n:
-                        return level
-                    if newNum not in visited:
-                        queue.append(newNum)
-                        visited.add(newNum)
-                    j += 1
-            level += 1
-        raise ValueError("No solution found.")
-        """
+    def numSquares(self, n: int) -> int:
         """ 
-        2/2 Regular DP: State transition: 
-        nums[i] = 1 + min(nums[i - 1], nums[i - 4], ..., nums[i - j*j]),
-        where j * j <= i
+        BFS, also a DP. Note that the size of the input is actually log(n),
+        assuming each step takes constant time, then the worst case we need O(N) steps,
+        N is the value of the input number. And N's size is log(N), so O(N) = O(2^(log(N))) = O(2^n)
         """
-        nums = [i for i in range(n + 1)]
-        for i in range(1, n + 1):
-            j = 1
-            while j*j <= i:
-                nums[i] = min(nums[i], nums[i - j*j] + 1)
-                j += 1
-        return nums[-1]
+        squares = [i * i for i in range(int(n ** 0.5) + 1)]
+        sums = set(squares)
+        result = 1
+        while n not in sums:
+            sums = {x + y for x in sums for y in squares}
+            result += 1
+        return result

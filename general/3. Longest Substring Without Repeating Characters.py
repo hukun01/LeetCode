@@ -1,9 +1,6 @@
 class Solution:
-    def lengthOfLongestSubstring(self, s):
+    def lengthOfLongestSubstring(self, s: str) -> int:
         """
-        :type s: str
-        :rtype: int
-
         Sliding window technique with dictionary { char: index } and two indices.
         """
         letters = {}

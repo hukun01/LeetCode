@@ -21,8 +21,8 @@ class Solution:
         def countSmaller(upperBound):
             count, j = 0, len(matrix[0]) - 1
             # each time j moves to left or down, so the runtime would be (row + col), aka, O(n)
-            for i in range(len(matrix)):
-                while j >= 0 and matrix[i][j] > upperBound:
+            for row in matrix:
+                while j >= 0 and row[j] > upperBound:
                     j -= 1
                 count += j + 1
             return count
