@@ -7,8 +7,10 @@ class Solution:
         2. We need to restrict the range of the possible lock slots: [0, 9].
         3. We need to keep expanding deadendSet so we keep shrinking our search space.
         """
-        def updateString(string, index, num):
+        def turnLock(string, index, isAdd):
             li = list(string)
+            digit = int(li[index])
+            num = digit + 1 if isAdd else digit - 1
             li[index] = str(num % 10)
             return ''.join(li)
         
@@ -27,10 +29,7 @@ class Solution:
                 if lock in end:
                     return steps
                 deads.add(lock)
-                for i in range(4):
-                    for way in [1, -1]:
-                        newLock = updateString(lock, i, int(lock[i]) + way )
-                        nextLevel.add(newLock)
+                [nextLevel.add(turnLock(lock, i, isAdd)) for i in range(4) for isAdd in [False, True]]
             steps += 1
             begin = nextLevel
             
