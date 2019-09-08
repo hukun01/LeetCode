@@ -2,11 +2,9 @@ class Solution:
     def isMatch(self, s: str, p: str) -> bool:
         '''
         Search with memoization with below scenarios:
-        If p[n] == s[m] or p[n] == '.': dp[m][n] = dp[m-1][n-1];
-        If p[n] == '*': 
-            dp[m][n] = dp[m][n-2] OR below // a* only counts as empty
-            if p[n-1] == s[m] or p[n-1] == '.':
-                dp[m][n] = dp[m-1][n]      // a* counts as 1+ a
+        if p[n] in (s[m], '.'): dp[m][n] = dp[m-1][n-1]
+        elif p[n] == '*': dp[m][n] = dp[m][n-2] or // a* counts as empty
+            if p[n-1] in (s[m], '.'): dp[m][n] = dp[m-1][n] // a* counts as one or more a
         '''
         matched = dict()
         def isMatched(m, n):
