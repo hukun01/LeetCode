@@ -9,11 +9,15 @@ class Solution:
         If there is no extra ')', meaning we have removed them all in the previous part, now we need
         to scan from right to left to ensure there is no extra '(', or we can exit the function after
         adding the current string to the result list.
+        A good example to go through the code is "())())"
         '''
         ans = []
-        def dfs(s, iStart, jStart, openParen, closedParen):
+
+        # lastI denotes the s[:lastI] prefix that contains valid # of parens after the last removal,
+        # lastJ denotes the last index that we removed the extra paren from the prefix.
+        def dfs(s, lastI, lastJ, openParen, closedParen):
             counter = collections.Counter()
-            i = iStart
+            i = lastI
             while i < len(s) and counter[closedParen] <= counter[openParen]:
                 counter[s[i]] += 1
                 i += 1
@@ -23,8 +27,8 @@ class Solution:
                 i -= 1
                 # now there is one extra ')' that we need to delete,
                 # we can go back to delete one ')' from each position, skipping continuous duplicates.
-                for j in range(jStart, i+1):
-                    if s[j] == closedParen and (j == jStart or s[j-1] != closedParen):
+                for j in range(lastJ, i+1):
+                    if s[j] == closedParen and (j == lastJ or s[j-1] != closedParen):
                         # effectively removing s[j], and continue the processing with recursion,
                         # note that now the first i elements contain valid # of parenthesis.
                         dfs(s[:j] + s[j+1:], i, j, openParen, closedParen)
