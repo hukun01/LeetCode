@@ -17,16 +17,13 @@ class Solution:
         We can calculate the lefts in one pass, and multiply that with rights in the second pass.
         Note that we need to store the lefts in the output array to not use extra space.
         '''
-        result = [0] * len(nums)
+        ans = [0] * len(nums)
         left = 1
         for i in range(len(nums)):
-            if i > 0:
-                left = left * nums[i-1]
-            result[i] = left
-            
+            ans[i] = left
+            left *= nums[i]
         right = 1
-        for i in reversed(range(len(nums)-1)):
-            right = right * nums[i+1]
-            result[i] *= right
-        
-        return result
+        for i in reversed(range(len(nums))):
+            ans[i] *= right
+            right *= nums[i]
+        return ans

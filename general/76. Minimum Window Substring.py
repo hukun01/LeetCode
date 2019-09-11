@@ -4,9 +4,9 @@ class Solution:
         High level flow:
         1. Use two pointers: 'start' and 'end' to represent a window.
         2. Move 'end' to find a valid window.
-        3. When a valid window is found, move 'start' to find a smaller window.
+        3. When a valid window is found, advance 'start' to find a smaller window.
 
-        The current window is s[i:j] and the result window is s[start:end].
+        The current window is s[start:end+1] and the result window is s[finalStart:finalEnd].
         In need[c] I store how many times I need character c (can be negative),
         and missing tells how many characters are still missing. 
         In the loop, first add the new character to the window. 
@@ -15,17 +15,17 @@ class Solution:
         '''
         need = collections.Counter(t)
         missing = len(t)
-        i = start = end = 0
-        # j is base-1 index so that s[i:j] is valid
-        for j, c in enumerate(s, 1):
+        finalStart = finalEnd = 0
+        start = 0
+        for end, c in enumerate(s):
             if need[c] > 0:
                 missing -= 1
             need[c] -= 1
             if missing == 0:
-                while i < j and need[s[i]] < 0:
-                    need[s[i]] += 1
-                    i += 1
-                if end == 0 or j - i < end - start:
-                    start, end = i, j
+                while start < end and need[s[start]] < 0:
+                    need[s[start]] += 1
+                    start += 1
+                if finalEnd == 0 or end - start < finalEnd - finalStart:
+                    finalStart, finalEnd = start, end+1
             
-        return s[start: end]
+        return s[finalStart: finalEnd]
