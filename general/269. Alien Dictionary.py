@@ -5,32 +5,19 @@ class Solution:
         on the pair list.
         To make code concise, use list comprehension as much as possible.
         '''
-        if not words:
-            return ''
-        # build the prerequisite mapping
-        prevWord = words[0]
-        allChars = { char: set() for word in words for char in word }
-        for word in words[1:]:
-            for a, b in zip(prevWord, word):
-                if a != b:
-                    allChars[b].add(a)
+        prevs = { c: set() for word in words for c in word }
+        for pair in zip(words, words[1:]):
+            w1, w2 = pair[0], pair[1]
+            for c1, c2 in zip(w1, w2):
+                if c1 != c2:
+                    prevs[c2].add(c1)
                     break
-            prevWord = word
-            
-        # topological sort
         ans = []
         while True:
-            # get all chars without previous chars
-            nextChars = [ char for char, preSet in allChars.items() if len(preSet) == 0 ]
-            allChars = { char: preSet for char, preSet in allChars.items() if len(preSet) > 0 }
-            if len(nextChars) == 0:
+            removed = [p for p, prev in prevs.items() if len(prev) == 0]
+            if len(removed) == 0:
                 break
-            ans += nextChars
-            for preSet in allChars.values():
-                for char in nextChars:
-                    if char in preSet:
-                        preSet.remove(char)
-            
-        if len(allChars) > 0:
-            return ''
-        return ''.join(ans)
+            ans.extend(removed)
+            nextChars = set(removed)
+            prevs = { char: prevSet - nextChars for char, prevSet in prevs.items() if len(prevSet) > 0 }
+        return ''.join(ans) if len(prevs) == 0 else ""
