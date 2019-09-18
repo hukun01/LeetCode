@@ -1,9 +1,5 @@
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
-        total = sum(nums)
-        if total % 2 == 1:
-            return False
-        target = total // 2
         '''
         Let dp[i][j] denote whether the first i numbers can add up to a sum j.
         
@@ -15,7 +11,10 @@ class Solution:
         Note that we need to reversely traverse the inner loop to ensure that we don't erase
         our own footprints.
         '''
-        
+        total = sum(nums)
+        if total % 2 == 1:
+            return False
+        target = total // 2
         dp = [False] * (target + 1)
         dp[0] = True
         for num in nums:
