@@ -10,17 +10,17 @@ class Solution:
         rowStart, rowEnd = 0, len(matrix)
         colStart, colEnd = 0, len(matrix[0])
         while rowStart < rowEnd and colStart < colEnd:
-            # first row
+            # top row
             for col in range(colStart, colEnd):
                 ans.append(matrix[rowStart][col])
-            # last col
+            # right col
             for row in range(rowStart+1, rowEnd):
                 ans.append(matrix[row][colEnd-1])
-            # last row
+            # bottom row if not overlapped with top row
             if rowStart != rowEnd - 1:
                 for col in reversed(range(colStart, colEnd-1)):
                     ans.append(matrix[rowEnd-1][col])
-            # first col
+            # left col if not overlapped with right col
             if colStart != colEnd - 1:
                 for row in reversed(range(rowStart+1, rowEnd-1)):
                     ans.append(matrix[row][colStart])

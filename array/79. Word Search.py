@@ -1,15 +1,18 @@
 class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
         '''
-        Regular DFS. The key here is to use word.startswith(curr) to stop early.
+        Regular DFS. The key here is to stop early by comparing the last character.
         '''
         compass = [(0, 1), (0, -1), (1, 0), (-1, 0)]
         rows, cols = len(board), len(board[0])
+
         def dfs(row, col, curr, visited):
-            if curr == word:
-                return True
-            if not word.startswith(curr):
+            if len(curr) == len(word):
+                return curr == word
+
+            if curr[-1] != word[len(curr)-1]:
                 return False
+
             for dirs in compass:
                 newRow = row + dirs[0]
                 newCol = col + dirs[1]
