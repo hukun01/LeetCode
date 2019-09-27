@@ -32,14 +32,14 @@ class NestedIterator(object):
         """
         self.data = nestedList
         self.pos = 0
-        self.nextIter = None
+        self.nestedIter = None
 
     def next(self):
         """
         :rtype: int
         """
-        if self.nextIter:
-            return self.nextIter.next()
+        if self.nestedIter:
+            return self.nestedIter.next()
         else:
             val = self.data[self.pos].getInteger()
             self.pos += 1
@@ -49,15 +49,15 @@ class NestedIterator(object):
         """
         :rtype: bool
         """
-        if self.nextIter and self.nextIter.hasNext():
+        if self.nestedIter and self.nestedIter.hasNext():
             return True
-        self.nextIter = None
+        self.nestedIter = None
         while self.pos < len(self.data):
             element = self.data[self.pos]
             if element.isInteger():
                 return True
             else:
-                self.nextIter = NestedIterator(element.getList())
+                self.nestedIter = NestedIterator(element.getList())
                 self.pos += 1
                 return self.hasNext()
         return False

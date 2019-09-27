@@ -1,54 +1,68 @@
 class Solution:
     def numberToWords(self, num: int) -> str:
         '''
-        Need to process 'hundred' in multiple places, so it's better to do it recursively.
+        Need to process 'hundred' in multiple places, so it's better to do it in a function.
         Also need to handle billion, million, and thousand.
         '''
-        oneToNine = {
-            1:"One", 2:"Two", 3:"Three", 4:"Four", 5:"Five", 6:"Six", 7:"Seven", 8:"Eight", 9:"Nine"
+        data = {
+            1: 'One',
+            2: 'Two',
+            3: 'Three',
+            4: 'Four',
+            5: 'Five',
+            6: 'Six',
+            7: 'Seven',
+            8: 'Eight',
+            9: 'Nine',
+            10: 'Ten',
+            11: 'Eleven',
+            12: 'Twelve',
+            13: 'Thirteen',
+            14: 'Fourteen',
+            15: 'Fifteen',
+            16: 'Sixteen',
+            17: 'Seventeen',
+            18: 'Eighteen',
+            19: 'Nineteen',
+            20: 'Twenty',
+            30: 'Thirty',
+            40: 'Forty',
+            50: 'Fifty',
+            60: 'Sixty',
+            70: 'Seventy',
+            80: 'Eighty',
+            90: 'Ninety',
         }
         
-        tenToNineteen = {
-            10 :"Ten", 11:"Eleven", 12:"Twelve", 13:"Thirteen", 14:"Fourteen",
-            15:"Fifteen", 16:"Sixteen", 17:"Seventeen", 18:"Eighteen", 19:"Nineteen"
-        }
-        
-        twentyToNinety = {
-            20:"Twenty", 30:"Thirty", 40:"Forty", 50:"Fifty", 60:"Sixty", 70:"Seventy", 80:"Eighty", 90:"Ninety"
-        }
-        
-        def parseLessThanThousand(num):
-            # only handles num from 1 to 999
-            if num == 0:
-                return
-            if num >= 100:
-                parseLessThanThousand(num // 100)
+        # parse from 1 to 999
+        def parse(number):
+            hundreds = number // 100
+            if hundreds > 0:
+                ans.append(data[hundreds])
                 ans.append("Hundred")
-                parseLessThanThousand(num % 100)
-            elif num in oneToNine:
-                ans.append(oneToNine[num])
-            elif num in tenToNineteen:
-                ans.append(tenToNineteen[num])
-            elif num in twentyToNinety:
-                ans.append(twentyToNinety[num])
-            else:
-                ans.append(twentyToNinety[num // 10 * 10])
-                ans.append(oneToNine[num%10])
-
-        def transform(integer, word):
-            if integer == 0:
+            number %= 100
+            if number in data:
+                ans.append(data[number])
+                return
+            elif (number // 10 * 10) in data:
+                ans.append(data[number // 10 * 10])
+            number %= 10
+            if number > 0:
+                ans.append(data[number])
+        
+        def divide(base, word):
+            if base == 0:
                 return
             nonlocal num
-            if num >= integer:
-                parseLessThanThousand(num // integer)
+            if num >= base:
+                parse(num // base)
                 ans.append(word)
-                num = num % integer
-        
-        if num == 0:
-            return "Zero"
+                num %= base
+            
         ans = []
-        transform(1000000000, "Billion")
-        transform(1000000, "Million")
-        transform(1000, "Thousand")
-        parseLessThanThousand(num)
-        return ' '.join(ans)
+        divide(1000000000, "Billion")
+        divide(1000000, "Million")
+        divide(1000, "Thousand")
+        parse(num)
+        
+        return ' '.join(ans) if ans else "Zero"
