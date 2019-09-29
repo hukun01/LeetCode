@@ -17,7 +17,7 @@ class Solution:
             removed = [p for p, prev in prevs.items() if len(prev) == 0]
             if len(removed) == 0:
                 break
-            ans.extend(removed)
+            ans += removed
             nextChars = set(removed)
             prevs = { char: prevSet - nextChars for char, prevSet in prevs.items() if len(prevSet) > 0 }
         return ''.join(ans) if len(prevs) == 0 else ""
