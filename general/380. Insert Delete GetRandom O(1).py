@@ -34,9 +34,9 @@ class RandomizedSet:
         idx = self.locations[val]
         self.locations.pop(val)
         if idx < len(self.li) - 1:
-            last = self.li[-1]
-            self.li[idx] = last
-            self.locations[last] = idx
+            lastVal = self.li[-1]
+            self.li[idx] = lastVal
+            self.locations[lastVal] = idx
         self.li.pop()
         return True
 
