@@ -10,7 +10,7 @@ class Solution:
         the depth is the number of leading tabs in each string piece.
         It's ok to override it as we just need to visit each piece once.
         '''
-        pathLens = { -1: 0 }
+        pathLens = collections.defaultdict(int)
         maxLen = 0
         for line in input.splitlines():
             name = line.lstrip('\t')
