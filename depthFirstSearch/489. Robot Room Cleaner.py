@@ -36,53 +36,29 @@ class Solution:
         :type robot: Robot
         :rtype: None
         """
-        direction = 0
-        visited = set()
-        compass = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-        
-        def turnTo(targetDir):
-            nonlocal direction
-            while direction != targetDir:
-                direction = (direction+1) % 4
-                robot.turnRight()
-        cleaned = set()
-        def dfs(node):
+        '''
+        The 'compass' moving directions need to be aligned with the turns.
+        Robot initially face up, so we need to start with (0, 1).
+        If we keep turning left, we need to go to (-1, 0) the next;
+        if we keep turning right, we need to go to (1, 0) the next.
+        '''
+        compass = [(0, 1), (-1, 0), (0, -1), (1, 0)]
+        def dfs(node, currDir, cleaned):
             robot.clean()
             cleaned.add(node)
-            for d in compass:
+            
+            for _ in range(4):
+                d = compass[currDir]
                 newNode = (node[0] + d[0], node[1] + d[1])
-                if newNode in visited or newNode in cleaned:
-                    continue
-                if d[1] == 1:
-                    # go up
-                    turnTo(0)
-                elif d[1] == -1:
-                    # go down
-                    turnTo(2)
-                elif d[0] == 1:
-                    # go right
-                    turnTo(1)
-                elif d[0] == -1:
-                    # go left
-                    turnTo(3)
-                if not robot.move():
-                    continue
-                visited.add(newNode)
-                dfs(newNode)
-                visited.remove(newNode)
+                if newNode not in cleaned and robot.move():
+                    dfs(newNode, currDir, cleaned)
+                robot.turnLeft()
+                currDir = (currDir+1) % 4
+            
+            robot.turnLeft()
+            robot.turnLeft()
+            robot.move()
+            robot.turnLeft()
+            robot.turnLeft()
                 
-                if d[1] == 1:
-                    # go down
-                    turnTo(2)
-                elif d[1] == -1:
-                    # go up
-                    turnTo(0)
-                elif d[0] == 1:
-                    # go left
-                    turnTo(3)
-                elif d[0] == -1:
-                    # go right
-                    turnTo(1)
-                robot.move()
-        visited.add((0, 0))
-        dfs((0, 0))
+        dfs((0, 0), 0, set())
