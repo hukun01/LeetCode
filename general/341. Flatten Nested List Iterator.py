@@ -52,7 +52,7 @@ class NestedIterator(object):
         if self.nestedIter and self.nestedIter.hasNext():
             return True
         self.nestedIter = None
-        while self.pos < len(self.data):
+        if self.pos < len(self.data):
             element = self.data[self.pos]
             if element.isInteger():
                 return True
