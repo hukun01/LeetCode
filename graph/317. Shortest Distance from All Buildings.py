@@ -9,7 +9,7 @@ class Solution:
         compass = [(1, 0), (-1, 0), (0, 1), (0, -1)]
         rows, cols = len(grid), len(grid[0])
         
-        distancesAndHits = [[[0, 0] for c in range(cols)] for r in range(rows)]
+        distancesAndHits = collections.defaultdict(lambda: [0, 0])
         def bfs(r, c):
             queue = collections.deque([(r, c)])
             visited = [[False for c in range(cols)] for r in range(rows)]
@@ -29,8 +29,8 @@ class Solution:
                                 localBuildingCount += 1
                             if grid[newR][newC] > 0:
                                 continue
-                            distancesAndHits[newR][newC][0] += distance
-                            distancesAndHits[newR][newC][1] += 1
+                            distancesAndHits[(newR, newC)][0] += distance
+                            distancesAndHits[(newR, newC)][1] += 1
                             queue.append((newR, newC))
                 distance += 1
             return localBuildingCount == buildingCount
@@ -41,6 +41,6 @@ class Solution:
                     if not bfs(r, c):
                         return -1
         
-        candidates = [distancesAndHits[r][c][0] for r in range(rows) \
-                      for c in range(cols) if distancesAndHits[r][c][1] == buildingCount]
+        candidates = [distancesAndHit[0] for distancesAndHit in distancesAndHits.values() \
+                      if distancesAndHit[1] == buildingCount]
         return -1 if len(candidates) == 0 else min(candidates)
