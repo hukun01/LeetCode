@@ -3,7 +3,9 @@ class Solution:
         '''
         Solve 2D problem based on 1D case. In 1D array, we just find the median,
         and sum the distance from each element to the median.
-        
+        Note that we find the rowIds and colIds because those ids partially represent the
+        distances. And we keep the rowIds and colIds sorted when building the arrays,
+        so the median would just be the middle element.
         '''
         rows, cols = len(grid), len(grid[0])
         rowIds = []
