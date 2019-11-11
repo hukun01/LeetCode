@@ -14,7 +14,9 @@ class Solution(object):
         to the head of list B. Assuming list A's part1 has x length, list B's part1
         has y length, and the shared part has z length.
         Then node a would traverse (x + y + z) length, and same for node b, so they will
-        meet at the intersection.
+        meet at the intersection. If there is no itersection, they will meet at 'None'.
+
+        The key here is to step through 'None' as a Node.
         """
         a, b = headA, headB
         while a != b:

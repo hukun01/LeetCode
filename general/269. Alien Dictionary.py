@@ -4,6 +4,8 @@ class Solution:
         Find the prerequisite pairs by iterating every 2 words, and do topological sorting
         on the pair list.
         To make code concise, use list comprehension as much as possible.
+
+        Don't use defaultdict here because we actually need to explicitly keep all chars in the dict.
         '''
         prevs = { c: set() for word in words for c in word }
         for pair in zip(words, words[1:]):
@@ -14,10 +16,9 @@ class Solution:
                     break
         ans = []
         while True:
-            removed = [p for p, prev in prevs.items() if len(prev) == 0]
+            removed = { p for p, prev in prevs.items() if len(prev) == 0 }
             if len(removed) == 0:
                 break
             ans += removed
-            nextChars = set(removed)
-            prevs = { char: prevSet - nextChars for char, prevSet in prevs.items() if len(prevSet) > 0 }
+            prevs = { char: prevSet - removed for char, prevSet in prevs.items() if len(prevSet) > 0 }
         return ''.join(ans) if len(prevs) == 0 else ""

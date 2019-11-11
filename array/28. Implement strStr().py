@@ -4,14 +4,12 @@ class Solution:
         Note that we need to return 0 when needle is empty.
         '''
         i = 0
-        while True:
+        while i + len(needle) <= len(haystack):
             j = 0
-            while True:
-                if j == len(needle):
-                    return i
-                if i + j >= len(haystack):
-                    return -1
-                if needle[j] != haystack[i+j]:
-                    break
+            while j < len(needle) and needle[j] == haystack[i + j]:
                 j += 1
+            if j == len(needle):
+                return i
             i += 1
+            
+        return -1

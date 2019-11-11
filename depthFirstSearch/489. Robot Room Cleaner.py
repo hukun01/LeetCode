@@ -38,6 +38,9 @@ class Solution:
         """
         '''
         The 'compass' moving directions need to be aligned with the turns.
+        No matter which direction the robot is facing, we need to go through all 4 directions.
+        Only when the potential new position is not cleaned, and robot can move, we will further dfs.
+
         Robot initially face up, so we need to start with (0, 1).
         If we keep turning left, we need to go to (-1, 0) the next;
         if we keep turning right, we need to go to (1, 0) the next.
