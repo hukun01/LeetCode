@@ -1,10 +1,6 @@
 class Solution:
-    def subarraySum(self, nums, k):
+    def subarraySum(self, nums: List[int], k: int) -> int:
         """
-        :type nums: List[int]
-        :type k: int
-        :rtype: int
-        
         Similar to #930
         
         We are looking for intervals [i:j], where sum[i:j] = k, we know that
