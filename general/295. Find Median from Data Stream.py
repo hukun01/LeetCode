@@ -17,8 +17,8 @@ class MedianFinder:
     def addNum(self, num: int) -> None:
         small, large = self.heaps
         
-        # flip the number to make the largest one become the smallest;
-        # always add to small heap first, and balance the size of two heaps,
+        # Flip the number to make the largest one become the smallest;
+        # Always add to small heap first, and balance the size of two heaps,
         # making sure that len(large) >= len(small)
         heappush(small, -heappushpop(large, num))
         if len(large) < len(small):
