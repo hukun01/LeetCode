@@ -9,21 +9,26 @@ class Solution:
         need to sort the (price, workerQuality) pair.
         
         We start from the min price, and as we move to the next price, we pay more overall.
+        Every worker has his price, we must increase our price to match the next worker,
+        when we try to add him to the group.
         We maintain a max heap of quality (use negative quality with Python's min heap), 
         because when we move to a worker with higher price, his total wage can be lower,
         comparing to a previous worker with very high quality and not so high price.
         So we remove the highest quality when we have more than K candidates.
         If we have exactly K workers, we get the total wages by the qualitySum * currentPrice.
+
+        Note that the first K price would sort of be ignored because they are so low that they
+        just satisfy the first K workers.
         '''
         pricesAndQualities = sorted([w / q, q] for w, q in zip(wage, quality))
         res = float('inf')
-        qsum = 0
-        heap = []
+        qSum = 0
+        qHeap = []
         for price, q in pricesAndQualities:
-            heapq.heappush(heap, -q)
-            qsum += q
-            if len(heap) > K:
-                qsum += heapq.heappop(heap)
-            if len(heap) == K:
-                res = min(res, qsum * price)
+            heapq.heappush(qHeap, -q)
+            qSum += q
+            if len(qHeap) > K:
+                qSum += heapq.heappop(qHeap)
+            if len(qHeap) == K:
+                res = min(res, qSum * price)
         return res
