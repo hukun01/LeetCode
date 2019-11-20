@@ -12,8 +12,7 @@ class Solution:
             return 0
         ans = 0
         rows, cols = len(matrix), len(matrix[0])
-        dp = [[0] * (cols+1) for _ in range(2)]
-
+        # solution 1/2
         dp = [[0] * (cols+1) for _ in range(rows+1)]
         for r in range(1, rows+1):
             for c in range(1, cols+1):
@@ -22,9 +21,13 @@ class Solution:
                     ans = max(ans, dp[r][c])
         return ans ** 2
 
-        ''' Note that in above code we only use the current row and the last row,
+        '''
+        solution 2/2
+        Note that in above code we only use the current row and the last row,
         so we can use 2 rows instead of len(matrix)+1 rows. Just need to reset the
         current row to 0 when the cell is not "1".
+
+        dp = [[0] * (cols+1) for _ in range(2)]
         for r in range(1, rows+1):
             for c in range(1, cols+1):
                 currRow = (r-1) % 2
