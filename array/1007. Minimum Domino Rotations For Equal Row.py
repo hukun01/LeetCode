@@ -5,7 +5,7 @@ class Solution:
         or they both match with B[0]. Otherwise matching can't be done.
         To prove this, consider A as [a, b, b], B as [c, b, b], they can't match.
 
-        Also, if A can match A[0], then B can match A[0]
+        Also, A can match A[0], B can match A[0] too, so in one iteration we can check both arrays.
         '''
         
         def check(target):
