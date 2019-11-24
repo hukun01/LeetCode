@@ -21,8 +21,8 @@ class Solution:
             skipLeft, robLeft = robWithSelection(node.left)
             skipRight, robRight = robWithSelection(node.right)
             
-            robNode = skipLeft + skipRight + node.val
             skipNode = max(robLeft, skipLeft) + max(robRight, skipRight)
+            robNode = skipLeft + skipRight + node.val
             
             return skipNode, robNode
         return max(robWithSelection(root))

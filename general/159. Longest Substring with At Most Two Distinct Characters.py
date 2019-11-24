@@ -1,22 +1,19 @@
 class Solution:
-    def lengthOfLongestSubstringTwoDistinct(self, s):
+    def lengthOfLongestSubstringTwoDistinct(self, s: str) -> int:
         """
-        :type s: str
-        :rtype: int
-
         Another sliding window technique with word-count dictionary and two indices.
         """
-        letters = dict()
-        ans, lastIdx = 0, 0
+        k = 2
+        counter = collections.Counter()
+        start = 0
+        ans = 0
         for i, c in enumerate(s):
-            if c in letters:
-                letters[c] += 1
-            else:
-                letters[c] = 1
-                while len(letters) > 2:
-                    letters[s[lastIdx]] -= 1
-                    if letters[s[lastIdx]] == 0:
-                        letters.pop(s[lastIdx])
-                    lastIdx += 1
-            ans = max(ans, i - lastIdx + 1)
+            counter[c] += 1
+            while len(counter) > k:
+                lastChar = s[start]
+                start += 1
+                counter[lastChar] -= 1
+                if counter[lastChar] == 0:
+                    del counter[lastChar]
+            ans = max(ans, i - start + 1)
         return ans

@@ -4,18 +4,14 @@ class Solution:
         DFS with backtracking.
         '''
         ans = []
-        def dfs(nums, idx, remaining):
-            if remaining < 0:
+        def dfs(idx, currList, currSum):
+            if currSum >= target:
+                if currSum == target:
+                    ans.append(currList[:])
                 return
-            if remaining == 0:
-                ans.append(nums[:])
-                return
-            
             for i in range(idx, len(candidates)):
-                curr = candidates[i]
-                nums.append(curr)
-                dfs(nums, i, remaining - curr)
-                nums.pop()
-        
-        dfs([], 0, target)
+                currList.append(candidates[i])
+                dfs(i, currList, currSum + candidates[i])
+                currList.pop()
+        dfs(0, [], 0)
         return ans

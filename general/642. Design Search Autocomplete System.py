@@ -53,12 +53,9 @@ class AutocompleteSystem:
             self.reset()
             return []
         self.search.append(c)
-        if c in self.currNode.children:
-            self.currNode = self.currNode.children[c]
-        else:
-            child = Node(c)
-            self.currNode.children[c] = child
-            self.currNode = child
+        if c not in self.currNode.children:
+            self.currNode.children[c] = Node(c)
+        self.currNode = self.currNode.children[c]
         return self.find()
 
 # Your AutocompleteSystem object will be instantiated and called as such:
