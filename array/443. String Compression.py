@@ -13,7 +13,7 @@ class Solution:
             chars[idx] = curr
             idx += 1
             if count > 1:
-                for c in list(str(count)):
+                for c in str(count):
                     chars[idx] = c
                     idx += 1
         
