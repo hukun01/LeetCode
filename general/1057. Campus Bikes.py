@@ -29,7 +29,7 @@ class Solution:
         more bikes to the bike heap from the worker's bike list.
         
         The way we use bike heap is a bit similar to "merge n sorted lists".
-        distances = [] # a list of heaps, each heap stores all (distance, bike) for a worker
+        distances = [] # a list of lists, each list stores all (distance, bike) for a worker
         for wIdx in range(len(workers)):
             w = workers[wIdx]
             distances.append([])
@@ -42,7 +42,7 @@ class Solution:
         usedBikes = set()
         sortedBikes = [distances[i].pop() for i in range(len(workers))]
         heapq.heapify(sortedBikes)
-        while len(usedBikes) < len(workers):
+        while sortedBikes:
             d, wIdx, bIdx = heapq.heappop(sortedBikes)
             if bIdx not in usedBikes:
                 ans[wIdx] = bIdx
