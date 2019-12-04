@@ -1,35 +1,27 @@
 class Solution:
     def fullJustify(self, words: List[str], maxWidth: int) -> List[str]:
-        '''
-        '''
         wIdx = 0
         lines = []
         while wIdx < len(words):
-            width = 0
-            prevIdx = wIdx
-            wordCount = wIdx - prevIdx
-            while wIdx < len(words) and width + wordCount + len(words[wIdx]) <= maxWidth:
-                width += len(words[wIdx])
+            wordsLen = 0
+            wordsCount = 0
+            while wIdx < len(words) and wordsLen + wordsCount + len(words[wIdx]) <= maxWidth:
+                wordsLen += len(words[wIdx])
                 wIdx += 1
-                wordCount = wIdx - prevIdx
+                wordsCount += 1
             line = []
-            delta = maxWidth - width
+            spacesCount = maxWidth - wordsLen
             if wIdx < len(words):
-                avgSpaces = delta // max(wordCount - 1, 1)
-                extraSpaces = delta % max(wordCount - 1, 1)
-                while prevIdx < wIdx:
-                    line.append(words[prevIdx])
-                    line.append(' ' * (avgSpaces + min(1, extraSpaces)))
-                    extraSpaces = max(0, extraSpaces - 1)
-                    prevIdx += 1
-                if len(line) > 2:
-                    line.pop()
-                lines.append(''.join(line))
-        while prevIdx < len(words):
-            line.append(words[prevIdx])
-            if prevIdx != len(words) - 1:
-                line.append(' ')
-            prevIdx += 1
-        line.append(' ' * (delta - (wordCount - 1)))
+                if wordsCount == 1:
+                    line = words[wIdx - 1] + ' ' * spacesCount
+                else:
+                    line = words[wIdx - wordsCount: wIdx]
+                    for i in range(spacesCount % (wordsCount - 1)): # evenly distribute extra spaces to left
+                        line[i] += ' '
+                    avgSpaces = spacesCount // (wordsCount - 1) # evenly distribute average spaces
+                    line = (' ' * avgSpaces).join(line)
+                lines.append(line)
+        line = ' '.join(words[-wordsCount:])
+        line += ' ' * (maxWidth - len(line))
         lines.append(''.join(line))
         return lines
