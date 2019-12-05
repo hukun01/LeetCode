@@ -1,5 +1,9 @@
 class Solution:
     def fullJustify(self, words: List[str], maxWidth: int) -> List[str]:
+        '''
+        This is about having detailed control flow.
+        Separate cases, don't handle them in one path.
+        '''
         wIdx = 0
         lines = []
         while wIdx < len(words):

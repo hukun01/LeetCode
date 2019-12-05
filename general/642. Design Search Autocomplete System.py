@@ -32,18 +32,18 @@ class AutocompleteSystem:
                 parent = child
     
     def find(self):
-        ans = []
+        tops = []
         def dfs(node, currSentence):
             if node.times > 0:
-                heapq.heappush(ans, (-node.times, "".join(currSentence)))
+                heapq.heappush(tops, (-node.times, "".join(currSentence)))
             for child in node.children.values():
                 currSentence.append(child.c)
                 dfs(child, currSentence)
                 currSentence.pop()
         dfs(self.currNode, self.search)
         result = []
-        while ans and len(result) < 3:
-            pair = heapq.heappop(ans)
+        while tops and len(result) < 3:
+            pair = heapq.heappop(tops)
             result.append(pair[1])
         return result
 
