@@ -7,26 +7,20 @@ class Solution:
         
         x is to get the combination between two lists based on the symbol
         '''
-        def check(start, end):
-            if input[start: end].isdigit():
-                return [int(input[start: end])]
-            result = []
-            for i in range(start, end):
-                c = input[i]
-                if c not in '+-*':
-                    continue
-                leftResult = check(start, i)
-                rightResult = check(i + 1, end)
-                if c == '-':
-                    calc = lambda l, r: l - r
-                elif c == '+':
-                    calc = lambda l, r: l + r
-                elif c == '*':
-                    calc = lambda l, r: l * r
-                else:
-                    raise KeyError(f"unknown symbol {c}")
-                for l in leftResult:
-                    for r in rightResult:
-                        result.append(calc(l, r))
-            return result
-        return check(0, len(input))
+        if input.isdigit():
+            return [int(input)]
+        ans = []
+        for i, c in enumerate(input):
+            if c not in '+-*':
+                continue
+            lefts = self.diffWaysToCompute(input[:i])
+            rights = self.diffWaysToCompute(input[i+1:])
+            for l in lefts:
+                for r in rights:
+                    if c == '+':
+                        ans.append(l + r)
+                    elif c == '-':
+                        ans.append(l - r)
+                    else:
+                        ans.append(l * r)
+        return ans
