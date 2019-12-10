@@ -7,14 +7,14 @@ class Solution:
         wIdx = 0
         lines = []
         while wIdx < len(words):
-            wordsLen = 0
+            wordsWidth = 0
             wordsCount = 0
-            while wIdx < len(words) and wordsLen + wordsCount + len(words[wIdx]) <= maxWidth:
-                wordsLen += len(words[wIdx])
+            while wIdx < len(words) and wordsWidth + wordsCount + len(words[wIdx]) <= maxWidth:
+                wordsWidth += len(words[wIdx])
                 wIdx += 1
                 wordsCount += 1
             line = []
-            spacesCount = maxWidth - wordsLen
+            spacesCount = maxWidth - wordsWidth
             if wIdx < len(words):
                 if wordsCount == 1:
                     line = words[wIdx - 1] + ' ' * spacesCount
