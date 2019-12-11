@@ -8,7 +8,7 @@
 class Solution:
     def rob(self, root: TreeNode) -> int:
         '''
-        We can use a dict to cache all the (node, canRob) entries, but that
+        Brute force: We can use a dict to cache all the (node, canRob) entries, but that
         would require us to traverse the nodes twice.
         A better approach is to have the recursive method return a tuple.
         In the tuple, the first element records the money we got by not robbing

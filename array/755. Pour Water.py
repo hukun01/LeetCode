@@ -10,6 +10,8 @@ class Solution:
         
         After each droplet, we likely need to update the left and right heaps, because there
         can be high walls that we were not able to pass, but we are now with more water.
+
+        After each droplet, we also need to push the new height back.
         '''
         left = []
         right = []
