@@ -14,26 +14,23 @@ class Solution:
             return '0'
         nPositive = numerator > 0
         dPositive = denominator > 0
-        sign = '-' if nPositive ^ dPositive else ''
-        ans = [sign]
-        n = abs(numerator)
-        d = abs(denominator)
-        num = n // d
-        ans.append(str(num))
-        remainder = n % d
-        if remainder == 0:
-            return ''.join(ans)
-        ans.append('.')
+        ans = []
+        if nPositive ^ dPositive:
+            ans.append('-')
+        num = abs(numerator)
+        den = abs(denominator)
+        ans.append(str(num // den))
+        remainder = num % den
+        if remainder > 0:
+            ans.append('.')
         remainderIdx = { remainder: len(ans) }
-        while remainder != 0:
+        while remainder:
             remainder *= 10
-            ans.append(str(remainder // d))
-            remainder %= d
+            ans.append(str(remainder // den))
+            remainder %= den
             if remainder in remainderIdx:
-                idx = remainderIdx[remainder]
-                ans.insert(idx, '(')
+                ans.insert(remainderIdx[remainder], '(')
                 ans.append(')')
                 break
-            else:
-                remainderIdx[remainder] = len(ans)
+            remainderIdx[remainder] = len(ans)
         return ''.join(ans)

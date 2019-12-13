@@ -1,4 +1,6 @@
 '''
+1166. Design File System
+
 1/2 Build the file system as a tree.
 
 Use a path node that's like a tree node. 
@@ -49,6 +51,7 @@ class FileSystem:
 2/2 Use a dict to store all path to value mappings. For all create requests,
 use path.rfind('/') to find the rightmost index of '/', and get the parent
 path, only when parent path exists, we create the path.
+We need to add "":-1 to the initial paths mappings.
 
 class FileSystem:
 

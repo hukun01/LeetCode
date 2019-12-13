@@ -5,14 +5,12 @@ class Solution:
         When we see */, we must process the num at stack peek and current num, immediately.
         '''
         stack = []
+        num = 0
         lastSign = '+'
-        numStr = ""
         for i, c in enumerate(s):
             if c.isdigit():
-                numStr += c
+                num = num * 10 + int(c)
             if c in '+-*/' or i == len(s) - 1:
-                num = int(numStr)
-                numStr = ""
                 if lastSign == '+':
                     stack.append(num)
                 if lastSign == '-':
@@ -20,7 +18,8 @@ class Solution:
                 if lastSign == '*':
                     stack.append(stack.pop() * num)
                 if lastSign == '/':
-                    stack.append(int(stack.pop() / num))
+                    stack.append(stack.pop() // num)
+                num = 0
                 lastSign = c
         
-        return sum(n for n in stack)
+        return sum(stack)
