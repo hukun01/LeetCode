@@ -6,15 +6,11 @@
 #         self.right = None
 
 class Solution:
-    def buildTree(self, inorder, postorder):
+    def buildTree(self, inorder: List[int], postorder: List[int]) -> TreeNode:
         """
         The use of postorder is to find the root; 
         the use of inorder is to find the left subtree and the right subtree.
         Also use a inorderDict to have fast access to root index.
-
-        :type inorder: List[int]
-        :type postorder: List[int]
-        :rtype: TreeNode
         """
         """ 1/3 Recursive approach:
         def buildTree(inorder, iLeft, iRight, postorder, pLeft, pRight, inorderDict):

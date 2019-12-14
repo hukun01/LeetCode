@@ -1,7 +1,17 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
         '''
-        TODO
+        A BFS problem.
+
+        Keep a fresh set and a rotten set.
+        
+        Keep doing below while fresh is not empty:
+        If rotten is empty, we can't keep rotting, return -1;
+
+        Go through all the rotten positions, and check their neighbors, if
+        a neighbor is in fresh, we can add it to the newRotten, and remove it from fresh.
+
+        After above, we can replace the rotten with newRotten.
         '''
         rows, cols = len(grid), len(grid[0])
         minutes = 0
@@ -17,7 +27,7 @@ class Solution:
                     newC = c + dC
                     if (newR, newC) in fresh:
                         newRotten.add((newR, newC))
-            fresh -= newRotten
+                        fresh.remove((newR, newC))
             rotten = newRotten
             minutes += 1
         return minutes
