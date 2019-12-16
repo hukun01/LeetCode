@@ -8,38 +8,50 @@ class Solution:
         Use isupper() to check whether the cell is a lock; Use lower() to convert the lock to its key.
         Use islower() to check whether the cell is a key;
         '''
-        def findOffset(char):
-            return 1 << (ord(char) - ord('a'))
+        def addKey(keychain, k):
+            keychain |= (1 << (ord(k) - ord('a')))
+            return keychain
+        
+        def checkLock(keychain, lock):
+            return keychain & (1 << (ord(lock.lower()) - ord('a')))
+        
+        q = collections.deque()
+        targetKey = 0
         rows, cols = len(grid), len(grid[0])
-        start = (0, 0)
-        finalState = 0
         for r in range(rows):
             for c in range(cols):
                 if grid[r][c] == '@':
-                    start = (r, c)
-                elif grid[r][c].islower():
-                    finalState |= findOffset(grid[r][c])
-        q = collections.deque([(0, *start, 0)])
-        visited = set()
-        while q:
-            steps, r, c, state = q.popleft()
-            if state == finalState:
-                return steps
-            for dR, dC in [(0, 1), (0, -1), (-1, 0), (1, 0)]:
-                newR = r + dR
-                newC = c + dC
+                    q.append((r, c, 0))
+                if grid[r][c].islower():
+                    targetKey = addKey(targetKey, grid[r][c])
+        def getNextSteps(r, c):
+            for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+                newR = dr + r
+                newC = dc + c
                 if newR < 0 or newR >= rows or newC < 0 or newC >= cols:
                     continue
-                cell = grid[newR][newC]
-                if cell == '#':
+                char = grid[newR][newC]
+                if char == '#':
                     continue
-                # if cell is not lock, or if it's lock and we got the key
-                if not cell.isupper() or (state & findOffset(cell.lower())):
-                    if cell.islower():
-                        newState = state | findOffset(cell)
+                if not char.isupper() or checkLock(key, char):
+                    yield (newR, newC)
+        steps = 0
+        visited = set()
+        while q:
+            for _ in range(len(q)):
+                r, c, key = q.popleft()
+                if key == targetKey:
+                    return steps
+                if (r, c, key) in visited:
+                    continue
+                visited.add((r, c, key))
+                for newR, newC in getNextSteps(r, c):
+                    char = grid[newR][newC]
+                    if char.islower():
+                        newKey = addKey(key, char)
+                        q.append((newR, newC, newKey))
                     else:
-                        newState = state
-                    if (newR, newC, newState) not in visited:
-                        visited.add((newR, newC, newState))
-                        q.append((steps + 1, newR, newC, newState))
+                        q.append((newR, newC, key))
+            steps += 1
+            
         return -1

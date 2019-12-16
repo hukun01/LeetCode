@@ -1,3 +1,4 @@
+# 285. Inorder Successor in BST
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -6,13 +7,9 @@
 #         self.right = None
 
 class Solution(object):
-    def inorderSuccessor(self, root, p):
+    def inorderSuccessor(self, root: 'TreeNode', p: 'TreeNode') -> 'TreeNode':
         """
-        :type root: TreeNode
-        :type p: TreeNode
-        :rtype: TreeNode
-        """
-        """ Use BST features, just find the smallest one that is larger than the given value.
+        Use BST features, just find the smallest one that is larger than the given value.
         """
         succ = None
         while root:

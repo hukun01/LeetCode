@@ -3,10 +3,8 @@ class Solution:
     Accumulate the weights, and pick a random weight from [0, total),
     and use binary search to find its interval index in the accumulated array.
 
-    Note that in the binary search, if target == arr[m], we can't keep m,
-    but we need to make l = m + 1. Consider the accumulated array being [3, 10],
-    the intervals would be [[0, 3), [3, 10)], if target is 3, we need to go to the
-    next interval.
+    Note that in the binary search, we want to find the index of the
+    lowest number that's greater than target.
     '''
     def __init__(self, w: List[int]):
         self.runningSums = list(itertools.accumulate(w))
@@ -15,6 +13,7 @@ class Solution:
         w = random.randrange(self.runningSums[-1])
         return self.findLowerBound(self.runningSums, w)
     
+    # Find the index of the lowest number that's greater than target
     def findLowerBound(self, arr, target):
         l, h = 0, len(arr) - 1
         while l < h:

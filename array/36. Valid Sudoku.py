@@ -5,22 +5,22 @@ class Solution:
         Use f"cell in row x" and f"cell in col y", and f"cell in block x-y" to 
         help easily find duplicates.
         '''
-        seen = set()
-        for row in range(9):
-            for col in range(9):
-                cell = board[row][col]
-                if cell == '.':
+        visited = set()
+        def addMessage(msg):
+            if msg in visited:
+                return False
+            visited.add(msg)
+            return True
+        
+        for r in range(len(board)):
+            for c in range(len(board[0])):
+                if board[r][c] == '.':
                     continue
-                rowRecord = f"{cell} in row {row}"
-                if rowRecord in seen:
+                digit = board[r][c]
+                if not addMessage(f"{digit} in row {r}"):
                     return False
-                seen.add(rowRecord)
-                colRecord = f"{cell} in col {col}"
-                if colRecord in seen:
+                if not addMessage(f"{digit} in col {c}"):
                     return False
-                seen.add(colRecord)
-                blockRecord = f"{cell} in block {row // 3}-{col // 3}"
-                if blockRecord in seen:
+                if not addMessage(f"{digit} in cell {r//3}-{c//3}"):
                     return False
-                seen.add(blockRecord)
         return True
