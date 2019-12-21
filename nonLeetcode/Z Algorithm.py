@@ -1,10 +1,9 @@
 def zAlgorithm(string):
     '''
-    Z algorithm is used to do string matching, it's simpler than KMP, but KMP can
-    handle streaming data, while Z cannot.
+    Z algorithm is used to do string matching, it's simpler than KMP.
 
-    Giving a string T, Z algo helps us find an array Z values in which each index i
-    represents the longest prefix length when comparing T[i:] and T.
+    Giving a string T, Z algo helps us find an array of Z values in which
+    each index i represents the longest prefix length when comparing T[i:] and T.
     '''
     L = R = 0
     Z = [0] * len(string)

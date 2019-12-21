@@ -16,7 +16,6 @@ class Solution:
         def union(x, y):
             uf[find(x)] = find(y)
         for a in A:
-            find(a)
             if len(a) >= N:
                 [union(a,b) for b in A if similar(a,b)]
             else:

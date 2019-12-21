@@ -14,7 +14,9 @@ class Solution:
         steps = 0
         while q:
             for _ in range(len(q)):
-                r, c, e = q.popleft()
+                r, c, remainingK = q.popleft()
+                if remainingK >= rows - 1 + cols - 1 - r - c - 1:
+                    return steps + rows - 1 + cols - 1 - r - c
                 if r == rows - 1 and c == cols - 1:
                     return steps
                 for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
@@ -22,7 +24,7 @@ class Solution:
                     newC = dc + c
                     if newR < 0 or newR >= rows or newC < 0 or newC >= cols:
                         continue
-                    newE = e - grid[newR][newC]
+                    newE = remainingK - grid[newR][newC]
                     if newE < 0:
                         continue
                     # The second condition is to only keep the best status, we want more
