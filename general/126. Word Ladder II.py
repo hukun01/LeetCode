@@ -25,7 +25,7 @@ class Solution:
                                 return
                             if nextWord in wordSet:
                                 nextSet.add(nextWord)
-                                wordSet.remove(nextWord)
+                                wordSet.remove(nextWord) # this is critical for time
                 begins.append(nextSet)
         bfsFindLayers()
         ans = []

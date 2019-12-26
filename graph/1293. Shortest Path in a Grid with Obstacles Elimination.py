@@ -8,29 +8,27 @@ class Solution:
         one with the most eliminationCount. In the visited dict, the last
         eliminationCount for a position should be the biggest one.
         '''
-        q = collections.deque([(0, 0, k)]) # (r, c, eliminationCount)
+        q = [(0, 0, 0, k)] # steps, r, c, K
         rows, cols = len(grid), len(grid[0])
-        visited = collections.defaultdict(list)
-        steps = 0
-        while q:
-            for _ in range(len(q)):
-                r, c, remainingK = q.popleft()
-                if remainingK >= rows - 1 + cols - 1 - r - c - 1:
-                    return steps + rows - 1 + cols - 1 - r - c
-                if r == rows - 1 and c == cols - 1:
-                    return steps
-                for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
-                    newR = dr + r
-                    newC = dc + c
-                    if newR < 0 or newR >= rows or newC < 0 or newC >= cols:
+        visited = set()
+        for steps, r, c, remainingK in q:
+            #steps, r, c, remainingK = q.popleft()
+            if r == rows - 1 and c == cols - 1:
+                return steps
+            if remainingK >= rows - 1 - r + cols - 1 - c - 1:
+                return steps + rows - 1 - r + cols - 1 - c
+            for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+                newR = dr + r
+                newC = dc + c
+                if newR < 0 or newR >= rows or newC < 0 or newC >= cols:
+                    continue
+                if (remainingK, newR, newC) in visited:
+                    continue
+                visited.add((remainingK, newR, newC))
+                if grid[newR][newC] == 1:
+                    if remainingK == 0:
                         continue
-                    newE = remainingK - grid[newR][newC]
-                    if newE < 0:
-                        continue
-                    # The second condition is to only keep the best status, we want more
-                    # elimination count at this position.
-                    if (newR, newC) not in visited or newE > visited[(newR, newC)][-1][0]:
-                        visited[(newR, newC)].append((newE, steps))
-                        q.append((newR, newC, newE))
-            steps += 1
+                    q.append((steps + 1, newR, newC, remainingK - 1))
+                else:
+                    q.append((steps + 1, newR, newC, remainingK))
         return -1
