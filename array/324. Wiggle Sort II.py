@@ -30,21 +30,27 @@ class Solution:
         The remap logic relies on the relative position of the index,
         when the index falls into the first half of the list, it maps to
         odd slots, when it falls into the second half, it maps to even slots.
+
+        In the classic color sort:
+        [ :i] are values less than mid;
+        [i:j] are values equal to mid;
+        [j:k] are values not yet sorted;
+        [k: ] are values greater than mid
         '''
-        mid = statistics.median(nums)
         def remap(i):
             return (1 + 2 * i) % (len(nums) | 1)
         def swapRemap(a, b):
             nums[remap(a)], nums[remap(b)] = nums[remap(b)], nums[remap(a)]
         i = j = 0
         k = len(nums) - 1
+        mid = statistics.median(nums)
         while j <= k:
-            if nums[remap(j)] > mid:
+            if nums[remap(j)] < mid:
+                swapRemap(j, k)
+                k -= 1
+            elif nums[remap(j)] > mid:
                 swapRemap(i, j)
                 i += 1
                 j += 1
-            elif nums[remap(j)] < mid:
-                swapRemap(j, k)
-                k -= 1
             else:
                 j += 1

@@ -1,8 +1,10 @@
 class Solution:
     def calculate(self, s: str) -> int:
         '''
-        When we see +-, we push the number with symbol to stack.
-        When we see */, we must process the num at stack peek and current num, immediately.
+        When we see +-, we push the number with symbol to stack, because there may be
+        higher priority operaters after +-.
+        When we see */, we must process the num at stack peek and current num, immediately,
+        because */ have the highest priority.
         '''
         stack = []
         num = 0

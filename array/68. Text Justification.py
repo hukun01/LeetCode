@@ -27,5 +27,5 @@ class Solution:
                 lines.append(line)
         line = ' '.join(words[-wordsCount:])
         line += ' ' * (maxWidth - len(line))
-        lines.append(''.join(line))
+        lines.append(line)
         return lines

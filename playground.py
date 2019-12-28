@@ -1,3 +1,4 @@
+import sys
 class Solution:
     def consecutive(self, num):
         '''
@@ -18,5 +19,6 @@ class Solution:
 
 if __name__ == "__main__":
     so = Solution()
-    x = so.consecutive(123456789)
-    print("answer:", x)
+    for numStr in sys.argv[1:]:
+        ans = so.consecutive(int(numStr))
+        print(f"answer for {numStr}:", ans)
