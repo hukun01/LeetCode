@@ -8,15 +8,15 @@ class Solution:
         and still explore the other cheaper options first within the stepsLeft.
         Hence, when we get to the dst, we know the price is the lowest one.
         '''
-        edges = collections.defaultdict(dict)
-        for c1, c2, price in flights:
-            edges[c1][c2] = price
-        heap = [(0, src, K + 1)]
-        while heap:
-            price, city, k = heapq.heappop(heap)
+        maps = collections.defaultdict(list)
+        for (city, nextCity, price) in flights:
+            maps[city].append((price, nextCity))
+        trips = [(0, src, K + 1)]
+        while trips:
+            cost, city, hops = heapq.heappop(trips)
             if city == dst:
-                return price
-            if k > 0:
-                for nextCity in edges[city]:
-                    heapq.heappush(heap, (price + edges[city][nextCity], nextCity, k - 1))
+                return cost
+            if hops > 0:
+                for price, nextCity in maps[city]:
+                    heapq.heappush(trips, (cost + price, nextCity, hops - 1))
         return -1
