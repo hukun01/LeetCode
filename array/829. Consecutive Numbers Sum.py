@@ -11,6 +11,8 @@ class Solution:
         we know kx > 0, so N > k(k-1)/2 which is 2N > k(k-1), and it
         can be approximated to 2N > (k-1)(k-1), which is k < sqrt(2N) + 1
 
+        Note that we don't look for x but just look for a number that
+        is the above 'kx' by trying different k.
         Note that we should start k from 2 to ensure the consecutive arrays
         have at least 2 numbers (see the initial equation x + ..+(x + k - 1)).
         '''

@@ -19,6 +19,7 @@ class Solution:
         return [[x, y] for _, x, y in quickSelect(ps, K)]
         '''
         2/3 Quick select version2
+        # Similar to 215. Kth Largest Element in an Array
         # The search space within the array is changing for each round - but the list,
         # is still the same size. Thus, k does not need to be updated with each round.
         def sort(start, end):
