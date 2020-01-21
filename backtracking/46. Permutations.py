@@ -1,3 +1,4 @@
+# 46. Permutations
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         '''
@@ -5,16 +6,17 @@ class Solution:
         if not, continue to DFS with an expanded current list
         '''
         ans = []
-        def dfs(curr):
-            if len(curr) == len(nums):
-                ans.append(curr[:])
+        def dfs(used, comb):
+            if len(comb) == len(nums):
+                ans.append(comb[:])
                 return
-            for c in nums:
-                if c in curr:
+            for i in range(len(nums)):
+                if i in used:
                     continue
-                curr.append(c)
-                dfs(curr)
-                curr.pop()
-        dfs([])
-            
+                comb.append(nums[i])
+                used.add(i)
+                dfs(used, comb)
+                comb.pop()
+                used.remove(i)
+        dfs(set(), [])
         return ans

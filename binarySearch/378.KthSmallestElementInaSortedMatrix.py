@@ -6,14 +6,17 @@ class Solution:
         Time complexity is O(k * log n), space complexity is O(n)
         
         # Init a heap with the first row
-        heap = [(val, 0, j) for j, val in enumerate(matrix[0])]
-        heapq.heapify(heap)
-        answer = 0
+        heap = []
+        b = matrix
+        n = len(b)
+        for i in range(n):
+            heapq.heappush(heap, (b[0][i], 0, i))
+        ans = 0
         for _ in range(k):
-            answer, i, j = heapq.heappop(heap)
-            if i + 1 < len(matrix):
-                heapq.heappush(heap, (matrix[i + 1][j], i + 1, j))
-        return answer
+            ans, r, c = heapq.heappop(heap)
+            if r + 1 < n:
+                heapq.heappush(heap, (b[r + 1][c], r + 1, c))
+        return ans
         """
         """ 2/2 Another instance for binary searching the *value* spaces.
             Time complexity is O(n * log(max - min)), space complexity is O(1)
