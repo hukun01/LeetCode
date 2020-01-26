@@ -14,6 +14,7 @@ class Solution:
         parents.
         The total number of coins that need to be passed through each node is the
         number of moves.
+        Similar to 517. Super Washing Machines
         '''
         ans = 0
         def dfs(node):
