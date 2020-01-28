@@ -26,7 +26,7 @@ class Solution:
             return -1
         rowSum = sum(b[0][i] == i % 2 for i in range(N))
         colSum = sum(b[i][0] == i % 2 for i in range(N))
-        ans = 0
+        
         if N % 2 == 1:
             if rowSum % 2 == 1:
                 rowSum = N - rowSum
