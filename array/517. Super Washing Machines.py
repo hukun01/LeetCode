@@ -4,10 +4,11 @@ class Solution:
         '''
         Two parts:
         1. Ensure there is a solution by checking the total % len(machines) == 0.
-        2. For each machine from left to right, get the max of (the total number
-        of dresses that need to be passed through a machine). This total number can
-        be negative, meaning that we need to get dresses from machines on the right,
-        in that case we need to get the abs() number.
+        2. For each machine from left to right, the max number of dresses that need 
+        to be passed through a machine is 
+        max(max(throughput of every washer), max(give out of every washer)).
+        This total number can be negative, meaning that we need to get dresses 
+        from machines on the right, in that case we need to get the abs() number.
 
         The max total number of passed dresses is the minimum number of moves.
         Similar to 979. Distribute Coins in Binary Tree

@@ -20,13 +20,10 @@ class Solution:
         We end the iteration with a list of schedules that are mutually incompatible, and we find
         the best profit out of them.
         '''
-        jobs = []
-        for s, e, p in zip(startTime, endTime, profit):
-            jobs.append((s, e, p))
-        jobs.sort(key=lambda x: x[0])
+        jobs = [(s, e, p) for s, e, p in zip(startTime, endTime, profit)]
         ans = 0
         heap = []
-        for s, e, p in jobs:
+        for s, e, p in sorted(jobs):
             while heap and heap[0][0] <= s:
                 _, lastProfit = heapq.heappop(heap)
                 ans = max(ans, lastProfit)
