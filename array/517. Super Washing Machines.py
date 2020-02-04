@@ -12,6 +12,11 @@ class Solution:
 
         The max total number of passed dresses is the minimum number of moves.
         Similar to 979. Distribute Coins in Binary Tree
+
+        Why not use abs(load-target)? Because [-1, 2 ,-1] and [1, -2, 1] are different! 
+        The former can be balanced with 2 steps, but the latter can be balanced with
+        only 1 step! That said, giving out loads and receiving loads are different. One
+        machines can at most give 1 load each step, but can receive at most 2 loads each step.
         '''
         total = sum(machines)
         if total % len(machines) != 0:
@@ -19,7 +24,7 @@ class Solution:
 
         target = total // len(machines)
         ans = toRight = 0
-        for m in machines:
-            toRight += m - target
-            ans = max(ans, abs(toRight), m - target)
+        for load in machines:
+            toRight += load - target
+            ans = max(ans, abs(toRight), load - target)
         return ans

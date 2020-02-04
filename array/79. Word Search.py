@@ -2,29 +2,22 @@ class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
         '''
         Regular DFS. The key here is to stop early by comparing the last character.
+        Also, comparing the char-count in word char-count in the board to check the
+        existence helps a lot with performance.
         '''
-        compass = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-        rows, cols = len(board), len(board[0])
-
-        def dfs(row, col, curr, visited):
-            if len(curr) == len(word):
-                return curr == word
-
-            if curr[-1] != word[len(curr)-1]:
-                return False
-
-            for dirs in compass:
-                newRow = row + dirs[0]
-                newCol = col + dirs[1]
-                if 0 <= newRow < rows and 0 <= newCol < cols and (newRow, newCol) not in visited:
-                    visited.add((newRow, newCol))
-                    newWord = curr + board[newRow][newCol]
-                    if dfs(newRow, newCol, newWord, visited):
-                        return True
-                    visited.remove((newRow, newCol))
+        if collections.Counter(word) - collections.Counter(ch for row in board for ch in row):
             return False
-        for r in range(rows):
-            for c in range(cols):
-                if dfs(r, c, board[r][c], { (r, c) }):
+        def dfs(r, c, wIdx):
+            if wIdx == len(word):
+                return True
+            if not 0 <= r < len(board) or not 0 <= c < len(board[0]):
+                return False
+            for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+                if board[r][c] != word[wIdx]:
+                    continue
+                board[r][c] = '#'
+                if dfs(r + dr, c + dc, wIdx + 1):
                     return True
-        return False
+                board[r][c] = word[wIdx]
+            return False
+        return any(dfs(r, c, 0) for r in range(len(board)) for c in range(len(board[0])))

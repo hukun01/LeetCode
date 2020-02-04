@@ -29,6 +29,9 @@ class Solution:
         
         if N % 2 == 1:
             if rowSum % 2 == 1:
+                # When there are N total rows, if the number of properly placed rows is odd,
+                # then the misplaced rows must be even, because we have to touch even number
+                # of rows. Same applies to cols.
                 rowSum = N - rowSum
             if colSum % 2 == 1:
                 colSum = N - colSum

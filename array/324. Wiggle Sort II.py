@@ -22,10 +22,10 @@ class Solution:
         Find the median using "statistics.median(list)", this should be O(N).
 
         Do a 3-way-partitioning, or color sort, we can sort the nums
-        into 3 parts [smallers, medians, biggers]
+        into 3 parts [biggers, medians, smallers] (note that this is reversed)
         When doing the color sort:
-            For smallers, remap the index to odd slots;
-            For biggers, remap the index to even slots.
+            For biggers, remap the index to odd slots.
+            For smallers, remap the index to even slots;
             For medians, keep them unchanged.
         The remap logic relies on the relative position of the index,
         when the index falls into the first half of the list, it maps to
