@@ -15,7 +15,7 @@ class Solution:
             else:
                 # insert case
                 return s[i:] == t[i+1:]
-        return abs(len(s) - len(t)) == 1
+        return len(t) - len(s) == 1
         '''
         Original, more straightforward solution
         for i in range(min(len(s), len(t))):

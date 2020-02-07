@@ -9,12 +9,12 @@
 class Solution:
     def isSubtree(self, s: TreeNode, t: TreeNode) -> bool:
         '''
-        Recursion
+        Recursion.
+        Have a sameTree(s, t) method, and check t and s is the same tree,
+        otherwise check t can be a subtree under s.left or s.right.
         '''
         def sameTree(s, t):
-            if not s and not t:
-                return True
             if not s or not t:
-                return False
+                return not s and not t
             return s.val == t.val and sameTree(s.left, t.left) and sameTree(s.right, t.right)
         return sameTree(s, t) or (s and (self.isSubtree(s.left, t) or self.isSubtree(s.right, t)))
