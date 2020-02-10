@@ -1,20 +1,15 @@
+# 680. Valid Palindrome II
 class Solution:
     def validPalindrome(self, s: str) -> bool:
         '''
         Use one helper function 'isPalindrome' to be concise.
         '''
-        start, end = 0, len(s) - 1
-        def isPalindrome(start, end):
-            while start < end and s[start] == s[end]:
-                start += 1
-                end -= 1
-
-            return start >= end
-        
-        while start < end:
-            if s[start] == s[end]:
-                start += 1
-                end -= 1
-            else:
-                return isPalindrome(start+1, end) or isPalindrome(start, end-1)
+        def isP(l, r):
+            return s[l: r] == s[l: r][::-1]
+        l, r = 0, len(s) - 1
+        while l < r:
+            if s[l] != s[r]:
+                return isP(l, r) or isP(l+1, r+1)
+            l += 1
+            r -= 1
         return True

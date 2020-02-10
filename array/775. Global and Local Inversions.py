@@ -9,4 +9,4 @@ class Solution:
         Local inversions are swaps between two adjacent elements only.
         So whenever we find |i - A[i]| > 1, it's a non-local global inversion.
         '''
-        return all(abs(A[i] - i) <= 1 for i in range(len(A)))
+        return all(abs(i - a) <= 1 for i, a in enumerate(A))

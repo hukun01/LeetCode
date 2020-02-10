@@ -6,15 +6,16 @@ class Solution:
           = kx + (1 + 2 + .. + k - 1)
           = kx + (k-1)(1 + k - 1) / 2
           = kx + k(k-1)/2
-        Basically we are looking for kx (or a number that % k == 0),
-        and kx = N - k(k-1)/2
-        we know kx > 0, so N > k(k-1)/2 which is 2N > k(k-1), and it
-        can be approximated to 2N > (k-1)(k-1), which is k < sqrt(2N) + 1
+        
+        Hence kx = N - k(k-1)/2, we want to find the number of different 'x'.
+        Namely, we find the # of cases such that (N - k(k-1)/2) % k == 0.
 
-        Note that we don't look for x but just look for a number that
-        is the above 'kx' by trying different k.
         Note that we should start k from 2 to ensure the consecutive arrays
-        have at least 2 numbers (see the initial equation x + ..+(x + k - 1)).
+        have at least 2 numbers (see the initial equation x + ..+(x + k - 1)).        
+        So we have:
+        k >= 2, x > 0
+        So kx = N - k(k-1)/2 > 0, or N > k(k-1)/2 > (k-1)(k-1)/2, which is k < sqrt(2N) + 1
+        We try all the possible 'k' and increment count whenever it satisfies the above case.
         '''
         count = 1
         for k in range(2, int((2*N)**(0.5)) + 1):

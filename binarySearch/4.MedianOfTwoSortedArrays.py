@@ -8,10 +8,6 @@ class Solution:
         and left part is always smaller than right part. 
         Then median = (max(left_part) + min(right_part))/2.
         https://leetcode.com/problems/median-of-two-sorted-arrays/discuss/2481/Share-my-O(log(min(mn))-solution-with-explanation
-
-        :type nums1: List[int]
-        :type nums2: List[int]
-        :rtype: float
         """
         A, B = nums1, nums2
         m, n = len(A), len(B)
@@ -29,7 +25,7 @@ class Solution:
         # and l <= h to make sure we never break the while loop!
         l, h = 0, m
         while l <= h:
-            a = l + (h - l) // 2
+            a = (l + h) // 2
             b = halfLen - a
             if a > 0 and A[a - 1] > B[b]:
                 h = a - 1

@@ -1,3 +1,4 @@
+# 145. Binary Tree Postorder Traversal
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
@@ -6,14 +7,49 @@
 #         self.right = None
 
 class Solution:
-    def postorderTraversal(self, root):
+    def postorderTraversal(self, root: TreeNode) -> List[int]:
+        '''
+        1/2 Iterative approach using 1286's methodology.
+        '''
+        '''
+        Recursive method as a refernce for finding entry points.
+
+            def postorder(node):
+                # entry0
+                if not node:
+                    return
+                postorder(node.left)
+                # entry1
+                postorder(node.right)
+                # entry2
+                ans.append(node.val)
+        '''
+        ans = []
+        stack = [(0, root)]
+        def step():
+            entry, node = stack.pop()
+            if entry == 0:
+                if not node:
+                    return
+                stack.append((1, node))
+                stack.append((0, node.left))
+            elif entry == 1:
+                stack.append((2, node))
+                stack.append((0, node.right))
+            elif entry == 2:
+                return node.val
+            
+        while stack:
+            x = step()
+            if x:
+                ans.append(x)
+
+        return ans
+
         """
-        Morris traversal. Similar to InOrder traversal. 
+        2/2 Morris traversal. Similar to InOrder traversal. 
         Key is to use a dummy node whose left child is root! Also need to reverse the
         whole right linked list when accessing.
-
-        :type root: TreeNode
-        :rtype: List[int]
         """
         def reverseLinkedList(start):
             prevHead = None

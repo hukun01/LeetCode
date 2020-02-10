@@ -13,7 +13,7 @@ class Solution:
         for s, e in clips:
             if s <= T:
                 ends[s] = max(ends[s], min(e, T))
-        i = count = furthest = curEnd = 0
+        i = ans = furthest = curEnd = 0
         while curEnd < T:
             while i <= curEnd:
                 furthest = max(furthest, ends[i])
@@ -21,8 +21,8 @@ class Solution:
             if furthest == curEnd:
                 return -1
             curEnd = furthest
-            count += 1
-        return count
+            ans += 1
+        return ans
 
         '''
         2/2 Sorting
@@ -34,10 +34,8 @@ class Solution:
         
         We pick the furthest every time, the number of picks is the minimum number
         of clips that can stitch together to cover [0, T].
-        
-
-        ans = furthest = curEnd = 0
-        i = 0
+        '''
+        i = ans = furthest = curEnd = 0
         clips.sort()
         while curEnd < T:
             while i < len(clips) and clips[i][0] <= curEnd:
@@ -49,4 +47,3 @@ class Solution:
             curEnd = furthest
             ans += 1
         return ans
-        '''

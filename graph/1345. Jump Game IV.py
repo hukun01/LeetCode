@@ -1,12 +1,10 @@
-import collections
-import itertools
-import random
-import sys
-import time
-from typing import List
-
+# 1345. Jump Game IV
 class Solution:
     def minJumps(self, arr: List[int]) -> int:
+        '''
+        The key is to exclude the visited indicies and values, to avoid 反复横跳.
+        1/2 Two end BFS.
+        '''
         maps = collections.defaultdict(list)
         [maps[a].append(i) for i, a in enumerate(arr)]
  
@@ -26,7 +24,10 @@ class Solution:
                 nextLevels.update([b - 1, b + 1] + maps[arr[b]])
                 maps.pop(arr[b])
             begins = nextLevels
-    def minJumps2(self, arr: List[int]) -> int:
+
+        '''
+        2/2 Regular BFS.
+        '''
         maps = collections.defaultdict(list)
         [maps[a].append(i) for i, a in enumerate(arr)]
         
@@ -41,17 +42,3 @@ class Solution:
                     visitedIdx.add(p)
                     q.append((step + 1, p))
             maps.pop(arr[pos])
-
-if __name__ == "__main__":
-    solution = Solution()
-    ls = []
-    for _ in range(400):
-        l = list(range(10000))
-        random.shuffle(l)
-        ls.append(l)
-    for func in [solution.minJumps, solution.minJumps2]:
-        start = time.time()
-        for l in ls:
-            func(l)
-        end = time.time()
-        print("time: ", end - start)

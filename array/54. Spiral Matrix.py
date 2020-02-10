@@ -1,6 +1,8 @@
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
         '''
+        To make the logic clear, do all the boundaries update at the end of the while loop.
+
         Note that when processing the last row and the first column, need to check for duplicates.
         '''
         if not matrix or not matrix[0]:

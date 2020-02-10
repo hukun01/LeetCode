@@ -6,7 +6,12 @@ class Solution:
         1. Ensure there is a solution by checking the total % len(machines) == 0.
         2. For each machine from left to right, the max number of dresses that need 
         to be passed through a machine is 
-        max(max(throughput of every washer), max(give out of every washer)).
+        max(max(ACCUMULATED GIVE-OUT at every washer), max(GIVE OUT of every washer)).
+
+        The key is to measure the GIVE OUT, not TAKE IN, because take-in can happen
+        from both left and right, and give-out is unidirectional, and is counted as
+        one move.
+
         This total number can be negative, meaning that we need to get dresses 
         from machines on the right, in that case we need to get the abs() number.
 
