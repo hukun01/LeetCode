@@ -9,10 +9,12 @@
 class Solution:
     def pathSum(self, root: TreeNode, sum: int) -> int:
         '''
-        Similar to 560. Subarray Sum Equals K.
         Use prefixSum at each node, so we can get the sum of any downwards
-        paths in constant time. Also remember to decrement the prefixSum count
-        when exiting the recursion.
+        paths in constant time.
+        Also remember to decrement the prefixSum count when exiting the recursion,
+        because we are switching to another branch.
+
+        Similar to 560. Subarray Sum Equals K.
         '''
         count = collections.Counter()
         count[0] += 1
@@ -23,6 +25,8 @@ class Solution:
             
             preSum += node.val
             ans = count[preSum - sum]
+
+            # only increment the count after we check it, and before we enter subtrees.
             count[preSum] += 1
             
             ans += dfs(node.left, preSum)

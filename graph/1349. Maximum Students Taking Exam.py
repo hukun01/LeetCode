@@ -3,7 +3,8 @@ class Solution:
     def maxStudents(self, seats: List[List[str]]) -> int:
         '''
         1/2 Hungarian algorithm.
-        Seats on odd columns and even columns form a bipartite graph. Then the maximum independent set on the bipartite graph is the answer.
+        Seats on odd columns and even columns form a bipartite graph.
+        Then the maximum independent set on the bipartite graph is the answer.
         '''
         R, C = len(seats), len(seats[0])
         
