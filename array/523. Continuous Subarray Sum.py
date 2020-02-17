@@ -8,6 +8,9 @@ class Solution:
         in which x can be 0, 1, ..., k-1.
         When we see x in 'seen', our target must be (x + n*k) because
         it is monotonically increasing.
+
+        Note that we need to check the existing sum's last index, in order
+        to determine whether the subarray has at least 2 elements.
         '''
         seen = { 0: -1 }
         runningSum = 0

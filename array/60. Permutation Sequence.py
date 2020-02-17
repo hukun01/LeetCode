@@ -20,5 +20,5 @@ class Solution:
             fact //= (n - i)
             idx = k // fact
             ans.append(str(nums.pop(idx)))
-            k -= idx * fact
+            k %= fact
         return ''.join(ans)
