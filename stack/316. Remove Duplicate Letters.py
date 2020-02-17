@@ -1,16 +1,24 @@
 class Solution:
     def removeDuplicateLetters(self, s: str) -> str:
         '''
-        If current char is smaller than the last char in stack, and the last char
-        appears later in the string again, the last char can be removed and added 
-        later. E.g., stack = "bc", and remaining string is "abc" then 'a' can 
-        pop 'b' and then 'c'.
-        We use a stack because we are only interested in the most recent chars. 
-        We are interested in the most recent chars because we want to keep the relative order.
+        Use a stack because we are only interested in the most recent chars. 
+        The most recent chars have the relative order.
+        If we make this stack monotonically increasing, the char oder will be the smallest.
+
+        If:
+            1. current char is a new char we have not used,
+            2. and it is smaller than the last char in stack,
+            3. and the last char appears later in the string again,
+        then:
+            the last char can be removed and added later.
+        E.g., stack = "bc", and remaining string is "abc" then 'a' can pop 'c' and then 'b'.
         
         Use a counter to tell whether a char appears later in the string again.
-        
         Use a set to tell whether we already added the char to the answer.
+        
+        Note that the stack is monotonically increasing, so when we see a visited char,
+        we should skip it, because it must have been put in the right place. Only new
+        char can cause potential rearrangement.
         '''
         remainingLetters = collections.Counter(s)
         visited = set()
