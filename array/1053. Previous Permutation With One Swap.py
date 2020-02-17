@@ -2,7 +2,7 @@ class Solution:
     def prevPermOpt1(self, A: List[int]) -> List[int]:
         '''
         From backward, find a local maximum, the first point
-        where the array stops decreasing.
+        where the array starts increasing.
 
         From forward staring after the above local maximum,
         find the largest num that's smaller than this local maximum.
@@ -15,7 +15,7 @@ class Solution:
             return A
         myI = j + 1
         for i in range(j + 1, len(A)):
-            if A[i] < A[j] and A[i] > A[myI]:
+            if A[myI] < A[i] < A[j]:
                 myI = i
         A[j], A[myI] = A[myI], A[j]
         return A
