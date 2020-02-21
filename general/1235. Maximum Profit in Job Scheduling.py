@@ -19,16 +19,14 @@ class Solution:
         We end the iteration with a list of schedules that are mutually incompatible, and we find
         the best profit out of them.
         '''
+        # represents the max profit from all compatible schedules so far.
+        currMax = 0
+        schedule = []
         jobs = [(s, e, p) for s, e, p in zip(startTime, endTime, profit)]
-        ans = 0
-        heap = []
         for s, e, p in sorted(jobs):
-            while heap and heap[0][0] <= s:
-                _, lastProfit = heapq.heappop(heap)
-                ans = max(ans, lastProfit)
-            heapq.heappush(heap, (e, p + ans))
-        
-        while heap:
-            _, lastProfit = heapq.heappop(heap)
-            ans = max(ans, lastProfit)
-        return ans
+            while schedule and schedule[0][0] <= s:
+                _, lastProfit = heapq.heappop(schedule)
+                currMax = max(currMax, lastProfit)
+            heapq.heappush(schedule, (e, p + currMax))
+
+        return max(j[1] for j in schedule)

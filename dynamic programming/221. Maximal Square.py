@@ -1,3 +1,4 @@
+# 221. Maximal Square
 class Solution:
     def maximalSquare(self, matrix: List[List[str]]) -> int:
         '''
@@ -29,10 +30,10 @@ class Solution:
 
         dp = [[0] * (cols+1) for _ in range(2)]
         for r in range(1, rows+1):
+            currRow = (r-1) % 2
+            lastRow = 1 - currRow
             for c in range(1, cols+1):
-                currRow = (r-1) % 2
                 if matrix[r-1][c-1] == "1":
-                    lastRow = 1 - currRow
                     dp[currRow][c] = min(dp[currRow][c-1], dp[lastRow][c], dp[lastRow][c-1]) + 1
                     ans = max(ans, dp[currRow][c])
                 else:
