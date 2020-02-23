@@ -6,52 +6,28 @@ import time
 from typing import List
 
 class Solution:
-    def minJumps(self, arr: List[int]) -> int:
-        maps = collections.defaultdict(list)
-        [maps[a].append(i) for i, a in enumerate(arr)]
- 
-        begins = set([0])
-        ends = set([len(arr) - 1])
-        visitedIdx = set([-1, len(arr)])
-        for steps in range(len(arr)):
-            if len(begins) > len(ends):
-                begins, ends = ends, begins
-            nextLevels = set()
-            for b in begins:
-                if b in ends:
-                    return steps
-                if b in visitedIdx:
-                    continue
-                visitedIdx.add(b)
-                nextLevels.update([b - 1, b + 1] + maps[arr[b]])
-                maps.pop(arr[b])
-            begins = nextLevels
-    def minJumps2(self, arr: List[int]) -> int:
-        maps = collections.defaultdict(list)
-        [maps[a].append(i) for i, a in enumerate(arr)]
+    def closestDivisors(self, num: int) -> List[int]:
+        for c in [num + 1, num + 2]:
+            x = int(c ** 0.5)
+            if x ** 2 == c:
+                return [x, x]
         
-        visitedIdx = set([-1, len(arr)])
-        q = collections.deque([(0, 0)])
-        while q:
-            step, pos = q.popleft()
-            if pos == len(arr) - 1:
-                return step
-            for p in [pos - 1, pos + 1] + maps[arr[pos]]:
-                if p not in visitedIdx:
-                    visitedIdx.add(p)
-                    q.append((step + 1, p))
-            maps.pop(arr[pos])
+        def get(target):
+            ans = [-1, -1]
+            delta = float('inf')
+            for i in range(int(target ** 0.5), 0, -1):
+                if target % i == 0:
+                    diff = abs(i - target // i)
+                    if diff < delta:
+                        ans = [i, target // i]
+                        delta = diff
+                    
+            return ans
+        return min(get(num + 1), get(num + 2), key=lambda x: abs(x[1] - x[0]))
 
 if __name__ == "__main__":
     solution = Solution()
-    ls = []
-    for _ in range(400):
-        l = list(range(10000))
-        random.shuffle(l)
-        ls.append(l)
-    for func in [solution.minJumps, solution.minJumps2]:
-        start = time.time()
-        for l in ls:
-            func(l)
-        end = time.time()
-        print("time: ", end - start)
+    start = time.time()
+    print(solution.closestDivisors(129045830))
+    end = time.time()
+    print("time: ", end - start)
