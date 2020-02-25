@@ -4,7 +4,8 @@ class Solution:
         '''
         DP.
         dp[r][c] represents the min hp needed at [r, c].
-        TODO.
+        dp[r][c] = min(dp[r+1][c], dp[r][c+1]) - dungeon[r][c]
+        Space can be reduced to 1-D.
         '''
         d = dungeon
         rows, cols = len(d), len(d[0])

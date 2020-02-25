@@ -16,8 +16,7 @@ class Solution:
 
         Similar to 560. Subarray Sum Equals K.
         '''
-        count = collections.Counter()
-        count[0] += 1
+        count = collections.Counter({0: 1})
         
         def dfs(node, preSum):
             if not node:
