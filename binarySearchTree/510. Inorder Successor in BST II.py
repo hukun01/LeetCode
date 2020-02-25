@@ -11,20 +11,21 @@ class Node:
 class Solution:
     def inorderSuccessor(self, node: 'Node') -> 'Node':
         '''
-        If a node has right child, then successor is the right child's leftmost child;
-        Otherwise, 
-            if a node is its parent's left child, then successor is the parent;
-            if a node's parent is its grandparent's left child, then successor is the parent
+        if it has no right, then check its parent,
+            if it's the parent's left child, then parent is the successor,
+            if it's the parent's right child, then go further to the parent's parent
+        if it has right,
+            if the right has left, then the leftmost is the successor,
+            if the right has no left, the right is the successor
         '''
         if not node:
             return None
-        if node.right:
-            r = node.right
-            while r.left:
-                r = r.left
-            return r
-        while node.parent:
-            if node == node.parent.left:
-                return node.parent
-            node = node.parent
-        return None
+        if not node.right:
+            p = node.parent
+            while p and p.left != node:
+                node, p = p, p.parent
+            return p
+        r = node.right
+        while r and r.left:
+            r = r.left
+        return r
