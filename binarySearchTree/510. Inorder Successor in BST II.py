@@ -13,10 +13,10 @@ class Solution:
         '''
         if it has no right, then check its parent,
             if it's the parent's left child, then parent is the successor,
-            if it's the parent's right child, then go further to the parent's parent
+            if it's the parent's right child, then go further to the parent's parent.
         if it has right,
             if the right has left, then the leftmost is the successor,
-            if the right has no left, the right is the successor
+            if the right has no left, the right is the successor.
         '''
         if not node:
             return None
