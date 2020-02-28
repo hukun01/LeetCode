@@ -3,7 +3,7 @@ class Solution:
     def sumOfDistancesInTree(self, N: int, edges: List[List[int]]) -> List[int]:
         '''
         In linear time we can find sum of distances from root to all other nodes.
-        
+
         When we move from root to a connected node X, one part of the nodes get
         closer to X, the rest gets further. If we know how many nodes on both
         sides for each node X, we know the distances between X and all other nodes.
