@@ -1,8 +1,7 @@
 class Solution:
-    def nextPermutation(self, nums):
+    def nextPermutation(self, nums: List[int]) -> None:
         """
-        :type nums: List[int]
-        :rtype: void Do not return anything, modify nums in-place instead.
+        Do not return anything, modify nums in-place instead.
         """
         """ 1. Traverse the given number from rightmost digit, 
         keep traversing till you find a digit which is smaller than the previously traversed digit. 
@@ -20,7 +19,7 @@ class Solution:
         while i >= 0 and nums[i] >= nums[i + 1]:
             i -= 1
         if i < 0:
-            nums[:] = reversed(nums)
+            nums.sort()
             return
         j = len(nums) - 1
         while nums[j] <= nums[i]:
