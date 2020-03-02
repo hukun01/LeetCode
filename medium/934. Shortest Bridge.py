@@ -4,42 +4,36 @@ class Solution:
         Regular DFS and BFS. Do DFS to find the first island, and store all positions in the queue for later BFS.
         Either use a set to record the visited positions, or mark the positions as -1.
         """
-        rows = len(A)
-        cols = len(A[0])
-        queue = collections.deque()
-        dirs = [(1, 0), (-1, 0), (0, 1), (0, -1)]
-        visited = set()
+        q = collections.deque()
+        rows, cols = len(A), len(A[0])
+        def valid(r, c):
+            return 0 <= r < rows and 0 <= c < cols
 
         def dfs(r, c):
-            if not isValid(r, c) or A[r][c] != 1:
+            if not valid(r, c) or A[r][c] != 1:
                 return
-            queue.append((r, c))
-            visited.add((r, c))
-            for d in dirs:
-                dfs(r + d[0], c + d[1])
-            
-        def findFirstIsland():
+            A[r][c] = 2
+            q.append((r, c))
+            for dr, dc in ((0, 1), (0, -1), (1, 0), (-1, 0)):
+                nr, nc = dr + r, dc + c
+                dfs(nr, nc)
+        def mark():
             for r in range(rows):
                 for c in range(cols):
                     if A[r][c] == 1:
                         dfs(r, c)
                         return
-
-        def isValid(r, c):
-            return r >= 0 and r < rows and c >= 0 and c < cols and (r, c) not in visited
-
-        findFirstIsland()
-        
+        mark()
         steps = 0
-        while queue:
-            for _ in range(len(queue)):
-                r, c = queue.popleft()
-                for d in dirs:
-                    r2 = r + d[0]
-                    c2 = c + d[1]
-                    if isValid(r2, c2):
-                        if A[r2][c2] == 1:
-                            return steps
-                        visited.add((r2, c2))
-                        queue.append((r2, c2))
+        while q:
+            for _ in range(len(q)):
+                r, c = q.popleft()
+                for dr, dc in ((0, 1), (0, -1), (1, 0), (-1, 0)):
+                    nr, nc = dr + r, dc + c
+                    if not valid(nr, nc) or A[nr][nc] == 2:
+                        continue
+                    if A[nr][nc] == 1:
+                        return steps
+                    A[nr][nc] = 2
+                    q.append((nr, nc))
             steps += 1

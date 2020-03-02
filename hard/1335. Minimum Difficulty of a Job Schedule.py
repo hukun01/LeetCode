@@ -2,20 +2,20 @@
 class Solution:
     def minDifficulty(self, jobDifficulty: List[int], d: int) -> int:
         '''
-        1/2 DP with monotic stacks. Much faster than 2nd solution.
+        1/2 DP with monotic stacks. Much faster than the 2nd solution.
         '''
-        A = jobDifficulty
-        n = len(A)
+        j = jobDifficulty
+        n = len(j)
         if n < d: return -1
         
         dp, dp2 = [float('inf')] * n, [0] * n
-        for d in range(d):
+        for day in range(d):
             stack = []
-            for i in range(d, n):
-                dp2[i] = dp[i - 1] + A[i] if i else A[i]
-                while stack and A[stack[-1]] <= A[i]:
-                    j = stack.pop()
-                    dp2[i] = min(dp2[i], dp2[j] - A[j] + A[i])
+            for i in range(day, n):
+                dp2[i] = dp[i - 1] + j[i] if i else j[i]
+                while stack and j[stack[-1]] <= j[i]:
+                    idx = stack.pop()
+                    dp2[i] = min(dp2[i], dp2[idx] - j[idx] + j[i])
                 if stack:
                     dp2[i] = min(dp2[i], dp2[stack[-1]])
                 stack.append(i)
@@ -26,19 +26,21 @@ class Solution:
         The key for performance is to compute the current max as we go deeper
         in the search tree.
         '''
-        if d > len(jobDifficulty):
+        j = jobDifficulty
+        n = len(j)
+        if d > n:
             return -1
         cache = {}
         def dfs(idx, d):
             if (idx, d) in cache:
                 return cache[(idx, d)]
             if d == 1:
-                return max(jobDifficulty[idx:])
+                return max(j[idx:])
             total = float('inf')
-            maxDiff = 0
-            for i in range(idx, len(jobDifficulty) - d + 1):
-                maxDiff = max(maxDiff, jobDifficulty[i])
-                total = min(total, maxDiff + dfs(i + 1, d - 1))
+            maxJob = 0
+            for i in range(idx, n - d + 1):
+                maxJob = max(maxJob, j[i])
+                total = min(total, maxJob + dfs(i + 1, d - 1))
             cache[(idx, d)] = total
             return total
         return dfs(0, d)

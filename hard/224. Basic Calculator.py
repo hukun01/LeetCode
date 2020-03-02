@@ -6,28 +6,28 @@ class Solution:
         multiple digits.
         To let above logic cover equations without '()', we add '()' to wrap the input equation.
         '''
-        s = "(" + s.replace(' ', '') + ")"
         stack = []
-        i = 0
-        while i < len(s):
-            if s[i].isdigit():
-                numStart = i
-                while i < len(s) and s[i].isdigit():
-                    i += 1
-                stack.append(int(s[numStart: i]))
-                continue
-            elif s[i] in '+-(':
-                stack.append(s[i])
-            else: # s[i] == ')'
-                pos = neg = 0
-                prevC = None
-                while prevC != '(':
-                    num = stack.pop()
-                    prevC = stack.pop()
-                    if prevC in '(+':
-                        pos += num
-                    else:
-                        neg += num
-                stack.append(pos - neg)
-            i += 1
+        num = ""
+        for c in '(' + s + ')':
+            if c.isdigit():
+                num += c
+            elif c in '()+-':
+                if num:
+                    stack.append(int(num))
+                    num = ""
+                if c in '(+-':
+                    stack.append(c)
+                elif c == ')':
+                    res = 0
+                    while stack:
+                        n = stack.pop()
+                        s = stack.pop()
+                        if s == '+':
+                            res += n
+                        elif s == '-':
+                            res -= n
+                        elif s == '(':
+                            res += n
+                            break
+                    stack.append(res)
         return stack[0]

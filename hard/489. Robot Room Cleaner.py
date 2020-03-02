@@ -41,7 +41,7 @@ class Solution:
         No matter which direction the robot is facing, we need to go through all 4 directions.
         Only when the potential new position is not cleaned, and robot can move, we will further dfs.
 
-        Robot initially face up, so we need to start with (0, 1).
+        Robot initially face up, so we need to start with 0.
         If we keep turning left, we need to go to (-1, 0) the next;
         if we keep turning right, we need to go to (1, 0) the next.
         '''
@@ -51,8 +51,8 @@ class Solution:
             cleaned.add(node)
             
             for _ in range(4):
-                d = compass[currDir]
-                newNode = (node[0] + d[0], node[1] + d[1])
+                dr, dc = compass[currDir]
+                newNode = (node[0] + dr, node[1] + dc)
                 if newNode not in cleaned and robot.move():
                     dfs(newNode, currDir, cleaned)
                 robot.turnLeft()
