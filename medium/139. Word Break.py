@@ -21,14 +21,16 @@ class Solution:
 
         '''
         wordDict = set(wordDict)
-        cache = { 0: True }
-        def check(end):
-            if end in cache:
-                return cache[end]
-            for i in reversed(range(end)):
-                if s[i:end] in wordDict and check(i):
-                    cache[end] = True
-                    return cache[end]
-            cache[end] = False
-            return cache[end]
-        return check(len(s))
+        cache = {}
+        def dfs(start):
+            if start in cache:
+                return cache[start]
+            if start >= len(s):
+                return True
+            for i in range(start + 1, len(s) + 1):
+                if s[start: i] in wordDict and dfs(i):
+                    cache[start] = True
+                    return True
+            cache[start] = False
+            return False
+        return dfs(0)
