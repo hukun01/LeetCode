@@ -9,11 +9,12 @@
 class Solution:
     def distributeCoins(self, root: TreeNode) -> int:
         '''
-        Post-order traverse, return the number of coins that should be passed up
-        to the parent node. Negative number means that the child needs coin from
-        parents.
-        The total number of coins that need to be passed through each node is the
-        number of moves.
+        Post-order traverse.
+        In each dfs sub-procedure, return the number of coins that should be
+        passed up to the parent. Negative number means that the child needs
+        coin from parents.
+        The total number of coins that need to be passed through each node is
+        the number of moves.
         Similar to 517. Super Washing Machines
         '''
         ans = 0
