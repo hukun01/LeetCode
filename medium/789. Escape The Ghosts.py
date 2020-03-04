@@ -5,10 +5,7 @@ class Solution:
         Just need to know whether it's possible, no need to find the actual path.
         Manhattan distance is enough for checking the possibility.
         '''
-        def distanceToTarget(r1, c1):
-            return abs(r1 - target[0]) + abs(c1 - target[1])
-        toTarget = distanceToTarget(0, 0)
-        for r1, c1 in ghosts:
-            if distanceToTarget(r1, c1) <= toTarget:
-                return False
-        return True
+        def distanceToTarget(point):
+            return abs(point[0] - target[0]) + abs(point[1] - target[1])
+        toTarget = distanceToTarget([0, 0])
+        return not any(distanceToTarget(g) <= toTarget for g in ghosts)
