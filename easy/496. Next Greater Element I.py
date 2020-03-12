@@ -1,10 +1,6 @@
 class Solution:
-    def nextGreaterElement(self, nums1, nums2):
+    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
         """
-        :type nums1: List[int]
-        :type nums2: List[int]
-        :rtype: List[int]
-
         Since nums1 is a subset of nums2, we just need to traverse nums2 for the below logic.
         We use a stack to keep a decreasing sub-sequence, 
         whenever we see a number n greater than stack[-1],

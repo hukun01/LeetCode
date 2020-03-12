@@ -6,7 +6,7 @@ class Solution:
         (N ^ x), and Alice wants (N ^ x) to not be 0, so she should always
         erase the x that's not equal to N.
         Alice will win when she starts her move if:
-        1. the initial N is 0;
+        1. the initial N is 0; Or,
         2. the initial N is not 0, not all the elements are the same.
         Alice can always erase a good element (good means that it's not equal
         to the latest N) in this situation. However, to win, the total number
