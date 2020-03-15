@@ -4,6 +4,10 @@ class Solution:
         Iterate through the nums, for each index, do 3sum on nums[i+1:].
         Note that to dedup, we don't need to use set(), but just need to
         skip the same element after using it once in 3sum.
+
+        To improve runtime performance, we can add pruning logic to early
+        stop/skip some iteration. See the commented lines. Those two blocks
+        can improve the runtime from 40% to 90% on the ranking.
         ''' 
         nums.sort()
         
@@ -17,6 +21,12 @@ class Solution:
                 l = i + 1
                 r = len(array) - 1
                 newTarget = target - array[i]
+                ''' perf only
+                if newTarget < 2 * array[i]:
+                    break
+                if newTarget > 2 * array[-1]:
+                    continue
+                '''
                 while l < r:
                     s = array[l] + array[r]
                     if s == newTarget:
@@ -38,6 +48,12 @@ class Solution:
         for i in range(len(nums) - 3):
             if i > 0 and nums[i] == nums[i - 1]:
                 continue
+            ''' perf only
+            if 4 * nums[i] > target:
+                break
+            if nums[i] + 3 * nums[-1] < target:
+                continue
+            '''
             for subAns in threeSum(i + 1, nums, target - nums[i]):
                 ans.append([nums[i], *subAns])
         return ans

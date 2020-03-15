@@ -5,18 +5,16 @@
 #         self.next = None
 
 class Solution(object):
-    def getIntersectionNode(self, headA, headB):
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
         """
-        :type head1, head1: ListNode
-        :rtype: ListNode
-        
         Form a virtual cycle from each list, by connecting the tail of list A
         to the head of list B. Assuming list A's part1 has x length, list B's part1
         has y length, and the shared part has z length.
         Then node a would traverse (x + y + z) length, and same for node b, so they will
         meet at the intersection. If there is no itersection, they will meet at 'None'.
 
-        The key here is to step through 'None' as a Node.
+        KEY: the key here is to step through 'None' as a Node. Any two lists will intersect
+        at the 'None' node.
         """
         a, b = headA, headB
         while a != b:
