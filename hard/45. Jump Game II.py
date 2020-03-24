@@ -8,26 +8,22 @@ class Solution:
         furthest as the next reachable-by-jumping position.
         Similar to 1024. Video Stitching.
         '''
-        i = ans = furthest = curEnd = 0
-        while i < len(nums) - 1:
-            while i <= curEnd:
-                furthest = max(furthest, i + nums[i])
+        ans = furthest = currEnd = i = 0
+        while currEnd < len(nums) - 1:
+            while i <= currEnd:
+                furthest = max(furthest, nums[i] + i)
                 i += 1
+            currEnd = furthest
             ans += 1
-            curEnd = furthest
-            if curEnd >= len(nums) - 1:
-                return ans
         return ans
         
         '''
         Another style.
         '''
-        ans = 0
-        furthest = 0
-        curEnd = 0
+        ans = furthest = currEnd = 0
         for i in range(len(nums) - 1):
             furthest = max(furthest, i + nums[i])
-            if i == curEnd:
+            if i == currEnd:
                 ans += 1
-                curEnd = furthest
+                currEnd = furthest
         return ans

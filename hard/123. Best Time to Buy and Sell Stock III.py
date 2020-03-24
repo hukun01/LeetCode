@@ -2,20 +2,30 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         '''
-        oneBuy tracks the min price so far, and
-        oneBuyOneSell tracks the current max profit.
-        This is the same as the 121. Best Time to Buy and Sell Stock.
-        
-        Now twoBuy tracks the min price after we use our first
-        profit in the next stock, and twoBuyTwoSell tracks the max
-        profit with the 'discount' we get from the first sell.
+        T[i][k][0] is the max profit with 0 stock left after i-th day with k transaction
+        T[i][k][1] is the max profit with 1 stock left after i-th day with k transaction
+        i is in [1, len(prices)], k is in [1, 2]
+        T[0][1][1] = T[0][2][1] = -math.inf
+        T[i][k][0] = max(T[i-1][k][0], T[i-1][k][1] + prices[i])
+        T[i][k][1] = max(T[i-1][k][1], T[i-1][k-1][0] - prices[i])
         '''
-        oneBuyOneSell = twoBuyTwoSell = 0
-        oneBuy = twoBuy = float('inf')
+        T = [[[0] * 2 for k in range(3)] for i in range(len(prices) + 1)]
+        T[0][1][1] = T[0][2][1] = -math.inf
+        for i in range(1, len(prices) + 1):
+            for k in range(1, 3):
+                T[i][k][0] = max(T[i-1][k][0], T[i-1][k][1] + prices[i-1])
+                T[i][k][1] = max(T[i-1][k][1], T[i-1][k-1][0] - prices[i-1])
+        return T[-1][-1][0]
+        '''
+        Improvements:
+        Since T[i][k] depends on T[i-1][k] and T[i-1][k-1], we can convert 
+        the O(kn) space into O(k) space. In this case it would be O(1) space.
+        '''
+        Ti10 = Ti20 = 0
+        Ti11 = Ti21 = -math.inf
         for p in prices:
-            oneBuy = min(oneBuy, p)
-            oneBuyOneSell = max(oneBuyOneSell, p - oneBuy)
-            twoBuy = min(twoBuy, p - oneBuyOneSell)
-            twoBuyTwoSell = max(twoBuyTwoSell, p - twoBuy)
-            
-        return twoBuyTwoSell
+            Ti10 = max(Ti10, Ti11 + p)
+            Ti11 = max(Ti11, -p)
+            Ti20 = max(Ti20, Ti21 + p)
+            Ti21 = max(Ti21, Ti10 - p)
+        return Ti20

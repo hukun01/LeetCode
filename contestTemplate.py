@@ -8,5 +8,5 @@ class Solution:
         ans = 0
         # TODO
 
-        MOD = 10 ** 9 + 7
+        MOD = 1000000007
         return ans % MOD
