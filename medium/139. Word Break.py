@@ -21,16 +21,12 @@ class Solution:
 
         '''
         wordDict = set(wordDict)
-        cache = {}
+        @functools.lru_cache(None)
         def dfs(start):
-            if start in cache:
-                return cache[start]
-            if start >= len(s):
+            if start == len(s):
                 return True
             for i in range(start + 1, len(s) + 1):
                 if s[start: i] in wordDict and dfs(i):
-                    cache[start] = True
                     return True
-            cache[start] = False
             return False
         return dfs(0)
