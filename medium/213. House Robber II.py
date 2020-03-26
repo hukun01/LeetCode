@@ -1,8 +1,10 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
         '''
-        Similar to House Robber, in this problem we exclude the first house, and run the
-        first solution; and exclude the last house, and run the first solution, and pick the bigger one.
+        Similar to House Robber, in this problem we run the same solution when
+        1. excluding the first house;
+        2. excluding the last house.
+        And pick the bigger result.
         '''
         if len(nums) <= 2:
             return max(nums + [0])

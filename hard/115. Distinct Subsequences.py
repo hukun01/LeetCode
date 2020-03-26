@@ -1,4 +1,3 @@
-# 115. Distinct Subsequences
 class Solution:
     def numDistinct(self, s: str, t: str) -> int:
         '''
@@ -6,7 +5,8 @@ class Solution:
         Overall, DP is often a natural fit for string problems
         about subsequence count or match.
         
-        f[i][j] is number of distinct subsequences in t[:i] and s[:j].
+        f[i][j] is number of distinct subsequences in t[:i] that
+        are covered by s[:j].
         
         Transitions:
         f[i+1][j+1] = f[i+1][j], if t[i] != s[j], this means that
