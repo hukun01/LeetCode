@@ -13,10 +13,11 @@ class Solution:
         '''
         A = matrix
         rows, cols = len(A), len(A[0])
+        f = [[0] * cols for _ in range(rows)]
         ans = 0
         for r in range(rows):
             for c in range(cols):
-                if A[r][c] > 0 and r > 0 and c > 0:
-                    A[r][c] = min(A[r - 1][c], A[r][c - 1], A[r - 1][c - 1]) + 1
-                ans += A[r][c]
+                if A[r][c] == 1:
+                    f[r][c] = min(f[r - 1][c], f[r][c - 1], f[r - 1][c - 1]) + 1
+                ans += f[r][c]
         return ans
