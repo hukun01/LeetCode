@@ -6,25 +6,33 @@ class Solution:
         so we can use DP.
         Every DP entry is [maxScore, pathCount], and dp[r][c] is determined
         by the maxScore and pathCount in its right, bottom and right-bottom neighbors.
+        
+        To make it cleaner in iteration, we can go from top left to bottom right.
+
+        One key is to 
         '''
-        N = len(board)
-        # tuple is [score, pathCount]
-        dp = [[[0, 0] for c in range(N + 1)] for r in range(N + 1)]
-        dp[N - 1][N - 1] = [0, 1]
-        for r in reversed(range(N)):
-            for c in reversed(range(N)):
-                if board[r][c] in 'XS':
+        b = board
+        R, C = len(b), len(b[0])
+        dp = [[[0] * 2 for c in range(C)] for r in range(R)]
+        dp[0][0] = [0, 1]
+        for r in range(R):
+            for c in range(C):
+                char = b[r][c]
+                if char in 'EX':
                     continue
-                for dr, dc in [[0, 1], [1, 0], [1, 1]]:
-                    lastTuple = dp[r + dr][c + dc]
-                    score = dp[r][c][0]
-                    if score < lastTuple[0]:
-                        dp[r][c] = lastTuple[:]
-                    elif score == lastTuple[0]:
-                        dp[r][c][1] += lastTuple[1]
-                if board[r][c] != 'E':
-                    dp[r][c][0] += int(board[r][c])
-        if dp[0][0][1] == 0:
-            return [0, 0]
-        dp[0][0][1] %= 10 ** 9 + 7
-        return dp[0][0]
+                elif char == 'S':
+                    score, count = 0, 0
+                else:
+                    score, count = int(char), 1
+                for dr, dc in ((0, -1), (-1, 0), (-1, -1)):
+                    nr, nc = dr + r, dc + c
+                    if not 0 <= nr < R or not 0 <= nc < C:
+                        continue
+                    if dp[nr][nc][1] == 0: # can't go down if there is no path
+                        continue
+                    if dp[nr][nc][0] + score > dp[r][c][0]:
+                        dp[r][c] = [dp[nr][nc][0] + score, dp[nr][nc][1]]
+                    elif dp[nr][nc][0] + score == dp[r][c][0]:
+                        dp[r][c][1] += dp[nr][nc][1]
+        MOD = 10 ** 9 + 7
+        return [dp[-1][-1][0], dp[-1][-1][1] % MOD]
