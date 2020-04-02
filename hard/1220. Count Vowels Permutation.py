@@ -10,19 +10,17 @@ class Solution:
             'u': 'a'
         }
         
-        cache = collections.defaultdict(int)
+        @functools.lru_cache(None)
         def dfs(lastChar, currLen):
-            if (lastChar, currLen) in cache:
-                return cache[(lastChar, currLen)]
             if currLen == n:
                 return 1
 
+            total = 0
             for c in maps[lastChar]:
-                cache[(lastChar, currLen)] += dfs(c, currLen + 1)
-            return cache[(lastChar, currLen)]
-        
-        dfs('x', 0)
-        return cache[('x', 0)] % (10 ** 9 + 7)
+                total += dfs(c, currLen + 1)
+            return total
+
+        return dfs('x', 0) % (10 ** 9 + 7)
     '''
     v represents the number of paths starting with each vowel.
     Initially it's all 1, meaning that there is 1 path starting with every char.
