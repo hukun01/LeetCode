@@ -17,9 +17,7 @@ class Solution:
         minutes = 0
         rotten = { (r, c) for r in range(rows) for c in range(cols) if grid[r][c] == 2 }
         fresh = { (r, c) for r in range(rows) for c in range(cols) if grid[r][c] == 1 }
-        while fresh:
-            if len(rotten) == 0:
-                return -1
+        while fresh and rotten:
             newRotten = set()
             for r, c in rotten:
                 for dR, dC in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
@@ -30,4 +28,4 @@ class Solution:
                         fresh.remove((newR, newC))
             rotten = newRotten
             minutes += 1
-        return minutes
+        return -1 if fresh else minutes
