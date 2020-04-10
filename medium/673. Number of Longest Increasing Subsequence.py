@@ -9,8 +9,10 @@ class Solution:
         Let dp[k][x] be the number of LIS with length k that ends with number x.
         dp[k][x] = sum of dp[k-1][y] for y < x.
         '''
+        if not nums:
+            return 0
         dp = collections.defaultdict(collections.Counter)
-        dp[-1][-math.inf] = 1
+        dp[0][-math.inf] = 1
         
         # LIS_list: index is length of LIS, value is
         # the smallest ending number with that length.
@@ -21,5 +23,5 @@ class Solution:
                 lisList.append(x)
             else:
                 lisList[lisLen] = x 
-            dp[lisLen][x] += sum(count for y, count in dp[lisLen-1].items() if y < x)
-        return sum(dp[max(0, len(lisList)-1)].values())
+            dp[lisLen+1][x] += sum(count for y, count in dp[lisLen].items() if y < x)
+        return sum(dp[len(lisList)].values())
