@@ -1,3 +1,4 @@
+# 503. Next Greater Element II
 class Solution:
     def nextGreaterElements(self, nums: List[int]) -> List[int]:
         '''
@@ -5,10 +6,11 @@ class Solution:
         but here we don't need a dict, and we store the index in the stack. 
         Same as 739. Daily Temperatures.
         '''
-        ans = [-1] * len(nums)
+        n = len(nums)
+        ans = [-1] * n
         stack = []
-        for i in range(1, len(nums)*2):
-            actualIdx = i % len(nums)
+        for i in range(1, n*2):
+            actualIdx = i % n
             while stack and nums[stack[-1]] < nums[actualIdx]:
                 ans[stack[-1]] = nums[actualIdx]
                 stack.pop()
