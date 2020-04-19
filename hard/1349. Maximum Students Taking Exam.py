@@ -49,7 +49,7 @@ class Solution:
         2. (mask & (mask' << 1)) == 0, there should be no students in the upper right position for every student.
         '''
         rows, cols = len(seats), len(seats[0])
-        
+
         validity = [0] * rows
         for r in range(rows):
             cur = 0
