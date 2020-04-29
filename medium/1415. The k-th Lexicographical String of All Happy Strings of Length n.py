@@ -14,8 +14,8 @@ class Solution:
         ans.append(abc[k // fact])
         k %= fact
         rest = { 'a': 'bc', 'b': 'ac', 'c': 'ab' }
-        for i in range(1, n):
+        for _ in range(1, n):
+            k %= fact
             fact //= 2
             ans.append(rest[ans[-1]][k // fact])
-            k %= fact
         return ''.join(ans)

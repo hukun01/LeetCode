@@ -3,23 +3,16 @@ class Solution:
         '''
         DFS with memoization and pruning.
         '''
-        cache = {}
-        def dfs(pos, steps):
-            if (pos, steps) in cache:
-                return cache[(pos, steps)]
-            if steps == 0:
-                if pos == 0:
-                    return 1
+        @functools.lru_cache(None)
+        def dfs(pos, stepsLeft):
+            if pos < 0 or pos == arrLen:
                 return 0
-            # 1. We are at the rightmost end;
-            # 2. Don't have enough steps to go back from right to origin;
-            # 3. Out of allowable range.
-            if pos >= arrLen or pos > steps or pos < 0:
+            if stepsLeft == 0:
+                return pos == 0
+            if pos > stepsLeft:
                 return 0
-            result = 0
-            result += dfs(pos, steps - 1)
-            result += dfs(pos + 1, steps - 1)
-            result += dfs(pos - 1, steps - 1)
-            cache[(pos, steps)] = result
-            return result
-        return dfs(0, steps) % (10**9 + 7)
+            a1 = dfs(pos - 1, stepsLeft - 1)
+            a2 = dfs(pos + 1, stepsLeft - 1)
+            a3 = dfs(pos, stepsLeft - 1)
+            return (a1 + a2 + a3) % (10 ** 9 + 7)
+        return dfs(0, steps)
