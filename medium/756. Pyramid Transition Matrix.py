@@ -8,21 +8,16 @@ class Solution:
         for a, b, c in allowed:
             graph[(a, b)].append(c)
         
-        def dfs(bottom):
-            if len(bottom) == 1:
+        def dfs(level):
+            if len(level) == 1:
                 return True
-            
-            pairs = []
-            for i in range(len(bottom) - 1):
-                a = bottom[i]
-                b = bottom[i + 1]
-                pairs.append((a, b))
-            bs = [[]]
-            for p in pairs:
+
+            bs = [""]
+            for a, b in zip(level, level[1:]):
                 newB = []
-                for c in graph[p]:
+                for c in graph[(a, b)]:
                     for b in bs:
-                        newB.append(b + [c])
+                        newB.append(b + c)
                 bs = newB
             return any(dfs(b) for b in bs)
         return dfs(bottom)
@@ -30,18 +25,18 @@ class Solution:
         '''
         2/2 Another flavor of DFS that focus on current line and the above line.
         '''
-        maps = collections.defaultdict(set)
-        for c1, c2, c3 in allowed:
-            maps[(c1, c2)].add(c3)
+        graph = collections.defaultdict(list)
+        for a, b, c in allowed:
+            graph[(a, b)].append(c)
         
-        def dfs(line, start, above):
+        def dfs2(line, start, above):
             if len(line) == 1:
                 return True
             if start == len(line) - 1:
-                return dfs(above, 0, "")
-            c1, c2 = line[start], line[start + 1]
-            for c3 in maps[(c1, c2)]:
-                if dfs(line, start + 1, above + c3):
+                return dfs2(above, 0, "")
+            a, b = line[start], line[start + 1]
+            for c in graph[(a, b)]:
+                if dfs2(line, start + 1, above + c):
                     return True
             return False
-        return dfs(bottom, 0, "")
+        return dfs2(bottom, 0, "")

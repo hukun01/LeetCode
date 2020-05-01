@@ -7,8 +7,8 @@ class Solution:
 
         Also, A can match A[0], B can match A[0] too, so in one iteration we can check both arrays.
         '''
-        
-        def check(target):
+        def find(target):
+            # countA means the number of rotations from A.
             countA = countB = 0
             for a, b in zip(A, B):
                 if a != b:
@@ -21,8 +21,7 @@ class Solution:
                 elif a != target:
                     return -1
             return min(countA, countB)
-        
-        rotationsA = check(A[0])
-        if rotationsA != -1 or A[0] == B[0]:
-            return rotationsA
-        return check(B[0])
+
+        candidates = set([find(A[0]), find(B[0])])
+        candidates.discard(-1)
+        return min(candidates) if candidates else -1
