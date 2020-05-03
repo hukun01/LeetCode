@@ -4,6 +4,7 @@ class Solution:
         '''
         Keep track of the current furthest jumpable distance,
         if it's always that furthest >= i for all i, then we can jump.
+        In another word, if any position > furthest, we can't jump to it.
         '''
         furthest = 0
         for i, n in enumerate(nums):
