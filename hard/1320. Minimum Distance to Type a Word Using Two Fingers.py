@@ -6,10 +6,11 @@ class Solution:
         letter to represent finger position, instead of using the index, 
         because there are only 26 letters.
         '''
+        C = 6
         letters = {}
         for i, l in enumerate('ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
-            row = i // 6
-            col = i % 6
+            row = i // C
+            col = i % C
             letters[l] = (row, col)
         
         def distance(char1, char2):
@@ -18,17 +19,14 @@ class Solution:
             r1, c1 = letters[char1]
             r2, c2 = letters[char2]
             return abs(r1 - r2) + abs(c1 - c2)
-        cache = {}
         
+        @functools.lru_cache(None)
         def dfs(f1, f2, i):
             if i == len(word):
                 return 0
-            if (f1, f2, i) in cache:
-                return cache[(f1, f2, i)]
             d1 = distance(f1, word[i]) + dfs(word[i], f2, i + 1)
             d2 = distance(f2, word[i]) + dfs(f1, word[i], i + 1)
-            cache[(f1, f2, i)] = min(d1, d2)
-            return cache[(f1, f2, i)]
+            return min(d1, d2)
         
         return dfs(None, None, 0)
 
@@ -39,16 +37,28 @@ class Solution:
         In this solution, we start i from 1, namely the 0-th char has been
         typed by the 'last' finger before we start DFS.
         '''
-        def dfs(other, i):
+        C = 6
+        letters = {}
+        for i, l in enumerate('ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
+            row = i // C
+            col = i % C
+            letters[l] = (row, col)
+        
+        def distance(char1, char2):
+            if char1 == None or char2 == None:
+                return 0
+            r1, c1 = letters[char1]
+            r2, c2 = letters[char2]
+            return abs(r1 - r2) + abs(c1 - c2)
+
+        @functools.lru_cache(None)
+        def dfs2(other, i):
             if i == len(word):
                 return 0
-            if (other, i) in cache:
-                return cache[(other, i)]
             to = word[i]
             last = word[i - 1]
-            d1 = distance(other, to) + dfs(last, i + 1)
-            d2 = distance(last, to) + dfs(other, i + 1)
-            cache[(other, i)] = min(d1, d2)
-            return cache[(other, i)]
+            d1 = distance(other, to) + dfs2(last, i + 1)
+            d2 = distance(last, to) + dfs2(other, i + 1)
+            return min(d1, d2)
         
-        return dfs(None, 1)
+        return dfs2(None, 1)

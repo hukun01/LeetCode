@@ -5,16 +5,18 @@ class Solution:
         Use two sliding windows to record the max and min, when
         their diff is greater than limit, pop out the left side.
         '''
-        maxW = collections.deque()
-        minW = collections.deque()
-        i = 0
-        for j, a in enumerate(nums):
-            while len(maxW) and a > maxW[-1]: maxW.pop()
-            while len(minW) and a < minW[-1]: minW.pop()
+        ans = left = 0
+        maxW = collections.deque() # maxW[0] tracks the max since 'left' index
+        minW = collections.deque() # minW[0] tracks the min since 'left' index
+        for right, a in enumerate(nums):
+            # Note that in below 2 loops, only 1 will run in each iteration
+            while maxW and a > maxW[-1]: maxW.pop()
+            while minW and a < minW[-1]: minW.pop()
             maxW.append(a)
             minW.append(a)
             if maxW[0] - minW[0] > limit:
-                if maxW[0] == nums[i]: maxW.popleft()
-                if minW[0] == nums[i]: minW.popleft()
-                i += 1
-        return len(nums) - i
+                if maxW[0] == nums[left]: maxW.popleft()
+                if minW[0] == nums[left]: minW.popleft()
+                left += 1
+            ans = max(ans, right - left + 1)
+        return ans
