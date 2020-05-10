@@ -5,10 +5,9 @@ class Solution:
         Use intuition from 239. Sliding Window Maximum.
         Let f[i] be the answer when the subsequence ends at nums[i],
         f[0] = nums[0]
-        x = max(f[j] for all the j that i-j <= k)
-        f[i] = nums[i] + x
+        f[i] = nums[i] + x, where x = max(f[j] for all the j that i-j <= k)
+        x is the max sum of previous subsequence that ends at one of the last k-1 numbers.
         If x < 0, just ignore it, which means let the subsequence start from nums[i].
-        To find x, we look for the max from the last k-1 elements in f.
         To make this process faster, we leverage the optimal solution in 239 that
         tells the max in a sliding window in constant time once the window is built.
         '''
@@ -16,6 +15,8 @@ class Solution:
         f = nums[:] # f[i] >= nums[i], at least.
         for i in range(1, len(f)):
             f[i] += max(f[w[0]], 0)
+
+            # This is all from 239.
             while w and f[w[-1]] <= f[i]:
                 w.pop()
             w.append(i)
