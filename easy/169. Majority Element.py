@@ -7,7 +7,7 @@ class Solution:
         We will eventually switch to the majority number, because it has the most votes.
         '''
         vote = 0
-        candidate = None
+        candidate = 0
 
         for num in nums:
             if vote == 0:

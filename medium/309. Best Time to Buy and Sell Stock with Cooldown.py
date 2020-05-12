@@ -18,7 +18,6 @@ class Solution:
         if len(prices) < 2:
             return 0
         T = [[0] * 2 for _ in range(len(prices))]
-        T[0][0] = 0
         T[0][1] = -prices[0]
         for i in range(1, len(prices)):
             T[i][0] = max(T[i-1][0], T[i-1][1] + prices[i])

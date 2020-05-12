@@ -10,13 +10,17 @@ class Solution:
         minW = collections.deque() # minW[0] tracks the min since 'left' index
         for right, a in enumerate(nums):
             # Note that in below 2 loops, only 1 will run in each iteration
-            while maxW and a > maxW[-1]: maxW.pop()
-            while minW and a < minW[-1]: minW.pop()
+            while maxW and maxW[-1] < a:
+                maxW.pop()
+            while minW and minW[-1] > a:
+                minW.pop()
             maxW.append(a)
             minW.append(a)
             if maxW[0] - minW[0] > limit:
-                if maxW[0] == nums[left]: maxW.popleft()
-                if minW[0] == nums[left]: minW.popleft()
+                if maxW[0] == nums[left]:
+                    maxW.popleft()
+                if minW[0] == nums[left]:
+                    minW.popleft()
                 left += 1
             ans = max(ans, right - left + 1)
         return ans

@@ -21,19 +21,13 @@ class Solution:
         '''
         2/2 A more straightforward way of sliding window.
         '''
-        leftIdx = 0
+        startIdx = 0
         ans = 0
-        seen = collections.Counter()
-        total = 0
-        for i, c in enumerate(s):
-            if seen[c] == 0:
-                total += 1
+        seen = { c: 0 for c in 'abc' }
+        for c in s:
             seen[c] += 1
-            while leftIdx < i and seen[s[leftIdx]] >= 1 and total == 3:
-                char = s[leftIdx]
-                seen[char] -= 1
-                leftIdx += 1
-                ans += len(s) - i
-                if seen[char] == 0:
-                    total -= 1
+            while all(seen.values()):
+                seen[s[startIdx]] -= 1
+                startIdx += 1
+            ans += startIdx
         return ans
