@@ -13,7 +13,7 @@ class Solution:
         2. Mark the board[r][c] = '#' as visited, to avoid having an extra set for visited.
         3. No need to store the char on the trie node, we just need the children dict.
         '''
-        # another template for: Trie = lambda: collections.defaultdict(Trie)
+        # another template for: Node = lambda: defaultdict(Node); trie = Node();
         root = Node()
         for w in words:
             node = root

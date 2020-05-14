@@ -1,3 +1,4 @@
+# 32. Longest Valid Parentheses
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
         '''
@@ -9,7 +10,7 @@ class Solution:
         Also need to do the same process for the reversed string with opposite
         left and right, to handle cases like '(()'.
         '''
-        def check(s, leftParen, rightParen):
+        def check(s, leftParen):
             maxLen = left = right = 0
             for c in s:
                 if c == leftParen:
@@ -21,4 +22,4 @@ class Solution:
                 elif right > left:
                     left = right = 0
             return maxLen
-        return max(check(s, '(', ')'), check(s[::-1], ')', '('))
+        return max(check(s, '('), check(s[::-1], ')'))
