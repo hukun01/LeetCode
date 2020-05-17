@@ -7,14 +7,15 @@ class Solution:
         """
         '''
         1/2 Simple solution using sorting with O(NlogN) time.
-        Sort and find the median, and slice the list such that we
+        Sort and find the mid point, and slice the list such that we
         assign numbers smaller than mid to odd slots, and bigger numbers
         to even slots.
-        
+        '''
+        # Need to reversely sort to handle case like [4, 5, 5, 6] where the numbers
+        # around mid point are the same.
         nums.sort(reverse=True)
         mid = len(nums) // 2
         nums[1::2],nums[0::2] = nums[:mid], nums[mid:]
-        '''
 
         '''
         2/2 Complex soultion but using O(N) time and O(1) space
