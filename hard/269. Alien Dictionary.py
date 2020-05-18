@@ -7,18 +7,17 @@ class Solution:
 
         Don't use defaultdict here because we actually need to explicitly keep all chars in the dict.
         '''
-        prevs = { c: set() for word in words for c in word }
-        for pair in zip(words, words[1:]):
-            w1, w2 = pair[0], pair[1]
+        prevs = { c: set() for c in itertools.chain(*words) }
+        for w1, w2 in zip(words, words[1:]):
             for c1, c2 in zip(w1, w2):
                 if c1 != c2:
                     prevs[c2].add(c1)
                     break
         ans = []
         while True:
-            removed = { p for p, prev in prevs.items() if len(prev) == 0 }
+            removed = { c for c, prev in prevs.items() if len(prev) == 0 }
             if len(removed) == 0:
                 break
             ans += removed
-            prevs = { char: prevSet - removed for char, prevSet in prevs.items() if len(prevSet) > 0 }
+            prevs = { c: prevSet - removed for c, prevSet in prevs.items() if len(prevSet) > 0 }
         return ''.join(ans) if len(prevs) == 0 else ""
