@@ -25,30 +25,20 @@
 
 class NestedIterator(object):
 
-    def __init__(self, nestedList):
-        """
-        Initialize your data structure here.
-        :type nestedList: List[NestedInteger]
-        """
+    def __init__(self, nestedList: [NestedInteger]):
         self.data = nestedList
         self.pos = 0
         self.nestedIter = None
 
-    def next(self):
-        """
-        :rtype: int
-        """
+    def next(self) -> int:
         if self.nestedIter:
             return self.nestedIter.next()
         else:
             val = self.data[self.pos].getInteger()
             self.pos += 1
             return val
-        
-    def hasNext(self):
-        """
-        :rtype: bool
-        """
+
+    def hasNext(self) -> bool:
         if self.nestedIter and self.nestedIter.hasNext():
             return True
         self.nestedIter = None
@@ -64,12 +54,8 @@ class NestedIterator(object):
 
     '''
     Another style using generators.
-
-    def __init__(self, nestedList):
-        """
-        Initialize your data structure here.
-        :type nestedList: List[NestedInteger]
-        """
+    '''
+    def __init__(self, nestedList: [NestedInteger]):
         self.iter = self.flatten(nestedList)
         self.nextItem = next(self.iter, None)
     
@@ -84,20 +70,16 @@ class NestedIterator(object):
             for item in self.flatten(items.getList()):
                 yield item
 
-    def next(self):
+    def next(self) -> int:
         """
         :rtype: int
         """
         currItem = self.nextItem
         self.nextItem = next(self.iter, None)
         return currItem
-        
-    def hasNext(self):
-        """
-        :rtype: bool
-        """
+
+    def hasNext(self) -> bool:
         return self.nextItem is not None
-    '''
         
 # Your NestedIterator object will be instantiated and called as such:
 # i, v = NestedIterator(nestedList), []
