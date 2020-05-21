@@ -62,18 +62,13 @@ class NestedIterator(object):
     def flatten(self, items):
         if isinstance(items, list):
             for nestedItem in items:
-                for item in self.flatten(nestedItem):
-                    yield item
+                yield from self.flatten(nestedItem)
         elif items.isInteger():
             yield items.getInteger()
         else:
-            for item in self.flatten(items.getList()):
-                yield item
+            yield from self.flatten(items.getList())
 
     def next(self) -> int:
-        """
-        :rtype: int
-        """
         currItem = self.nextItem
         self.nextItem = next(self.iter, None)
         return currItem
