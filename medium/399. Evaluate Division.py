@@ -34,42 +34,34 @@ class Solution:
         return ans
         '''
         2/2 Using Union Find
-
-        parents = {}
-        
-        def find(operand):
-            if operand != parents[operand][0]:
-                p = find(parents[operand][0])
-                parents[operand][0] = p[0]
-                parents[operand][1] *= p[1]
-            return parents[operand]
-        
-        for i, e in enumerate(equations):
-            a, b = e
-            k = values[i]
-            if a not in parents and b not in parents:
-                parents[a] = [b, k]
-                parents[b] = [b, 1.0]
-            elif a not in parents:
-                parents[a] = [b, k]
-            elif b not in parents:
-                parents[b] = [a, 1.0 / k]
-            else:
-                pA = find(a)
-                pB = find(b)
-                if pA != pB:
-                    pA[0] = pB[0]
-                    pA[1] *= k * pB[1]
-                
-        ans = []
-        for q in queries:
-            a, b = q
-            if a not in parents or b not in parents:
-                ans.append(-1.0)
-                continue
-            if find(a)[0] == find(b)[0]:
-                ans.append(parents[a][1] / parents[b][1])
-            else:
-                ans.append(-1.0)
-        return ans
         '''
+        uf = {}
+        def find(a):
+            if uf[a][0] != a:
+                pA, vA = find(uf[a][0])
+                uf[a] = (pA, uf[a][1] * vA)
+            return uf[a]
+        for (a, b), v in zip(equations, values):
+            if a not in uf and b not in uf:
+                uf[a] = (b, v)
+                uf[b] = (b, 1.0)
+            elif a not in uf:
+                uf[a] = (b, v)
+            elif b not in uf:
+                uf[b] = (a, 1/v)
+            else:
+                pA, vA = find(a)
+                pB, vB = find(b)
+                uf[pA] = (pB, v * vB / vA)
+        ans = []
+        for a, b in queries:
+            if a not in uf or b not in uf:
+                ans.append(-1)
+            else:
+                pA, vA = find(a)
+                pB, vB = find(b)
+                if pA != pB:
+                    ans.append(-1)
+                else:
+                    ans.append(vA / vB)
+        return ans
