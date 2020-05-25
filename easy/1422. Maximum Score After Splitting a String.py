@@ -9,13 +9,12 @@ class Solution:
         Note that to keep both substrings non-empty, we can't
         take the last char into left substring.
         '''
-        count = collections.Counter(s)
-        count['0'] = 0
-        ans = 0
+        ones = sum(c == '1' for c in s)
+        ans = zeros = 0
         for c in s[:-1]:
             if c == '0':
-                count[c] += 1
+                zeros += 1
             else:
-                count[c] -= 1
-            ans = max(ans, count['0'] + count['1'])
+                ones -= 1
+            ans = max(ans, zeros + ones)
         return ans
