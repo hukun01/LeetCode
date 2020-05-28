@@ -5,6 +5,9 @@ class Solution:
         higher priority operaters after +-.
         When we see */, we must process the num at stack peek and current num, immediately,
         because */ have the highest priority.
+
+        Note that when processing division, we want to round down the floating number,
+        instead of integer division.
         '''
         stack = []
         num = 0
@@ -12,6 +15,7 @@ class Solution:
         for i, c in enumerate(s):
             if c.isdigit():
                 num = num * 10 + int(c)
+
             if c in '+-*/' or i == len(s) - 1:
                 if lastSign == '+':
                     stack.append(num)
@@ -20,7 +24,7 @@ class Solution:
                 if lastSign == '*':
                     stack.append(stack.pop() * num)
                 if lastSign == '/':
-                    stack.append(stack.pop() // num)
+                    stack.append(int(stack.pop() / num))
                 num = 0
                 lastSign = c
         
