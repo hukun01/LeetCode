@@ -14,11 +14,11 @@ class Solution:
         first = head
         dummy = second = ListNode(0)
         dummy.next = head
-        steps = 0
         while first:
-            steps += 1
             first = first.next
-            if steps > n:
+            if n > 0:
+                n -= 1
+            else:
                 second = second.next
         second.next = second.next.next
         return dummy.next
