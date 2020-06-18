@@ -7,28 +7,25 @@
 
 class Solution:
     def recoverFromPreorder(self, S: str) -> TreeNode:
-        levels = {}
-        num = ""
-        depth = 0
-        S += "-"
-        for c in S:
-            # continuous '-', keep adding depth
-            if c != '-':
-                num += c
-            else:
-                if not num:
-                    depth += 1
-                    continue
-                node = TreeNode(int(num))
-                num = ""
-                if depth not in levels:
-                    levels[depth] = []
-                levels[depth].append(node)
-                if depth > 0:
-                    parent = levels[depth - 1][-1]
-                    if not parent.left:
-                        parent.left = node
-                    else:
-                        parent.right = node
-                depth = 1
-        return levels[0][0]
+        tree = defaultdict(list)
+        i = 0
+        while i < len(S):
+            j = i
+            while j < len(S) and S[j] == '-':
+                j += 1
+            depth = j - i
+            i = j
+            while j < len(S) and S[j].isdigit():
+                j += 1
+            num = int(S[i:j])
+            i = j
+            tree[depth].append(TreeNode(num))
+            if depth - 1 >= 0:
+                parent = tree[depth - 1][-1]
+                if not parent.left:
+                    parent.left = tree[depth][-1]
+                else:
+                    parent.right = tree[depth][-1]
+        if not tree:
+            return None
+        return tree[0][0]

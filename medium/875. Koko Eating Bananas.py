@@ -1,3 +1,4 @@
+# 875. Koko Eating Bananas
 class Solution:
     def minEatingSpeed(self, piles: List[int], H: int) -> int:
         """
@@ -18,7 +19,7 @@ class Solution:
         total = sum(piles)
         l, h = math.ceil(total / H), math.ceil(total / (H - len(piles) + 1))
         while l < h:
-            m = l + (h - l) // 2
+            m = (l + h) // 2
             if sum(math.ceil(pile / m) for pile in piles) <= H:
                 h = m
             else:
