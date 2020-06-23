@@ -11,13 +11,12 @@ class Solution:
         '''
         created = dict()
         ans = []
-        for baseName in names:
-            finalName = baseName
-            if baseName in created:
-                finalName = f"{baseName}({created[baseName]})"
-                while finalName in created:
-                    created[baseName] += 1
-                    finalName = f"{baseName}({created[baseName]})"
-            created[finalName] = 1
-            ans.append(finalName)
+        for base_name in names:
+            final_name = base_name
+            if base_name in created:
+                while (final_name := f"{base_name}({created[base_name]})") in created:
+                    created[base_name] += 1
+                    final_name = f"{base_name}({created[base_name]})"
+            created[final_name] = 1
+            ans.append(final_name)
         return ans

@@ -1,17 +1,18 @@
+# 450. Delete Node in a BST
 # Definition for a binary tree node.
 # class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
-    def deleteNode(self, root, key):
-        """
-        :type root: TreeNode
-        :type key: int
-        :rtype: TreeNode
-        """
+    def deleteNode(self, root: TreeNode, key: int) -> TreeNode:
+        '''
+        For the node to be deleted, use a combine method to merge its left and right
+        children and return the merged child.
+        Then we can recursively or iteratively find the node to be deleted, and call
+        combine.
+        '''
         def combine(left, right):
             if not left:
                 return right
@@ -22,7 +23,8 @@ class Solution:
                 node = node.left
             node.left = left
             return right 
-        """ 1/3 Recursive
+        """ 1/2 Recursive
+        """
         def delete(root, key):
             if not root:
                 return None
@@ -34,8 +36,7 @@ class Solution:
                 root.right = self.deleteNode(root.right, key)
             return root
         return delete(root, key)
-        """
-        """ 2/3 Iterative
+        """ 2/2 Iterative
         """
         node = root
         parent = None
@@ -55,22 +56,3 @@ class Solution:
         if node == parent.right:
             parent.right = replacement
         return root
-        """ 3/3 Recursive
-        if not root:
-            return None
-        if root.val > key:
-            root.left = self.deleteNode(root.left, key)
-        elif root.val < key:
-            root.right = self.deleteNode(root.right, key)
-        else:
-            if not root.right:
-                return root.left
-            if not root.left:
-                return root.right
-            temp = root.right
-            while temp.left:
-                temp = temp.left
-            root.val = temp.val
-            root.right = self.deleteNode(root.right, root.val)
-        return root
-        """
