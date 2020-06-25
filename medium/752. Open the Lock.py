@@ -1,36 +1,62 @@
 class Solution:
     def openLock(self, deadends: List[str], target: str) -> int:
-        """
-        Shortest path - BFS. There are 3 keys:
+        '''
+        1/2 Shortest path - Two-end BFS.
+        Three keys:
         1. To update a char in a string in python we need to create a new string, to do 
            that, we need to convert the original string into a list, and do updates to it.
-        2. We need to restrict the range of the possible lock slots: [0, 9].
-        3. We need to keep expanding deadendSet so we keep shrinking our search space.
-        """
-        def turnLock(string, index, isAdd):
-            li = list(string)
-            digit = int(li[index])
-            num = digit + 1 if isAdd else digit - 1
-            li[index] = str(num % 10)
-            return ''.join(li)
-        
-        deads = set(deadends)
-        begin = set(["0000"])
-        end = set([target])
+        2. Restrict the range of the possible lock slots: [0, 9].
+        3. Keep expanding deadends_set so to shrink the search space.
+        '''
+        deadends_set = set(deadends)
         steps = 0
-        while begin and end:
-            if len(begin) > len(end):
-                begin, end = end, begin
-            
-            nextLevel = set()
-            for lock in begin:
-                if lock in deads:
+        begins = set(['0000'])
+        ends = set([target])
+        def find_next_node(node):
+            for i in range(len(node)):
+                for move in [-1, 1]:
+                    next_node = list(node)
+                    next_node[i] = str((int(next_node[i]) + move) % 10)
+                    yield ''.join(next_node)
+        
+        while begins and ends:
+            if steps % 2 == 0:
+                begins, ends = ends, begins
+            next_level = set()
+            for node in begins:
+                if node in deadends_set:
                     continue
-                if lock in end:
+                deadends_set.add(node)
+
+                if node in ends:
                     return steps
-                deads.add(lock)
-                [nextLevel.add(turnLock(lock, i, isAdd)) for i in range(4) for isAdd in [False, True]]
+
+                next_level.update(find_next_node(node))
+            begins = next_level
             steps += 1
-            begin = nextLevel
-            
+        return -1
+        '''
+        2/2 Regular BFS.
+        '''
+        def find_next_node(node):
+            for i in range(len(node)):
+                for move in [-1, 1]:
+                    next_node = list(node)
+                    next_node[i] = str((int(next_node[i]) + move) % 10)
+                    yield ''.join(next_node)
+        deadends_set = set(deadends)
+        queue = deque(['0000'])
+        steps = 0
+        while queue:
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                if node in deadends_set:
+                    continue
+                deadends_set.add(node)
+
+                if node == target:
+                    return steps
+
+                queue += list(find_next_node(node))
+            steps += 1
         return -1
