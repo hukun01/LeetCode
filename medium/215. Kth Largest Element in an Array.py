@@ -2,7 +2,20 @@
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
         '''
-        1/2 Quick select
+        1/2 Binary search
+        '''
+        l, h = min(nums), max(nums)
+        k -= 1
+        while l < h:
+            m = (l + h) // 2
+            greaterThanM = sum(n > m for n in nums)
+            if greaterThanM <= k:
+                h = m
+            else:
+                l = m + 1
+        return l
+        '''
+        2/2 Quick select
         Standard quick select algorithm, similar to 973. K Closest Points to Origin.
         '''
         def sort(start, end):
@@ -30,18 +43,3 @@ class Solution:
             return storedIdx # do NOT return pivotIdx!
         
         return sort(0, len(nums) - 1)
-        '''
-        2/2 Binary search
-
-
-        l, h = min(nums), max(nums)
-        k -= 1
-        while l < h:
-            m = (l + h) // 2
-            greaterThanM = sum(n > m for n in nums)
-            if greaterThanM <= k:
-                h = m
-            else:
-                l = m + 1
-        return l
-        '''

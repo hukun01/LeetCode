@@ -1,3 +1,4 @@
+# 94. Binary Tree Inorder Traversal
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
@@ -6,31 +7,26 @@
 #         self.right = None
 
 class Solution:
-    def inorderTraversal(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[int]
-        """
+    def inorderTraversal(self, root: TreeNode) -> List[int]:
         """ 1/2 Iterative using stack: 
-        To make the logic clear, use a nested function pushLeftNodes()
+        To make the logic clear, use a nested function push_left_nodes()
         to push all the left children of one Node and itself into the stack.
         We push all the left children of root and root into the stack until there's no more nodes.
         Then we pop from the stack which we'd call cur. Add cur to result list.
         Iteratively call pushAllLeft() on cur's right child.
-
+        """
         stack = []
         values = []
-        def pushLeftNodes(node, stack):
+        def push_left_nodes(node, stack):
             while node:
                 stack.append(node)
                 node = node.left
-        pushLeftNodes(root, stack)
+        push_left_nodes(root, stack)
         while stack:
             node = stack.pop()
             values.append(node.val)
-            pushLeftNodes(node.right, stack)
+            push_left_nodes(node.right, stack)
         return values
-        """
         """ 2/2 Morris traversal: See 0.Notes.txt
         """
         values = []

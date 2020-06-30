@@ -10,16 +10,16 @@ class Solution:
         Also need to do the same process for the reversed string with opposite
         left and right, to handle cases like '(()'.
         '''
-        def check(s, leftParen):
-            maxLen = left = right = 0
+        def check(s, left_paren):
+            max_len = left = right = 0
             for c in s:
-                if c == leftParen:
+                if c == left_paren:
                     left += 1
                 else:
                     right += 1
                 if left == right:
-                    maxLen = max(maxLen, 2 * right)
+                    max_len = max(max_len, 2 * right)
                 elif right > left:
                     left = right = 0
-            return maxLen
+            return max_len
         return max(check(s, '('), check(s[::-1], ')'))
