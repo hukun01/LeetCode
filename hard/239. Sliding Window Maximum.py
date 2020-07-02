@@ -13,7 +13,7 @@ class Solution:
            Note that we only start adding element once we see the first complete window.
         """
         ans = []
-        q = collections.deque()
+        q = deque()
         for i, n in enumerate(nums):
             while q and nums[q[-1]] < n:
                 q.pop()
