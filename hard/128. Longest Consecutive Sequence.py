@@ -12,14 +12,15 @@ class Solution:
         Overall, we iterate the list at most twice, so time is O(N).
         '''
         longest = 0
-        numSet = set(nums)
+        num_set = set(nums)
         for n in nums:
-            # below if condition is crucial, we are looking for the start of the sequence
-            if n - 1 not in numSet:
-                currNum = n
-                currLen = 1
-                while currNum + 1 in numSet:
-                    currNum += 1
-                    currLen += 1
-                longest = max(longest, currLen)
+            # we are looking for the start of the sequence
+            if n - 1 in num_set:
+                continue
+            start = n
+            curr_len = 1
+            while start + 1 in num_set:
+                start += 1
+                curr_len += 1
+            longest = max(longest, curr_len)
         return longest

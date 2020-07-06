@@ -4,12 +4,12 @@ class Solution:
         '''
         1/2 Greedy. The key is to write concise code.
         '''
-        sIdx = tIdx = 0
-        while sIdx < len(s) and tIdx < len(t):
-            if s[sIdx] == t[tIdx]:
-                sIdx += 1
-            tIdx += 1
-        return sIdx == len(s)
+        s_idx = t_idx = 0
+        while s_idx < len(s) and t_idx < len(t):
+            if s[s_idx] == t[t_idx]:
+                s_idx += 1
+            t_idx += 1
+        return s_idx == len(s)
         '''
         2/2 Binary search with time O(T) + O(S*log(T))
         This is better at handling scenarios where there are many 's' but one 't'.

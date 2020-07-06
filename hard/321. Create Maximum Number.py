@@ -1,0 +1,26 @@
+# 321. Create Maximum Number
+class Solution:
+    def maxNumber(self, nums1: List[int], nums2: List[int], k: int) -> List[int]:
+        '''
+        Divide and conquer.
+        Pick the largest number from each array with certain length k1, k2
+        that k1 + k2 == k.
+        Merge the two largest numbers.
+        Try all the possible k1 in [0, k], and k2 == k - k1.
+        '''
+        def prep(nums, k):
+            drop = len(nums) - k
+            out = []
+            for num in nums:
+                while drop and out and out[-1] < num:
+                    out.pop()
+                    drop -= 1
+                out.append(num)
+            return out[:k]
+
+        def merge(a, b):
+            return [max(a, b).pop(0) for _ in a+b]
+
+        return max(merge(prep(nums1, i), prep(nums2, k-i))
+                   for i in range(k+1)
+                   if i <= len(nums1) and k-i <= len(nums2))

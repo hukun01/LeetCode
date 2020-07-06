@@ -2,7 +2,12 @@
 class Solution:
     def nthUglyNumber(self, n: int) -> int:
         '''
-        
+        Following an ugly number 1, the next ugly number must be min of
+        2 * 1, 3 * 1, 5 * 1.
+        The key is that we don't want to repeatedly add any ugly number,
+        so if 2 * 1 is used, next time we should look at
+        2 * 2, 3 * 1, 5 * 1.
+        Hence, we keep a separate index for each factor, respectively.
         '''
         ugly = [0] * n
         ugly[0] = 1
