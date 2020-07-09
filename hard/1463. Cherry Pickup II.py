@@ -8,9 +8,7 @@ class Solution:
         R, C = len(grid), len(grid[0])
         @functools.lru_cache(None)
         def dfs(row, c1, c2):
-            if row == R:
-                return 0
-            if not 0 <= c1 < C or not 0 <= c2 < C:
+            if row == R or not 0 <= c1 < C or not 0 <= c2 < C:
                 return 0
             r = grid[row]
             if c1 != c2:
@@ -18,9 +16,9 @@ class Solution:
             else:
                 ans = r[c1]
             
-            nextMax = 0
+            next_max = 0
             for n1 in range(c1 - 1, c1 + 2):
                 for n2 in range(c2 - 1, c2 + 2):
-                    nextMax = max(nextMax, dfs(row + 1, n1, n2))
-            return ans + nextMax
-        return dfs(0, 0, len(grid[0]) - 1)
+                    next_max = max(next_max, dfs(row + 1, n1, n2))
+            return ans + next_max
+        return dfs(0, 0, C - 1)

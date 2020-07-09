@@ -1,3 +1,4 @@
+# 15. 3Sum
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         '''
@@ -9,7 +10,7 @@ class Solution:
         nums.sort()
         answer = set()
         for i, a in enumerate(nums[:-2]):
-            if i > 0 and a == nums[i-1]:
+            if i-1 >= 0 and a == nums[i-1]:
                 continue
             seen = set()
             for c in nums[i+1:]:
@@ -17,4 +18,29 @@ class Solution:
                 if b in seen:
                     answer.add((a, b, c))
                 seen.add(c)
-        return list(map(list, answer))
+        return [list(triplet) for triplet in answer]
+        '''
+        Another style.
+        '''
+        nums.sort()
+        ans = []
+        for l in range(len(nums) - 2):
+            if l - 1 >= 0 and nums[l - 1] == nums[l]:
+                continue
+            m = l + 1
+            r = len(nums) - 1
+            while m < r:
+                total = nums[l] + nums[m] + nums[r]
+                if total > 0:
+                    r -= 1
+                elif total < 0:
+                    m += 1
+                else:
+                    ans.append([nums[l], nums[m], nums[r]])
+                    while m + 1 <= r and nums[m] == nums[m + 1]:
+                        m += 1
+                    while r - 1 >= m and nums[r] == nums[r - 1]:
+                        r -= 1
+                    m += 1
+                    r -= 1
+        return ans
