@@ -1,3 +1,4 @@
+# 430. Flatten a Multilevel Doubly Linked List
 """
 # Definition for a Node.
 class Node:
@@ -10,16 +11,19 @@ class Node:
 class Solution:
     def flatten(self, head: 'Node') -> 'Node':
         node = head
-        cachedNexts = []
-        while node:
+        prev = None
+        cached_nexts = []
+        while node or cached_nexts:
+            if not node:
+                node = cached_nexts.pop()
+                continue
+            if prev:
+                prev.next = node
+                node.prev = prev
+            prev = node
             if node.child:
-                cachedNexts.append(node.next) # cache the most recent next before entering child list
-                node.next = node.child
-                node.child.prev = node
-                node.child = None
-            elif not node.next and cachedNexts:
-                node.next = cachedNexts.pop() # return to the parent list's next
-                if node.next:
-                    node.next.prev = node
-            node = node.next
+                cached_nexts.append(node.next)
+                node.child, node = None, node.child
+            else:
+                node = node.next
         return head

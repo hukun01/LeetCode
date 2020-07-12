@@ -8,7 +8,7 @@ class Solution:
         them at the end.
         Another approach is to do BFS.
         '''
-        ans = collections.defaultdict(list)
+        ans = defaultdict(list)
         upper = 0
         for r in range(len(nums)):
             for c, x in enumerate(nums[r]):
