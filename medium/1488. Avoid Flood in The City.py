@@ -33,27 +33,29 @@ class Solution:
     
         '''
         2/2 Binary search.
-        
+        Collect the dry days, and the rained lakes.
+        When a lake rains again, find the min dry day that's greater than the
+        lake's previous rain day, and dry the lake (pop out that dry day).
+        If no such dry day can be found, there's no answer.
         '''
         from sortedcontainers import SortedSet
-        n = len(rains)
-        res = [-1] * n
         rained = dict() # { lake: day } in chrono order
+        ans = [-1] * len(rains)
         dry_days = SortedSet()
-
         for day, lake in enumerate(rains):
             if lake == 0:
                 dry_days.add(day)
             else:
-                if lake in rained: # flood's coming. Find a dry day to empty this lake
-                    # search for a first dry day after the lake's previous raining day
-                    min_dry_day_idx = dry_days.bisect_right(rained[lake])
-                    if min_dry_day_idx == len(dry_days):
+                # flood's coming. Find a dry day to empty this lake
+                # search for a first dry day after the lake's previous raining day
+                if lake in rained:
+                    dry_day_idx = dry_days.bisect_right(rained[lake])
+                    if dry_day_idx == len(dry_days):
                         return []
-                    res[dry_days[min_dry_day_idx]] = lake
-                    dry_days.pop(min_dry_day_idx)
+                    ans[dry_days[dry_day_idx]] = lake
+                    dry_days.pop(dry_day_idx)
                 rained[lake] = day
 
         for day in dry_days:
-            res[day] = 1 # can be anything in [1, 10^9]
-        return res
+            ans[day] = 1 # can be anything in [1, 10^9]
+        return ans

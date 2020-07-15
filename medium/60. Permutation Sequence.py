@@ -11,10 +11,8 @@ class Solution:
         
         Note that after we take the nums[idx], we need to remove it.
         '''
-        fact = 1
         nums = list(range(1, n + 1))
-        for i in nums:
-            fact *= i
+        fact = math.factorial(nums[-1])
         ans = []
         k -= 1
         for i in range(n):

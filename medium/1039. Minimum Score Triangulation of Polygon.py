@@ -16,7 +16,7 @@ class Solution:
         '''
         2/2 DP bottom up
         Let f[i][j] be the answer for A[i:j]
-        f[i][j] = f[i][k] + f[k][j] + min(A[i] * A[k] * A[j] for k in [i+1, j))
+        f[i][j] = min(f[i][k] + f[k][j] + A[i] * A[k] * A[j] for k in [i+1, j))
         Final anser is f[0][end].
         Note that, since we build big chunks of f[i][j] based on small ones,
         we need to enumerate all i~j intervals from smallest size to largest.
