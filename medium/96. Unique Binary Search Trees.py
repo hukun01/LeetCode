@@ -13,7 +13,7 @@ class Solution:
         since the value of G(n) depends on the values of G(0) … G(n-1).
         '''
         g = [0] * (n + 1)
-        g[0] = g[1] = 1
+        g[0] = 1
         for x in range(1, n+1):
             g[x] = sum(g[i-1] * g[x-i] for i in range(1, x+1))
         return g[n]
