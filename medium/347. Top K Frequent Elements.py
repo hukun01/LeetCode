@@ -1,3 +1,4 @@
+# 347. Top K Frequent Elements
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         '''
@@ -6,23 +7,21 @@ class Solution:
         but the word is correctly ordered. But we keep the heap size at most k, and sort
         the heap with O(klogk) time.
         '''
-        heap = []
-        for num, freq in collections.Counter(nums).items():
-            heapq.heappush(heap, (freq, num))
-            if len(heap) > k:
-                heapq.heappop(heap)
-
-        return [x[1] for x in sorted(heap, key=lambda t: (-t[0], t[1]))]
+        ans = []
+        for n, f in Counter(nums).items():
+            if len(ans) == k:
+                heapq.heappushpop(ans, (f, n))
+            else:
+                heapq.heappush(ans, (f, n))
+        return [p[1] for p in ans]
 
         '''
         2/2 Bucket sort the frequency-num array, and pick the first k.
 
         Space is O(n) for the buckets, time is O(n) for counting + picking the
         first k nums in the buckets.
-
-
+        '''
         freqs = [[] for _ in nums]
-        for num, freq in collections.Counter(nums).items():
+        for num, freq in Counter(nums).items():
             freqs[-freq].append(num)
         return list(itertools.chain(*freqs))[:k]
-        '''
