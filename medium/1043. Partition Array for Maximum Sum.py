@@ -2,7 +2,7 @@
 class Solution:
     def maxSumAfterPartitioning(self, A: List[int], K: int) -> int:
         '''
-        DP.
+        1/2 DP.
         Let f[i] be the answer for A[:i].
         f[i] = 0
         f[i] = max(f[i - k] + curr_max * k for k in [1, min(i, K))
@@ -15,7 +15,7 @@ class Solution:
                 f[i] = max(f[i], f[i - k] + curr_max * k)
         return f[-1]
         '''
-        Memoized DFS.
+        2/2 Memoized DFS.
         '''
         @lru_cache(None)
         def dfs(start):
