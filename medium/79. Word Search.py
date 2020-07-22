@@ -6,19 +6,20 @@ class Solution:
         Also, comparing the char-count in word char-count in the board to check the
         existence helps a lot with performance.
         '''
-        if collections.Counter(word) - collections.Counter(ch for row in board for ch in row):
+        if Counter(word) - Counter(ch for row in board for ch in row):
             return False
-        def dfs(r, c, wIdx):
-            if wIdx == len(word):
+        R, C = len(board), len(board[0])
+        dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        def dfs(r, c, w_idx):
+            if w_idx == len(word):
                 return True
-            if not 0 <= r < len(board) or not 0 <= c < len(board[0]):
+            if not 0 <= r < R or not 0 <= c < C:
                 return False
-            for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
-                if board[r][c] != word[wIdx]:
-                    continue
-                board[r][c] = '#'
-                if dfs(r + dr, c + dc, wIdx + 1):
-                    return True
-                board[r][c] = word[wIdx]
+            if board[r][c] != word[w_idx]:
+                return False
+            board[r][c] = '#'
+            if any(dfs(r + dr, c + dc, w_idx + 1) for dr, dc in dirs):
+                return True
+            board[r][c] = word[w_idx]
             return False
-        return any(dfs(r, c, 0) for r in range(len(board)) for c in range(len(board[0])))
+        return any(dfs(r, c, 0) for r in range(R) for c in range(C))
