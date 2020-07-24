@@ -10,17 +10,17 @@ class Solution:
         STEP 4: Find order of items within each group.
         STEP 5. Combine ordered groups.
         '''
-        def get_top_order(graph, indegree):
+        def get_top_order(successors, indegree):
             top_order = []
-            free = [node for node in range(len(graph)) if indegree[node] == 0]
+            free = [node for node in range(len(successors)) if indegree[node] == 0]
             while free:
                 v = free.pop()
                 top_order.append(v)
-                for u in graph[v]:
+                for u in successors[v]:
                     indegree[u] -= 1
                     if indegree[u] == 0:
                         free.append(u)
-            return top_order if len(top_order) == len(graph) else []
+            return top_order if len(top_order) == len(successors) else []
 
         # STEP 1: Create a new group for each item that belongs to no group. 
         for u in range(len(group)):

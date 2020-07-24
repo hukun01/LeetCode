@@ -1,3 +1,4 @@
+# 528. Random Pick with Weight
 class Solution:
     '''
     Accumulate the weights, and pick a random weight from [0, total),
@@ -11,6 +12,9 @@ class Solution:
 
     def pickIndex(self) -> int:
         w = random.randrange(self.runningSums[-1])
+
+        # Alternative: using built-in module: return bisect.bisect(self.a, r)
+
         return self.findLowerBound(self.runningSums, w)
     
     # Find the index of the lowest number that's greater than target
