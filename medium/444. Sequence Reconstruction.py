@@ -6,14 +6,15 @@ class Solution:
         '''
         succ = defaultdict(list)
         indegree = defaultdict(int)
-        nodes = set()
+        seen_in_seqs = set()
         for seq in seqs:
-            nodes |= set(seq)
-            indegree[seq[0]] += 0
+            seen_in_seqs.update(seq)
             for c1, c2 in zip(seq, seq[1:]):
                 succ[c1].append(c2)
                 indegree[c2] += 1
-        free = [k for k in indegree if indegree[k] == 0]
+        if len(seen_in_seqs) != len(org):
+            return False
+        free = list(seen_in_seqs - set(indegree))
         res = []
         while len(free) == 1:
             cur = free.pop()
@@ -23,16 +24,16 @@ class Solution:
                 if indegree[nex] == 0:
                     free.append(nex)
 
-        return len(free) <= 1 and len(res) == len(nodes) and res == org
+        return len(free) <= 1 and res == org
         '''
-        2/2 
+        2/2 Ensure orders between every pair in ord and seqs.
+        Similar to topological sort.
         '''
         START = -math.inf
         def get_pairs(seq):
-            prev = START
-            for val in seq:
-                yield prev, val
-                prev = val
+            yield START, seq[0]
+            for c1, c2 in zip(seq, seq[1:]):
+                yield c1, c2
         ranks = {x: i for i, x in enumerate(org)}
         ranks[START] = -1
         orders = set(get_pairs(org))
