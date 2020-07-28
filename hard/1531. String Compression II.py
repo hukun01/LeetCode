@@ -11,7 +11,7 @@ class Solution:
             if idx >= len(s):
                 return 0
             if s[idx] == prev_char:
-                incr = 1 if count == 1 or count == 9 or count == 99 else 0
+                incr = 1 if count in (1, 9, 99) else 0
 
                 # Always keep s[idx] when it's the same as prev_char,
                 # because deleting a char in the middle of

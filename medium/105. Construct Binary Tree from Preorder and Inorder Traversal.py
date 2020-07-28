@@ -1,3 +1,4 @@
+# 106. Construct Binary Tree from Inorder and Postorder Traversal
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
@@ -6,35 +7,31 @@
 #         self.right = None
 
 class Solution:
-    def buildTree(self, preorder, inorder):
-        """
-        :type preorder: List[int]
-        :type inorder: List[int]
-        :rtype: TreeNode
-        """
-        """ 1/3 Recursive approach:
-        def buildTree(preorder, pLeft, pRight, inorder, iLeft, iRight, inorderDict):
+    def buildTree(self, inorder: List[int], postorder: List[int]) -> TreeNode:
+        ''' 1/3 Recursive approach
+        '''
+        inorderDict = { k : v for v, k in enumerate(inorder) }
+        def buildTree(preorder, pLeft, pRight, inorder, iLeft, iRight):
             if pLeft > pRight:
                 return None
             root = TreeNode(preorder[pLeft])
             rootIndex = inorderDict[root.val]
             leftTreeSize = rootIndex - iLeft
             root.left = buildTree(preorder, pLeft + 1, pLeft + leftTreeSize, \
-                                 inorder, iLeft, rootIndex - 1, inorderDict)
+                inorder, iLeft, rootIndex - 1)
             root.right = buildTree(preorder, pLeft + leftTreeSize + 1, pRight, \
-                                  inorder, rootIndex + 1, iRight, inorderDict)
+                inorder, rootIndex + 1, iRight)
             return root
         
-        inorderDict = { k : v for v, k in enumerate(inorder) }
-        return buildTree(preorder, 0, len(preorder) - 1, inorder, 0, len(inorder) - 1, inorderDict)
-        """
-        """ 2/3 Another recursive without the map!
+        return buildTree(preorder, 0, len(preorder) - 1, inorder, 0, len(inorder) - 1)
+        
+        ''' 2/3 Another recursive without the map!
         Each recursive call gets told where to stop, and it tells its subcalls where to stop. 
         It gives its own root value as stopper to its left subcall, 
         and gives its parent`s stopper as stopper to its right subcall.
         Essentially, this is the same as above - using preorder to locate the root value, and 
         using inorder to locate the left and right subtrees.
-
+        '''
         def build(stop):
             if inorder and inorder[0] != stop:
                 root = TreeNode(preorder.pop(0))
@@ -43,9 +40,8 @@ class Solution:
                 root.right = build(stop)
                 return root
         return build(None)
-        """
-        """ 3/3 Iterative approach:
-        """
+        ''' 3/3 Iterative approach:
+        '''
         if not preorder:
             return None
         inorderMap = { k : v for v, k in enumerate(inorder) }
