@@ -1,3 +1,4 @@
+# 106. Construct Binary Tree from Inorder and Postorder Traversal
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
@@ -7,31 +8,30 @@
 
 class Solution:
     def buildTree(self, inorder: List[int], postorder: List[int]) -> TreeNode:
-        """
+        '''
+        1/3 Recursive approach
         The use of postorder is to find the root; 
         the use of inorder is to find the left subtree and the right subtree.
-        Also use a inorderDict to have fast access to root index.
-        """
-        """ 1/3 Recursive approach:
-        def buildTree(inorder, iLeft, iRight, postorder, pLeft, pRight, inorderDict):
+        Also use a inorder_val_to_index to have fast access to root index.
+        '''
+        inorder_val_to_index = { k : v for v, k in enumerate(inorder) }
+        def buildTree(inorder, iLeft, iRight, postorder, pLeft, pRight):
             if iLeft > iRight:
                 return None
             root = TreeNode(postorder[pRight])
-            rootIndex = inorderDict[root.val]
+            rootIndex = inorder_val_to_index[root.val]
             leftTreeSize = rootIndex - iLeft
             root.left = buildTree(inorder, iLeft, rootIndex - 1, \
-                                  postorder, pLeft, pLeft + leftTreeSize - 1, inorderDict)
+                postorder, pLeft, pLeft + leftTreeSize - 1)
             root.right = buildTree(inorder, rootIndex + 1, iRight, \
-                                  postorder, pLeft + leftTreeSize, pRight - 1, inorderDict)
+                postorder, pLeft + leftTreeSize, pRight - 1)
             return root
 
-        inorderDict = { k : v for v, k in enumerate(inorder) }
-        return buildTree(inorder, 0, len(inorder) - 1, postorder, 0, len(postorder) - 1, inorderDict)
-        """
-        """ 2/3 Another recursive without the map!
+        return buildTree(inorder, 0, len(inorder) - 1, postorder, 0, len(postorder) - 1)
+        ''' 2/3 Another recursive without the map!
         Very similar to #105, except that we build the right subtree first based on postorder, and stop at left.
         Note that the stop value and if condition changed.
-
+        '''
         def build(stop):
             if inorder and inorder[-1] != stop:
                 root = TreeNode(postorder.pop())
@@ -40,10 +40,9 @@ class Solution:
                 root.left = build(stop)
                 return root
         return build(None)
-        """
 
-        """ Iterative approach:
-        """
+        ''' Iterative approach:
+        '''
         if not postorder:
             return None
         inorderMap = { value : index for index, value in enumerate(inorder) }

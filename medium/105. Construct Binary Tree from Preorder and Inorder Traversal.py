@@ -1,4 +1,4 @@
-# 106. Construct Binary Tree from Inorder and Postorder Traversal
+# 105. Construct Binary Tree from Preorder and Inorder Traversal
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
