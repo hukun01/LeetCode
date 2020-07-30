@@ -9,11 +9,11 @@ class Solution:
         T[0][1] = -prices[0]
         
         Transitions:
-        T[i][0] = max(T[i-1][0], T[i-1][1] + prices[i])
-        T[i-1][0] means rest from last day; T[i-1][1] + prices[i] means sell last stock.
+        T[i][0] = max(T[i-1][0], T[i-1][1] + p_i)
+        T[i-1][0] means rest from last day; T[i-1][1] + p_i means sell last stock.
 
-        T[i][1] = max(T[i-1][1], T[i-2][0] - prices[i])
-        T[i-1][1] means rest from last day; T[i-2][0] - prices[i] means buy after cooldown.
+        T[i][1] = max(T[i-1][1], T[i-2][0] - p_i)
+        T[i-1][1] means rest from last day; T[i-2][0] - p_i means buy after cooldown.
         '''
         if len(prices) < 2:
             return 0
