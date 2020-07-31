@@ -6,21 +6,19 @@ class Solution:
         Similar to 358. Rearrange String k Distance Apart.
         '''
         k = 2
-        freqs = Counter(S)
-        pq = [(-count, char) for char, count in freqs.items()]
-        heapify(pq)
-        if -pq[0][0] > (len(S) + (k - 1)) // k:
+        freqs = sorted([[c, b] for b, c in Counter(S).items()], reverse=True)
+        max_count = freqs[0][0]
+        if (max_count - 1) * k + sum(max_count == c[0] for c in freqs) > len(S):
             return ""
-        ans = []
-        while pq:
-            counts = []
-            for _ in range(k):
-                if not pq:
-                    break
-                count, char = heappop(pq)
-                if count + 1 != 0:
-                    counts.append((count + 1, char))
-                ans.append(char)
-            for count, char in counts:
-                heappush(pq, (count, char))
-        return ''.join(ans)
+
+        buckets = [[] for _ in range(max_count)]
+        i = 0
+        for c, b in freqs:
+            if c == max_count:
+                for bucket in buckets:
+                    bucket.append(b)
+            else:
+                for _ in range(c):
+                    buckets[i].append(b)
+                    i = (i + 1) % (max_count - 1)
+        return ''.join(itertools.chain(*buckets))
