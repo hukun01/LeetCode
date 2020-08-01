@@ -18,7 +18,7 @@ class Solution:
         also gets lined up at the end, so the total length would be
         (f_max - 1) * (n + 1) + n_max
         '''
-        freq = Counter(tasks).values()
+        freq = list(Counter(tasks).values())
         f_max = max(freq)
         n_max = sum(c == f_max for c in freq)
         
