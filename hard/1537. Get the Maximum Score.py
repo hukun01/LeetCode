@@ -3,6 +3,8 @@ class Solution:
     def maxSum(self, A: List[int], B: List[int]) -> int:
         '''
         Greedy.
+        Imagine the 2 arrays are 2 linked lists, and 2 lists interleaves
+        at the common values.
         If there's any common value, we can only select one of the
         two paths with greater sum. Same applies to the path segment
         between common values.

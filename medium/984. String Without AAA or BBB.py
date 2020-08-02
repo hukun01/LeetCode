@@ -2,18 +2,17 @@
 class Solution:
     def strWithout3a3b(self, A: int, B: int) -> str:
         '''
-        Greedy.
+        Buckets.
+        Similar to 358. Rearrange String k Distance Apart
+        and 1405. Longest Happy String.
         '''
-        ans = [''] * (A + B)
-        for i in range(len(ans)):
-            if i >= 2 and ans[i-1] == ans[i-2]:
-                use_a = ans[i-1] == 'b'
-            else:
-                use_a = A >= B
-            if use_a:
-                A -= 1
-                ans[i] = 'a'
-            else:
-                B -= 1
-                ans[i] = 'b'
-        return ''.join(ans)
+        (first, x), (second, y) = sorted([(A, 'a'), (B, 'b')], reverse=True)
+        buckets = [x + x] * (first // 2)
+        if first % 2 == 1:
+            buckets.append(x)
+        num_buckets = len(buckets)
+        bucket_idx = 0
+        for _ in range(second):
+            buckets[bucket_idx % num_buckets] += y
+            bucket_idx += 1
+        return ''.join(buckets[:min(num_buckets, bucket_idx + 1)])

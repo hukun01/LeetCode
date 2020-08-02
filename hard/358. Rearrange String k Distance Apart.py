@@ -15,21 +15,21 @@ class Solution:
         Note that if the (total length + (k - 1)) // k is less than the
         highest char frequency, then there's no way to reorganize.
         '''
-        counts = sorted([(count, char) for char, count in Counter(s).items()], reverse=True)
-        max_count = counts[0][0]
-        if (max_count - 1) * k + sum(c[0] == max_count for c in counts) > len(s):
+        freqs = sorted([[c, b] for b, c in Counter(s).items()], reverse=True)
+        max_count = freqs[0][0]
+        if (max_count - 1) * k + sum(c[0] == max_count for c in freqs) > len(s):
             return ""
         
         buckets = [[] for _ in range(max_count)]
         i = 0
-        for count, char in counts:
+        for count, char in freqs:
             if count == max_count:
                 for bucket in buckets:
                     bucket.append(char)
             else:
                 for _ in range(count):
                     buckets[i].append(char)
-                    i = (i+1) % (max_count-1)
+                    i = (i + 1) % (max_count - 1)
 
         return ''.join(itertools.chain(*buckets))
         '''

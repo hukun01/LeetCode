@@ -2,7 +2,7 @@
 class Solution:
     def reorganizeString(self, S: str) -> str:
         '''
-        Heap.
+        Buckets.
         Similar to 358. Rearrange String k Distance Apart.
         '''
         k = 2
@@ -13,12 +13,13 @@ class Solution:
 
         buckets = [[] for _ in range(max_count)]
         i = 0
-        for c, b in freqs:
-            if c == max_count:
+        for count, char in freqs:
+            if count == max_count:
                 for bucket in buckets:
-                    bucket.append(b)
+                    bucket.append(char)
             else:
-                for _ in range(c):
-                    buckets[i].append(b)
+                for _ in range(count):
+                    buckets[i].append(char)
                     i = (i + 1) % (max_count - 1)
+
         return ''.join(itertools.chain(*buckets))
