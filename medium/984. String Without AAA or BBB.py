@@ -3,8 +3,7 @@ class Solution:
     def strWithout3a3b(self, A: int, B: int) -> str:
         '''
         Buckets.
-        Similar to 358. Rearrange String k Distance Apart
-        and 1405. Longest Happy String.
+        Similar to 358. Rearrange String k Distance Apart.
         '''
         (first, x), (second, y) = sorted([(A, 'a'), (B, 'b')], reverse=True)
         buckets = [x + x] * (first // 2)

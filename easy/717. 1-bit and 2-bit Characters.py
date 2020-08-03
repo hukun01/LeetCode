@@ -8,8 +8,7 @@ class Solution:
         '''
         ones = 0
         for i in range(len(bits) - 2, -1, -1):
-            if bits[i] == 1:
-                ones += 1
-            else:
+            if bits[i] != 1:
                 break
+            ones += 1
         return ones % 2 == 0

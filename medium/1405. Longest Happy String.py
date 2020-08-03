@@ -3,7 +3,8 @@ class Solution:
     def longestDiverseString(self, a: int, b: int, c: int) -> str:
         '''
         Buckets.
-        Similar to 358. Rearrange String k Distance Apart.
+        Similar to 358. Rearrange String k Distance Apart
+        and 984. String Without AAA or BBB.
         '''
         (first, x), (second, y), (third, z) = sorted(
             [(a, 'a'), (b, 'b'), (c, 'c')], reverse=True)

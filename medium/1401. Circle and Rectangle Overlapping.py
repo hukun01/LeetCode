@@ -5,6 +5,8 @@ class Solution:
         Case by case analysis.
         First step is to translate coordination using circle center.
         In another word, treat the circle center as the origin.
+        This makes the distance calculation simpler.
+
         Then there are 3 cases:
         1. Circle is completely in the rectangle (distances from origin to all four vertex > radius).
         2. One vertex is in the circle (distance from origin to the closest vertex <= radius).

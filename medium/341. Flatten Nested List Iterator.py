@@ -1,3 +1,4 @@
+# 341. Flatten Nested List Iterator
 # """
 # This is the interface that allows for creating nested lists.
 # You should not implement it, or speculate about its implementation
@@ -24,30 +25,62 @@
 #        """
 
 class NestedIterator(object):
+    '''
+    Recursive structure to handle recursive data.
+    '''
+    def __init__(self, nestedList: [NestedInteger]):
+        self.list_iter = iter(nestedList) # traverse top level nested list.
+        self.curr_int = None
+        self.curr_iter = None # recursively traverse each NestedInteger.
+    
+    def next(self) -> int:
+        val = self.curr_int
+        self.curr_int = None
+        return val
+    
+    def hasNext(self) -> bool:
+        if self.curr_int is not None:
+            return True
+        if self.curr_iter and self.curr_iter.hasNext():
+            self.curr_int = self.curr_iter.next()
+            return True
+
+        next_val = next(self.list_iter, None)
+        if next_val is None:
+            return False
+        if next_val.isInteger():
+            self.curr_int = next_val.getInteger()
+        else:
+            self.curr_iter = NestedIterator(next_val.getList())
+        return self.hasNext()
+    
+    '''
+    Something that works but less elegant.
+    '''
 
     def __init__(self, nestedList: [NestedInteger]):
         self.data = nestedList
         self.pos = 0
-        self.nestedIter = None
+        self.nested_iter = None
 
     def next(self) -> int:
-        if self.nestedIter:
-            return self.nestedIter.next()
+        if self.nested_iter:
+            return self.nested_iter.next()
         else:
             val = self.data[self.pos].getInteger()
             self.pos += 1
             return val
 
     def hasNext(self) -> bool:
-        if self.nestedIter and self.nestedIter.hasNext():
+        if self.nested_iter and self.nested_iter.hasNext():
             return True
-        self.nestedIter = None
+        self.nested_iter = None
         if self.pos < len(self.data):
             element = self.data[self.pos]
             if element.isInteger():
                 return True
             else:
-                self.nestedIter = NestedIterator(element.getList())
+                self.nested_iter = NestedIterator(element.getList())
                 self.pos += 1
                 return self.hasNext()
         return False
