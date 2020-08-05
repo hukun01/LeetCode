@@ -16,28 +16,23 @@ class Solution:
         one by one and increment 'ans' each time.
         '''
         rows = []
-        for i, row in enumerate(grid):
+        n = len(grid)
+        for row in grid:
             count = 0
-            for r in row[::-1]:
-                if r == 0:
-                    count += 1
-                else:
+            for i in range(n-1, -1, -1):
+                if row[i] != 0:
                     break
+                count += 1
             rows.append(count)
-        n = len(rows)
         ans = 0
         for i in range(n):
             need = n - i - 1
             if rows[i] >= need:
                 continue
-            ok = False
-            for j in range(i, n):
-                if rows[j] >= need:
-                    ok = True
-                    break
-            if not ok:
+            found = next((j for j in range(i, n) if rows[j] >= need), None)
+            if not found:
                 return -1
-            for x in range(j, i, -1):
+            for x in range(found, i, -1):
                 rows[x], rows[x-1] = rows[x-1], rows[x]
                 ans += 1
         return ans

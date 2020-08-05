@@ -1,3 +1,4 @@
+# 380. Insert Delete GetRandom O(1)
 class RandomizedSet:
     '''
     Use a list and random.choice(list) to achieve randomized get().
@@ -12,39 +13,39 @@ class RandomizedSet:
         """
         Initialize your data structure here.
         """
-        self.locations = dict()
-        self.li = []
+        self.val_to_idx = dict()
+        self.vals = []
 
     def insert(self, val: int) -> bool:
         """
         Inserts a value to the set. Returns true if the set did not already contain the specified element.
         """
-        if val in self.locations:
+        if val in self.val_to_idx:
             return False
-        self.li.append(val)
-        self.locations[val] = len(self.li) - 1
+        self.vals.append(val)
+        self.val_to_idx[val] = len(self.vals) - 1
         return True
 
     def remove(self, val: int) -> bool:
         """
         Removes a value from the set. Returns true if the set contained the specified element.
         """
-        if val not in self.locations:
+        if val not in self.val_to_idx:
             return False
-        idx = self.locations[val]
-        self.locations.pop(val)
-        if idx < len(self.li) - 1:
-            lastVal = self.li[-1]
-            self.li[idx] = lastVal
-            self.locations[lastVal] = idx
-        self.li.pop()
+        idx = self.val_to_idx[val]
+        self.val_to_idx.pop(val)
+        if idx < len(self.vals) - 1:
+            lastVal = self.vals[-1]
+            self.vals[idx] = lastVal
+            self.val_to_idx[lastVal] = idx
+        self.vals.pop()
         return True
 
     def getRandom(self) -> int:
         """
         Get a random element from the set.
         """
-        return random.choice(self.li)
+        return random.choice(self.vals)
 
 
 # Your RandomizedSet object will be instantiated and called as such:

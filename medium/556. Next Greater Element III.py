@@ -1,11 +1,10 @@
+# 556. Next Greater Element III
 class Solution:
-    def nextGreaterElement(self, n):
-        """
-        :type n: int
-        :rtype: int
-        
-        An application of the next permutation. See 31. Next Permutation
-        """
+    def nextGreaterElement(self, n: int) -> int:
+        '''
+        An application of the next permutation.
+        Similar to 31. Next Permutation
+        '''
         s = list(str(n))
         # 1/4 step: find the first smaller-than-previous element
         i = len(s) - 2
@@ -23,4 +22,4 @@ class Solution:
         s[i + 1 :] = reversed(s[i + 1 :])
 
         val = int("".join(s))
-        return val if val <= ((1<<31) - 1) else -1
+        return val if val <= (1<<31) - 1 else -1
