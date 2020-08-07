@@ -8,8 +8,8 @@ class Solution:
         k -= 1
         while l < h:
             m = (l + h) // 2
-            greaterThanM = sum(n > m for n in nums)
-            if greaterThanM <= k:
+            greater_than_m = sum(n > m for n in nums)
+            if greater_than_m <= k:
                 h = m
             else:
                 l = m + 1
@@ -20,26 +20,26 @@ class Solution:
         '''
         def sort(start, end):
             while start != end:
-                pivotIdx = partition(start, end)
-                if len(nums) - k == pivotIdx:
-                    return nums[pivotIdx]
-                elif pivotIdx > len(nums) - k:
-                    end = pivotIdx - 1
+                pivot_idx = partition(start, end)
+                if len(nums) - k == pivot_idx:
+                    return nums[pivot_idx]
+                elif pivot_idx > len(nums) - k:
+                    end = pivot_idx - 1
                 else:
-                    start = pivotIdx + 1
+                    start = pivot_idx + 1
             return nums[start]
         
         def partition(start, end):
-            pivotIdx = random.randint(start, end)
-            pivot = nums[pivotIdx]
-            nums[end], nums[pivotIdx] = nums[pivotIdx], nums[end]
-            storedIdx = start
+            pivot_idx = random.randint(start, end)
+            pivot = nums[pivot_idx]
+            nums[end], nums[pivot_idx] = nums[pivot_idx], nums[end]
+            stored_idx = start
             for i in range(start, end): # excluding end
                 if nums[i] < pivot:
-                    nums[storedIdx], nums[i] = nums[i], nums[storedIdx]
-                    storedIdx += 1
-            nums[end], nums[storedIdx] = nums[storedIdx], nums[end]
+                    nums[stored_idx], nums[i] = nums[i], nums[stored_idx]
+                    stored_idx += 1
+            nums[end], nums[stored_idx] = nums[stored_idx], nums[end]
 
-            return storedIdx # do NOT return pivotIdx!
+            return stored_idx # do NOT return pivot_idx!
         
         return sort(0, len(nums) - 1)

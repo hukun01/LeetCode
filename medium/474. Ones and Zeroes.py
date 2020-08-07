@@ -2,7 +2,7 @@
 class Solution:
     def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
         '''
-        DP.
+        1/2 DP.
         Let f[i][j][k] be the answer for the first i strs, with j 0s, and k 1s.
         f[i][j][k] = max(item1, item2)
         item1: f[i-1][j][k], we don't take the i-th str
@@ -24,3 +24,24 @@ class Solution:
                         f[i][j][k] = f[i-1][j][k]
 
         return f[len(strs)][m][n]
+        '''
+        2/2 Memoized DFS.
+        Easier and more straightfoward, but not as good as bottom up DP in so many aspects.
+        '''
+        counts = []
+        for s in strs:
+            c = Counter(s)
+            counts.append((c['0'], c['1']))
+
+        @lru_cache(None)
+        def dfs(idx, m_remain, n_remain):
+            if idx == len(counts):
+                return 0
+            c0, c1 = counts[idx]
+            ans = 0
+            if m_remain >= c0 and n_remain >= c1:
+                ans = 1 + dfs(idx + 1, m_remain - c0, n_remain - c1)
+            ans = max(ans, dfs(idx + 1, m_remain, n_remain))
+            return ans
+
+        return dfs(0, m, n)
