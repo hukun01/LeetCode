@@ -1,3 +1,4 @@
+# 336. Palindrome Pairs
 class Solution:
     def palindromePairs(self, words: List[str]) -> List[List[int]]:
         '''
@@ -13,46 +14,42 @@ class Solution:
         3. w1[0:x] is a P, w2 is the reversed w1[x:], then w2 + w1 is a P. This covers case 2 when x is 0.
         4. w1[x:] is a P, w2 is the reversed w1[0:x], then w1 + w2 is a P. This covers case 1 when x is len(w1).
         '''
-        def isP(w):
+        def is_palin(w):
             return w == w[::-1]
-        mappings = { w: i for i, w in enumerate(words) }
+        word_to_idx = { w: i for i, w in enumerate(words) }
         ans = []
 
         # 1/2 A shorter translation of the last 2 cases above with extented coverages.
-        for w, a in mappings.items():
+        for w, i in word_to_idx.items():
             for cut in range(len(w) + 1):
                 left = w[:cut]
                 right = w[cut:]
-                if isP(left):
-                    rightReversed = right[::-1]
-                    if rightReversed in mappings:
-                        # case 2 and 3
-                        if mappings[rightReversed] != a:
-                            ans.append([mappings[rightReversed], a])
+                if is_palin(left) and (right_reversed := right[::-1]) in word_to_idx:
+                    # case 2 and 3
+                    if (j := word_to_idx[right_reversed]) != i:
+                        ans.append([j, i])
                 # We already checked the case (left == "", right == w), no need to check
                 # the case (left == w, right == "").
-                if cut != len(w) and isP(right):
-                    leftReversed = left[::-1]
-                    if leftReversed in mappings:
-                        # case 1 and 4
-                        ans.append([a, mappings[leftReversed]])
+                if cut != len(w) and is_palin(right) and (left_reversed := left[::-1]) in word_to_idx:
+                    # case 1 and 4
+                    ans.append([i, word_to_idx[left_reversed]])
         return ans
 
         '''
         2/2 A more straightforward translation of the 4 cases above.
         '''
         # case 1
-        if "" in mappings:
-            a = mappings[""]
+        if "" in word_to_idx:
+            a = word_to_idx[""]
             for b, w in enumerate(words):
-                if isP(w) and a != b:
+                if is_palin(w) and a != b:
                     ans.append([a, b])
                     ans.append([b, a])
         # case 2
         for a, w in enumerate(words):
             r = w[::-1]
-            if r in mappings:
-                b = mappings[r]
+            if r in word_to_idx:
+                b = word_to_idx[r]
                 if a != b:
                     ans.append([a, b])
         # case 3 and 4
@@ -60,10 +57,10 @@ class Solution:
             for x in range(1, len(w)):
                 left = w[:x]
                 right = w[x:]
-                rightReversed = right[::-1]
-                if isP(left) and rightReversed in mappings:
-                    ans.append([mappings[rightReversed], a])
-                leftReversed = left[::-1]
-                if isP(rightReversed) and leftReversed in mappings:
-                    ans.append([a, mappings[leftReversed]])
+                right_reversed = right[::-1]
+                if is_palin(left) and right_reversed in word_to_idx:
+                    ans.append([word_to_idx[right_reversed], a])
+                left_reversed = left[::-1]
+                if is_palin(right_reversed) and left_reversed in word_to_idx:
+                    ans.append([a, word_to_idx[left_reversed]])
         return ans
