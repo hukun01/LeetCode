@@ -8,7 +8,7 @@ class Solution:
         '''
         nums = [1] + nums + [1]
 
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dp(left, right):
             ans = 0
             for i in range(left+1, right):

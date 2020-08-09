@@ -4,7 +4,9 @@ class Solution:
         '''
         When seeing a right paren, try to find two right parens,
         if can't find enough, we need to insert it, otherwise use both
-        and advance index.
+        right parens and advance the index.
+        Note that the two right parens must be adjacent, so if the input
+        is "()()))", the min insertion count would be 3.
         '''
         ans = unmatched_left = 0
         n = len(s)

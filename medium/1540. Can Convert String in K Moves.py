@@ -13,8 +13,7 @@ class Solution:
         needed = Counter()
         for u, v in zip(s, t):
             if u != v:
-                # need to consider the case where u < v
-                needed[(ord(v) - ord(u) + 26) % 26] += 1
+                needed[(ord(v) - ord(u)) % 26] += 1
         for need, cnt in needed.items():
             if k // 26 + (k % 26 >= need) < cnt:
                 return False
