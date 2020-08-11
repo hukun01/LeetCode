@@ -5,12 +5,12 @@ class Solution:
             return -1
         preSums = [0] + list(itertools.accumulate(stones))
 
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dp(i, j, m):
             if (j - i + 1 - m) % (K - 1):
-                return inf
+                return math.inf
             if i == j:
-                return 0 if m == 1 else inf
+                return 0 if m == 1 else math.inf
             if m == 1:
                 return dp(i, j, K) + preSums[j + 1] - preSums[i]
             ans = math.inf
@@ -18,4 +18,4 @@ class Solution:
                 ans = min(ans, dp(i, mid, 1) + dp(mid + 1, j, m - 1))
             return ans
         ans = dp(0, len(stones) - 1, 1)
-        return ans if ans < inf else -1
+        return ans if ans < math.inf else -1
