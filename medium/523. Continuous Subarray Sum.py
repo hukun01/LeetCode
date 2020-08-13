@@ -7,20 +7,20 @@ class Solution:
         Based on modulus attribute: (x + n*k) % k = x,
         in which x can be 0, 1, ..., k-1.
         When we see x in 'seen', our target must be (x + n*k) because
-        it is monotonically increasing.
+        it is monotonically non-decreasing.
 
         Note that we need to check the existing sum's last index, in order
         to determine whether the subarray has at least 2 elements.
         '''
         seen = { 0: -1 }
-        runningSum = 0
+        running_sum = 0
         for i, n in enumerate(nums):
-            runningSum += n
+            running_sum += n
             if k != 0:
-                runningSum %= k
-            if runningSum in seen:
-                if i - seen[runningSum] > 1:
+                running_sum %= k
+            if running_sum in seen:
+                if i - seen[running_sum] > 1:
                     return True
             else:
-                seen[runningSum] = i
+                seen[running_sum] = i
         return False

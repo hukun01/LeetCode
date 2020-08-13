@@ -1,6 +1,42 @@
+# 301. Remove Invalid Parentheses
 class Solution:
     def removeInvalidParentheses(self, s: str) -> List[str]:
         '''
+        1/2 BFS.
+        The key is to stop further BFS once the longest valid parens are found.
+        '''
+        def isValid(s):
+            count = 0
+            for c in s:
+                if c == '(':
+                    count += 1
+                elif c == ')':
+                    if count == 0:
+                        return False
+                    count -= 1
+            return count == 0
+
+        ans = []
+        used = set([s])
+        q = deque([s])
+        found = False
+        while q and not found:
+            for _ in range(len(q)):
+                s = q.popleft()
+                if isValid(s):
+                    ans.append(s)
+                    found = True
+
+                for i, c in enumerate(s):
+                    if c not in "()":
+                        continue
+                    t = s[0:i] + s[i+1:]
+                    if t not in used:
+                        q.append(t)
+                        used.add(t)
+        return ans
+        '''
+        2/2 Recursive DFS.
         Check the sequence of parenthesis using counter, increment 1 when seeing '(',
         decrement 1 when seeing ')'. When counter is negative, we have extra ')'.
         When seeing the first extra ')', recursively process each new string with one ')' removed
@@ -13,33 +49,32 @@ class Solution:
         '''
         ans = []
 
-        # lastI denotes the s[:lastI] prefix that contains valid # of parens after the last removal,
-        # lastJ denotes the last index that we removed the extra paren from the prefix.
-        def dfs(s, lastI, lastJ, openParen, closedParen):
-            counter = collections.Counter()
-            i = lastI
-            while i < len(s) and counter[closedParen] <= counter[openParen]:
+        # last_i denotes the s[:last_i] prefix that contains valid # of parens after the last removal,
+        # last_j denotes the last index that we removed the extra paren from the prefix.
+        def dfs(s, last_i, last_j, open_paren, closed_paren):
+            counter = Counter()
+            i = last_i
+            while i < len(s) and counter[closed_paren] <= counter[open_paren]:
                 counter[s[i]] += 1
                 i += 1
-            if counter[closedParen] > counter[openParen]:
+            if counter[closed_paren] > counter[open_paren]:
                 # put i back to the right position as we incremented it before exiting the loop above,
                 # now i points to the first extra ')'.
                 i -= 1
                 # now there is one extra ')' that we need to delete,
                 # we can go back to delete one ')' from each position, skipping continuous duplicates.
-                for j in range(lastJ, i+1):
-                    if s[j] == closedParen and (j == lastJ or s[j-1] != closedParen):
+                for j in range(last_j, i+1):
+                    if s[j] == closed_paren and (j == last_j or s[j-1] != closed_paren):
                         # effectively removing s[j], and continue the processing with recursion,
                         # note that now the first i elements contain valid # of parenthesis.
-                        dfs(s[:j] + s[j+1:], i, j, openParen, closedParen)
+                        dfs(s[:j] + s[j+1:], i, j, open_paren, closed_paren)
             else:
                 # no extra ')', now we need to scan from right to left, or to exit the whole function.
-                if openParen == '(':
+                if open_paren == '(':
                     # we've processed from left to right, now reverse
                     # the input and parenthesis, to process from right to left.
                     dfs(s[::-1], 0, 0, ')', '(')
                 else:
                     ans.append(s[::-1])
-        dfs(s, 0,0,'(', ')')
+        dfs(s, 0, 0, '(', ')')
         return ans
-        

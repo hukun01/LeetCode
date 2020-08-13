@@ -26,6 +26,6 @@ class Solution:
                 node, p = p, p.parent
             return p
         r = node.right
-        while r and r.left:
+        while r.left:
             r = r.left
         return r

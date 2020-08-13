@@ -11,9 +11,7 @@ class Solution:
         while l <= h:
             m = (l + h) // 2
             hIdx = N - m
-            if citations[m] == hIdx:
-                return hIdx
-            elif citations[m] < hIdx:
+            if citations[m] < hIdx:
                 l = m + 1
             else:
                 h = m - 1
