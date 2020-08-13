@@ -15,37 +15,43 @@ class NumArray:
     '''
 
     def __init__(self, nums: List[int]):
-        n = len(nums)
-        self.tree = [0] * (n + 1)
-        for i, a in enumerate(nums, start = 1):
-            '''
-            # Simpler update, but slower as O(logN).
-            self.update(i-1, a)
-            '''
-            # O(1) update
-            self.tree[i] += a
-            if (parent_idx := i + low_bit(i)) <= n:
-                self.tree[parent_idx] += self.tree[i]
+        self.bit = BinaryIndexedTree(len(nums))
+        self.bit.initialize(nums)
 
     def update(self, i: int, val: int) -> None:
         dif = val - self.sumRange(i, i)
-        i += 1
-        while i < len(self.tree):
-            self.tree[i] += dif
-            i += low_bit(i)
-
-    @staticmethod
-    def query(tree, i):
-        i += 1
-        ans = 0
-        while i >= 1:
-            ans += tree[i]
-            i -= low_bit(i)
-        return ans
+        self.bit.update(i+1, dif)
 
     def sumRange(self, i: int, j: int) -> int:
-        return NumArray.query(self.tree, j) - NumArray.query(self.tree, i-1)
+        return self.bit.getPrefixSum(j+1) - self.bit.getPrefixSum(i)
 
+class BinaryIndexedTree:
+    def __init__(self, n):
+        self.sums = [0] * (n + 1)
+
+    # O(n) initialization. Better than using update() which leads to O(Ologn).
+    def initialize(self, nums):
+        assert len(nums) + 1 == len(self.sums)
+        
+        for i, a in enumerate(nums, start = 1):
+            self.sums[i] += a
+            if (parent_idx := i + self.low_bit(i)) <= len(nums):
+                self.sums[parent_idx] += self.sums[i]
+        
+    def low_bit(self, i):
+        return i & (-i)
+        
+    def update(self, i, val):
+        while i < len(self.sums):
+            self.sums[i] += val
+            i += self.low_bit(i)
+    
+    def getPrefixSum(self, i):
+        ans = 0
+        while i > 0:
+            ans += self.sums[i]
+            i -= self.low_bit(i)
+        return ans
 
 # Your NumArray object will be instantiated and called as such:
 # obj = NumArray(nums)
