@@ -21,7 +21,7 @@ class Solution:
                     if diff < delta:
                         ans = [i, target // i]
                         delta = diff
-                    
+
             return ans
         return min(get(num + 1), get(num + 2), key=lambda x: abs(x[1] - x[0]))
 
