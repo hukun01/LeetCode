@@ -13,7 +13,6 @@ class FooBar:
                 printFoo()
                 self.barLock.release()
 
-
     def bar(self, printBar: 'Callable[[], None]') -> None:
         for i in range(self.n):
             if self.barLock.acquire():
