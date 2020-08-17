@@ -37,20 +37,14 @@ class Solution:
 
         Below code can be refactored to make shorter, but it would be less clear.
         '''
+        # lower is the smallest possible relative count of left parens
+        # upper is the largest possible relative count of left parens
         lower = upper = 0
         for c in s:
             if c == '(':
                 lower += 1
                 upper += 1
             elif c == ')':
-                # **This is critical.**
-                # If lower is 0 now, it means we have
-                # used more stars as right parens,
-                # we should take those stars back and use
-                # them as empty, so we can skip this right
-                # paren here.
-                # The upper check will ensure that we don't
-                # have too many right parens.
                 if lower > 0:
                     lower -= 1
                 upper -= 1
