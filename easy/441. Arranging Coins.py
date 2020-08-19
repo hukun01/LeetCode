@@ -3,9 +3,13 @@ class Solution:
     def arrangeCoins(self, n: int) -> int:
         '''
         Middle school math.
-        Assume the answer is x, then n >= x(1 + x) / 2,
-        so x(1 + x) <= 2n.
-        Transform this into (x + 1/2)^2 - 1/4 <= 2n, then
-        x <= sqrt(2n + 1/4) - 1/2.
+        Assume the answer is x, we have below
+        n >= 1 + 2 + ... + x = x * (1 + x) / 2 > x * x / 2
+        x < sqrt(2n)
+        int(sqrt(2n)) is in [x, x + 1]
+        Now just need to ensure my sqrt is not too big.
         '''
-        return int((2 * n + 0.25) ** 0.5 - 0.5)
+        my_sqrt = int((2 * n) ** 0.5)
+        if my_sqrt * (1 + my_sqrt) // 2 > n:
+            my_sqrt -= 1
+        return my_sqrt
