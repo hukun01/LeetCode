@@ -2,6 +2,7 @@
 class Solution:
     def maxSideLength(self, mat: List[List[int]], threshold: int) -> int:
         '''
+        2D prefix sums + Binary search.
         Pre-calculate the sum of the rectangle whose bottom right is at (r, c),
         then the sum of the square from (top, left) to (bottom, right) can be
         calculated by preSums.
@@ -9,10 +10,10 @@ class Solution:
         longer length. Total time would be O(RC + min(R, C)), because for each length
         we only use once.
         '''
-        rows, cols = len(mat), len(mat[0])
-        pre = [[0] * (cols + 1) for _ in range(rows + 1)]
-        for r in range(rows):
-            for c in range(cols):
+        R, C = len(mat), len(mat[0])
+        pre = [[0] * (C + 1) for _ in range(R + 1)]
+        for r in range(R):
+            for c in range(C):
                 pre[r + 1][c + 1] = pre[r + 1][c] + pre[r][c + 1] - pre[r][c] + mat[r][c]
         
         # (r1, c1) is top left, (r2, c2) is bottom right
@@ -20,10 +21,10 @@ class Solution:
             return pre[r2][c2] - pre[r1][c2] - pre[r2][c1] + pre[r1][c1]
             
         ans = 0
-        for r in range(rows + 1):
-            for c in range(cols + 1):
+        for r in range(R + 1):
+            for c in range(C + 1):
                 length = ans + 1
-                while r + length <= rows and c + length <= cols and \
+                while r + length <= R and c + length <= C and \
                         squareSum(r, c, r + length, c + length) <= threshold:
                     ans = length
                     length += 1
