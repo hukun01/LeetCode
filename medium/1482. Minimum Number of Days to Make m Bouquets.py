@@ -1,4 +1,4 @@
-# 5455. Minimum Number of Days to Make m Bouquets
+# 1482. Minimum Number of Days to Make m Bouquets
 class Solution:
     def minDays(self, bloomDay: List[int], m: int, k: int) -> int:
         '''
@@ -11,8 +11,8 @@ class Solution:
             return -1
         l = min(bloomDay)
         h = max(bloomDay)
-        
-        def isGood(day):
+
+        def is_good(day):
             count = 0
             bouquets = 0
             for d in bloomDay:
@@ -25,10 +25,10 @@ class Solution:
                     count = 0
 
             return bouquets >= m
-            
+
         while l < h:
             mid = (l + h) // 2
-            if isGood(mid):
+            if is_good(mid):
                 h = mid
             else:
                 l = mid + 1
