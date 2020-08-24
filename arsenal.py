@@ -27,12 +27,33 @@ class BinaryIndexedTree:
             self.sums[i] += val
             i += self.low_bit(i)
 
-    def getPrefixSum(self, i):
+    def get_prefix_sum(self, i):
         ans = 0
         while i > 0:
             ans += self.sums[i]
             i -= self.low_bit(i)
         return ans
+
+'''
+A sliding window that maintains the current maximum.
+In every iteration, user is supposed to call pop_expired() before calling max().
+'''
+class MaxQueue:
+    def __init__(self, size):
+        self.queue = deque()
+        self.size = size
+
+    def pop_expired(self, pos):
+        if self.queue and pos - self.queue[0][1] >= self.size:
+            self.queue.popleft()
+
+    def push(self, x, pos):
+        while self.queue and self.queue[-1][0] <= x:
+            self.queue.pop()
+        self.queue.append([x, pos])
+
+    def max(self):
+        return self.queue[0][0]
 
 '''
 A sliding window that maintains the current minimum.
@@ -43,14 +64,14 @@ class MinQueue:
         self.queue = deque()
         self.size = size
 
+    def pop_expired(self, pos):
+        if self.queue and pos - self.queue[0][1] >= self.size:
+            self.queue.popleft()
+
     def push(self, x, pos):
         while self.queue and self.queue[-1][0] >= x:
             self.queue.pop()
         self.queue.append([x, pos])
-
-    def pop_expired(self, pos):
-        if self.queue and pos - self.queue[0][1] > self.size:
-            self.queue.popleft()
 
     def min(self):
         return self.queue[0][0]

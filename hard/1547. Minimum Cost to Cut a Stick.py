@@ -24,7 +24,7 @@ class Solution:
         2/2 DP.
         Note that we need to handle one base case separately: for sticks
         with length 1, there's nothing to cut, so cost is always 0.
-        
+
         '''
         cuts = sorted(cuts + [0, n])
         N = len(cuts)
