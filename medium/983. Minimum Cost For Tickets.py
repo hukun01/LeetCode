@@ -25,11 +25,11 @@ class Solution:
         f[i] = f[i-1] if day i is not in the plan;
         f[i] = min(f[i - x] + cost for x, cost in costs)
         '''
-        lastDay = days[-1]
-        f = [0] * (lastDay + 1)
+        last_day = days[-1]
+        f = [0] * (last_day + 1)
         days = set(days)
         costs = [(1, costs[0]), (7, costs[1]), (30, costs[2])]
-        for d in range(1, lastDay + 1):
+        for d in range(1, last_day + 1):
             if d not in days:
                 f[d] = f[d-1]
             else:
