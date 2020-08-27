@@ -13,7 +13,7 @@ class Solution:
         # this is the suffix sums.
         stoneValue = list(itertools.accumulate(stoneValue[::-1]))[::-1]
 
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(i):
             if i == len(stoneValue):
                 return 0
@@ -75,7 +75,7 @@ class Solution:
         According to LC judge, the memory usage is reduced from 140MB to 80MB.
         '''
         stoneValue = list(itertools.accumulate(stoneValue[::-1]))[::-1]
-        @functools.lru_cache(3) # 1/2 diffs than normal DFS: just need 3 entries
+        @lru_cache(3) # 1/2 diffs than normal DFS: just need 3 entries
         def dfs(i):
             if i == len(stoneValue):
                 return 0
@@ -119,25 +119,20 @@ class Solution:
         else:
             return "Bob"
         '''
-        4/4 Improved DP with O(1) space.
-        Note that in the straightforward DP, dp[i] relies on dp[i+1], dp[i+2], dp[i+3],
-        so we only need to keep track of those 
+        1/4 O(1) space DP
+        Let dp[i] be the highest extra score of Alice if we start from i.
+        From the end to the front, dp[i] is the max of below 3 options:
+        Take A[i], win take - dp[i+1]
+        Take A[i] + A[i+1], win take - dp[i+2]
+        Take A[i] + A[i+1] + A[i+2], win take - dp[i+3]
         '''
-        n = len(stoneValue)
-        for i in range(n-2, -1, -1):
-            stoneValue[i] += stoneValue[i+1]
-        moves = 3
-        dp = [0] * (moves + 1)
-        for i in range(n-1, -1, -1):
-            idx = i % len(dp)
-            dp[idx] = stoneValue[i] - dp[(i+1) % len(dp)]
-            for k in range(i+1, min(n, i+3)):
-                dp[idx] = max(dp[idx], stoneValue[i] - dp[(k+1) % len(dp)])
-        alice = dp[0]
-        bob = stoneValue[0] - alice
-        if alice == bob:
+        dp = [0] * 3
+        for i in range(len(stoneValue) - 1, -1, -1):
+            dp[i % 3] = max(sum(stoneValue[i:i + k]) - dp[(i + k) % 3] for k in (1, 2, 3))
+
+        if dp[0] == 0:
             return "Tie"
-        elif alice > bob:
+        elif dp[0] > 0:
             return "Alice"
         else:
             return "Bob"
