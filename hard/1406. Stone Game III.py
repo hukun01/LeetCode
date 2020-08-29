@@ -125,6 +125,10 @@ class Solution:
         Take A[i], win take - dp[i+1]
         Take A[i] + A[i+1], win take - dp[i+2]
         Take A[i] + A[i+1] + A[i+2], win take - dp[i+3]
+
+        Although dp[i] is Alice's extra score, it can be used as Bob's extra score,
+        when we compute dp[i-1] for Alice. dp[i] actually just denote the optimal
+        extra score one can get based on dp[i+1], dp[i+2], and dp[i+3].
         '''
         dp = [0] * 3
         for i in range(len(stoneValue) - 1, -1, -1):
