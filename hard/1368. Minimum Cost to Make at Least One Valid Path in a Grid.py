@@ -2,7 +2,37 @@
 class Solution:
     def minCost(self, grid: List[List[int]]) -> int:
         '''
-        1/2 DFS and BFS.
+        1/2 Dijkstra
+        Shortest path in graph.
+        Need to handle circle in the grid with a visited set.
+        To prune the search paths, we can use heap to track the existing costs
+        and only add the exploring nodes when the new cost is smaller.
+        '''
+        R, C = len(grid), len(grid[0])
+        nodes = [(0, (0, 0))]
+        end = (R - 1, C - 1)
+        visited = set()
+        dirs = { 1: (0, 1), 2: (0, -1), 3: (1, 0), 4: (-1, 0) }
+        while nodes:
+            cur_cost, cur_node = heappop(nodes)
+            if cur_node == end:
+                return cur_cost
+            r, c = cur_node
+            if (r, c) in visited:
+                continue
+            visited.add(cur_node)
+            d = grid[r][c]
+            for nd in range(1, 5):
+                dr, dc = dirs[nd]
+                nr, nc = dr + r, dc + c
+                if not 0 <= nr < R or not 0 <= nc < C:
+                    continue
+                if d != nd:
+                    heappush(nodes, (cur_cost + 1, (nr, nc)))
+                else:
+                    heappush(nodes, (cur_cost, (nr, nc)))
+        '''
+        2/2 DFS and BFS.
         From each position, start a DFS without changing direction, see
         how far we can go. This will define the minimum cost to reach
         the positions.
@@ -32,27 +62,3 @@ class Solution:
                 for dr, dc in dirs:
                     dfs(queue, r + dr, c + dc, cost)
         return dp[-1][-1]
-
-        '''
-        2/2 Dijkstra
-        Shortest path in graph.
-        Need to handle circle in the grid with a visited set.
-        To prune the search paths, we can use track the existing costs
-        and only add the exploring nodes when the new cost is smaller.
-        '''
-        rows, cols = len(grid), len(grid[0])
-        heap = [(0, 0, 0)]
-        dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-        visited = [[False] * cols for _ in range(rows)]
-        while heap:
-            cost, r, c = heapq.heappop(heap)
-            if visited[r][c]:
-                continue
-            visited[r][c] = True
-            if (r, c) == (rows-1, cols-1):
-                return cost
-            for dr, (dr, dc) in enumerate(dirs):
-                nr, nc = dr + r, dc + c
-                newCost = cost + (dr != grid[r][c]-1)
-                if 0 <= nr < rows and 0 <= nc < cols:
-                    heapq.heappush(heap, (newCost, nr, nc))
