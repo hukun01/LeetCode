@@ -50,13 +50,12 @@ class CombinationIterator:
         self.stack.append((0, i + 1, i + 1, path))
     
     def move_to_next(self) -> str:
-        while len(self.stack) > 0:
+        while len(self.stack) > 0 and self.next_comb is None:
             self.next_comb = self.step()
-            if self.next_comb is not None:
-                break
 
     def next(self) -> str:
         curr_comb = self.next_comb
+        self.next_comb = None
         self.move_to_next()
         return curr_comb
 
