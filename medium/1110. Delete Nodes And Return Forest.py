@@ -9,8 +9,9 @@
 class Solution:
     def delNodes(self, root: TreeNode, to_delete: List[int]) -> List[TreeNode]:
         '''
-        Start from a set 'ans' with root in it.
-        Iterate through the tree and delete node as we go.
+        Tree.
+        Key is to start from a set 'ans' with root node in it.
+        Preorder iterate through the tree and delete node as we go.
         We keep going down, if a node is in delete set, discard it from 'ans'.
         Everytime a node is deleted, we know the potential new trees - if
         it has children, its children becomes 2 new trees. Also, we need
