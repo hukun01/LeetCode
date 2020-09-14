@@ -1,17 +1,19 @@
+# 152. Maximum Product Subarray
 class Solution:
     def maxProduct(self, nums: List[int]) -> int:
         '''
-        f[i][0] = max(f[i-1][0] * nums[i], f[i-1][1] * nums[i], nums[i]) max positive
-        f[i][1] = min(f[i-1][1] * nums[i], f[i-1][0] * nums[i], nums[i]) min negative
+        DP.
+        For subarray problems, a typical decision we need to make is to
+        either append the current element to the previous subarray (if the
+        product is increasing),
+        or we start a new subarray with it (if the product is non-increasing).
+        Here, we want to keep track of the max product and min product so far,
+        as min and max can swap if the current element is negative.
         '''
-        f = [[0] * 2 for _ in range(2)]
-        f[0] = [nums[0], nums[0]]
-        ans = nums[0]
-        for i in range(1, len(nums)):
-            curr = i % 2
-            prev = 1 - curr
-            candidates = [f[prev][0] * nums[i], f[prev][1] * nums[i], nums[i]]
-            f[curr][0] = max(candidates)
-            f[curr][1] = min(candidates)
-            ans = max(ans, max(f[curr]))
+        ans = max_so_far = min_so_far = nums[0]
+        for a in nums[1:]:
+            candidates = [max_so_far * a, a, min_so_far * a]
+            max_so_far = max(candidates)
+            min_so_far = min(candidates)
+            ans = max(ans, max_so_far)
         return ans
