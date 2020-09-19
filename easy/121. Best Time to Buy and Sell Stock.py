@@ -1,9 +1,9 @@
+# 121. Best Time to Buy and Sell Stock
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        maxProfit = 0
-        currMin = float('inf') # don't use max(prices) due to empty input
+        ans = 0
+        min_so_far = math.inf # don't use max(prices) due to empty input
         for p in prices:
-            currMin = min(currMin, p)
-            currProfit = p - currMin
-            maxProfit = max(maxProfit, currProfit)
-        return maxProfit
+            min_so_far = min(min_so_far, p)
+            ans = max(ans, p - min_so_far)
+        return ans
