@@ -2,7 +2,7 @@
 class Solution:
     def numSubseq(self, nums: List[int], target: int) -> int:
         '''
-        Transform this problem into 2Sum.
+        Transform this problem into Two Sum.
         In the subsequence, we only care about min and max, so the 
         element order doesn't matter. We can sort the nums to make
         min() and max() operations fast.
