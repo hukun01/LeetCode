@@ -3,16 +3,16 @@ class Solution:
     def minOperations(self, n: int) -> int:
         '''
         Math.
-        Assuming the array is arr.
-        If n is odd, we need to balance arr[0] and arr[-1] for (n-1) times,
-        arr[1] and arr[-2] for (n-3) times, ... 
-        arr[(n-1)/2-1] and arr[(n+1)/2] for 2 times.
-        Total is (n-1)/2 * (2 + n - 1)/2 = n//2 * (n//2 + 1)
-
-        If n is even, we need to balance arr[0] and arr[-1] for (n-1) times,
-        arr[1] and arr[-2] for (n-3) times, ... 
-        arr[(n-1)/2] and arr[n/2] for 1 times.
-        Total is (n/2) * (1 + n - 1)/2 = n//2 * n//2
+        This is an arithmetic sequence of odd numbers with common difference
+        as 2.
+        Target is n, which is also the average number in array.
+        We only need to count the differences between target and the first
+        half of the numbers smaller than target.
+        The total of an arithmetic sequence is (a0 + ax) * count // 2
         '''
+        target = n
         count = n // 2
-        return count * (count + n % 2)
+        delta = -2
+        a0 = target - 1
+        ax = a0 + delta * (count - 1)
+        return (a0 + ax) * count // 2

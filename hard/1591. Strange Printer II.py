@@ -11,21 +11,23 @@ class Solution:
         We can also use topological sorting to check for cycles, but it
         doesn't help much on the runtime because C is small.
         '''
-        COLORS = 60
         R, C = len(A), len(A[0])
+        # top, left, bottom, right edge for each color
+        edges = [[R, C, 0, 0] for _ in range(61)]
+        colors = set()
+        for r in range(R):
+            for c in range(C):
+                color = A[r][c]
+                colors.add(color)
+                edges[color][0] = min(edges[color][0], r)
+                edges[color][1] = min(edges[color][1], c)
+                edges[color][2] = max(edges[color][2], r)
+                edges[color][3] = max(edges[color][3], c)
+
         nexts = defaultdict(set)
-        for color in range(1, COLORS + 1):
-            top, left, bottom, right = R, C, 0, 0
-            for r in range(R):
-                for c in range(C):
-                    if color != A[r][c]:
-                        continue
-                    top = min(top, r)
-                    left = min(left, c)
-                    bottom = max(bottom, r)
-                    right = max(right, c)
-            for r in range(top, bottom+1):
-                for c in range(left, right+1):
+        for color in colors:
+            for r in range(edges[color][0], edges[color][2]+1):
+                for c in range(edges[color][1], edges[color][3]+1):
                     if A[r][c] != color:
                         nexts[color].add(A[r][c])
         visited = set()
@@ -40,7 +42,7 @@ class Solution:
             visited.remove(color)
             return False
 
-        return not any(hasCycle(color) for color in range(1, COLORS + 1))
+        return not any(hasCycle(color) for color in colors)
         '''
         2/2 Greedy.
         Collects the edges for all colors, and try erase them one by one.
