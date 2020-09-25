@@ -1,6 +1,9 @@
 # 1590. Make Sum Divisible by P
 class Solution:
     def minSubarray(self, nums: List[int], p: int) -> int:
+        '''
+        Two Sum.
+        '''
         if (extra := sum(nums) % p) == 0:
             return 0
         seen = {0: -1}
