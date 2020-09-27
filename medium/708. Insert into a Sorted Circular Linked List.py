@@ -24,6 +24,7 @@ class Solution:
             return new
  
         prev, curr = head, head.next
+        toInsert = False
         while True:
             if prev.val <= insertVal <= curr.val:
                 # Case #1: insert the value in the middle.
