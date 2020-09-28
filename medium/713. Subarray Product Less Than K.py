@@ -15,9 +15,8 @@ class Solution:
         curr_product = 1
         for i, a in enumerate(nums):
             curr_product *= a
-            while left < i and curr_product >= k:
+            while left <= i and curr_product >= k:
                 curr_product //= nums[left]
                 left += 1
-            if curr_product < k:
-                ans += i - left + 1
+            ans += i - left + 1
         return ans

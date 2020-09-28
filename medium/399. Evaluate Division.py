@@ -1,7 +1,8 @@
+# 399. Evaluate Division
 class Solution:    
     def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
         '''
-        1/2 Using DFS
+        1/3 Using DFS
         To build the graph, encode each directed edge with (nextId, val) and reversed edge in a dict.
         Then do a DFS on the graph to find the path from a -> b.
         '''
@@ -33,7 +34,7 @@ class Solution:
             
         return ans
         '''
-        2/2 Using Union Find
+        2/3 Using Union Find
         '''
         uf = {}
         def find(a):
@@ -65,3 +66,16 @@ class Solution:
                 else:
                     ans.append(vA / vB)
         return ans
+        '''
+        3/3 Floyd-Warshall.
+        '''
+        quot = defaultdict(dict)
+        for (num, den), val in zip(equations, values):
+            quot[num][num] = quot[den][den] = 1.0
+            quot[num][den] = val
+            quot[den][num] = 1 / val
+        for k in quot:
+            for i in quot[k]:
+                for j in quot[k]:
+                    quot[i][j] = quot[i][k] * quot[k][j]
+        return [quot[num].get(den, -1.0) for num, den in queries]
