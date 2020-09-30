@@ -10,7 +10,7 @@ class Solution:
         '''
         n = len(A)
         for i in range(n):
-            while A[i] > 0 and A[i] <= n and A[A[i] - 1] != A[i]:
+            while 0 <= A[i] - 1 < n and A[A[i] - 1] != A[i]:
                 cached = A[A[i] - 1]
                 A[A[i] - 1] = A[i]
                 A[i] = cached
