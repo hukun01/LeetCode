@@ -22,7 +22,7 @@ class Solution:
                     continue
                 visitedIdx.add(b)
                 nextLevels.update([b - 1, b + 1] + maps[arr[b]])
-                maps.pop(arr[b])
+                maps.pop(arr[b]) # this is the key
             begins = nextLevels
 
         '''
@@ -41,4 +41,4 @@ class Solution:
                 if p not in visitedIdx:
                     visitedIdx.add(p)
                     q.append((step + 1, p))
-            maps.pop(arr[pos])
+            maps.pop(arr[pos]) # this is the key
