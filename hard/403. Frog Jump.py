@@ -19,3 +19,16 @@ class Solution:
                     break
             return False
         return dfs(1, 1)
+        '''
+        2/2 Dict + BFS.
+        '''
+        stone_steps = { stone: set() for stone in stones }
+        stone_steps[0].add(0)
+        for stone in stones:
+            for k in stone_steps[stone]:
+                for step in range(max(1, k - 1), k + 2):
+                    if (next_step := stone + step) in stone_steps:
+                        stone_steps[next_step].add(step)
+                        if next_step == stones[-1]:
+                            return True
+        return False

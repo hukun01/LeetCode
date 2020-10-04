@@ -9,6 +9,34 @@
 class Solution:
     def postorderTraversal(self, root: TreeNode) -> List[int]:
         '''
+        1/3 Stack.
+        postorder logic:
+        entry1:
+            visit(node.left)
+            visit(node.right)
+        entry2:
+            visit node
+
+        In the stack, push in two entries for the same node when going down,
+        one entry is used to find node's children, another is to visit itself
+        when going up. We can tell whether we are going down or up, by
+        comparing the two entries.
+        '''
+        if not root:
+            return []
+        stack = [root, root]
+        ans = []
+        while stack:
+            curr = stack.pop()
+            if stack and curr == stack[-1]:
+                if curr.right:
+                    stack += [curr.right, curr.right]
+                if curr.left:
+                    stack += [curr.left, curr.left]
+            else:
+                ans.append(curr.val)
+        return ans
+        '''
         1/2 Iterative approach using 1286's methodology.
         '''
         '''
