@@ -5,14 +5,17 @@ class Solution:
         Binary search.
         Notice that arr is sorted in increasing order and starts from 1, so
         the missing count in the first arr[:m+1] would be arr[m] - (m + 1).
-        The missing count monotonically goes up when m increases, so we can
-        do binary search.
+        The missing count monotonically goes non-decreasing when m increases,
+        so we can do binary search.
         The range of m is [0, len(arr)], if the missing count is less than k,
         we know the k-th missing number is on the right, otherwise it's on
         the left.
-        After the above search, we know that in the first l numbers the
-        missing count is k, so the answer is l + k, because we want to skip
-        k numbers that are missing in the first l numbers in arr.
+        After the above search, we know that either:
+        1. l == 0, in [1:arr[l]] the missing count is at least k, so the
+           answer is just k.
+        2. l > 0, in arr[:l], the missing count is X = arr[l-1] - (l-1+1) < k.
+           So the answer is arr[l-1] + k - X = l + k.
+        We can merge both cases to be l + k.
         '''
         l, r = 0, len(arr)
         while l < r:

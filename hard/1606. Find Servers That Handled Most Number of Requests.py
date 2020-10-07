@@ -20,7 +20,8 @@ class Solution:
             if len(available_servers) == 0:
                 continue
             expected_server_id = i % k
-            j = available_servers.bisect_left(expected_server_id) % len(available_servers)
+            j = available_servers.bisect_left(expected_server_id)
+            j %= len(available_servers)
             selected_server_id = available_servers.pop(j)
             num_reqs[selected_server_id] += 1
             free_server_events.add((time + duration, selected_server_id))

@@ -8,9 +8,9 @@ class Solution:
         just use 'abc', and for each '?', we pick the one from 'abc'
         that's different than the prev and the next chars.
         '''
-        candidates = {'a', 'b', 'c'}
+        candidates = set('abc')
         ans = []
-        prev = ""
+        prev = ''
         for i, c in enumerate(s):
             nex = s[i+1] if i+1 < len(s) else '?'
             cur = c if c != '?' else (candidates - {prev, nex}).pop()
