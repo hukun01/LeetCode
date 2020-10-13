@@ -1,19 +1,22 @@
+# 416. Partition Equal Subset Sum
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
         '''
         DFS with pruning. First, sort the nums with reversed order, so we can do pruning later.
         Second, we can start with the biggest number nums[0], because it must be in either sub-array.
         '''
-        if sum(nums) % 2 == 1:
+        if (total := sum(nums)) % 2 == 1:
             return False
-        half = sum(nums) // 2
-        nums.sort(reverse = True)
+        target = total // 2
 
-        def dfs(curr, i):
-            if curr >= half: return curr == half
-            return any(dfs(curr + nums[j], j) for j in range(i+1, len(nums)))
-        
-        return dfs(nums[0], 0)
+        @lru_cache(None)
+        def dfs(i, curr_sum):
+            if i == len(nums):
+                return False
+            if curr_sum >= target:
+                return curr_sum == target
+            return dfs(i + 1, curr_sum + nums[i]) or dfs(i + 1, curr_sum)
+        return dfs(0, 0)
         '''
         Let dp[i][j] denote whether the first i numbers can add up to a sum j.
         
@@ -24,8 +27,7 @@ class Solution:
         Hence, dp[j] = dp[j] or dp[j-nums[i]]
         Note that we need to reversely traverse the inner loop to ensure that we don't erase
         our own footprints.
-
-
+        '''
         total = sum(nums)
         if total % 2 == 1:
             return False
@@ -36,4 +38,3 @@ class Solution:
             for j in reversed(range(num, target+1)):
                 dp[j] = dp[j] or dp[j - num]
         return dp[target]
-        '''
