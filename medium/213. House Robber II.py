@@ -8,7 +8,7 @@ class Solution:
         '''
         if len(nums) <= 2:
             return max(nums + [0])
-        
+
         def rob1(nums):
             dp = [0] * len(nums)
             dp[0] = nums[0]
