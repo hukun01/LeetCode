@@ -2,7 +2,33 @@
 class Solution:
     def treeDiameter(self, edges: List[List[int]]) -> int:
         '''
-        Tree + recursion.
+        1/2 BFS twice.
+        The first BFS finds the farthest node A, starting from any node.
+        The second BFS finds the farthest node B, starting from A.
+        The distance between A and B is the longest path.
+        '''
+        graph = defaultdict(list)
+        for a, b in edges:
+            graph[a].append(b)
+            graph[b].append(a)
+
+        def bfs(src):
+            visited = {src}
+            q = deque([(src, 0)])  # (vertex, distance)
+            farthestNode, farthestDist = -1, 0
+            while q:
+                farthestNode, farthestDist = q.popleft()
+                for v in graph[farthestNode]:
+                    if v not in visited:
+                        visited.add(v)
+                        q.append((v, farthestDist + 1))
+            return farthestNode, farthestDist
+
+        farthestNode, _ = bfs(0)
+        _, dist = bfs(farthestNode)
+        return dist
+        '''
+        2/2 Tree + recursion.
         Diameter is the length sum of longest 2 paths that share the same root.
         Note that any node can be the root, and the two ends of the diameter
         path are (grand)children of the root.
