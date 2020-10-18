@@ -37,13 +37,18 @@ class Solution:
         to increase the total number of rooms, and we will go to the next room start time. 
         Also, as newStart >= currentEnd, the time has passed, so we need to move to the next end time.
         '''
-        starts = sorted([i[0] for i in intervals])
-        ends = sorted([i[1] for i in intervals])
-        room = 0
-        endIdx = 0
-        for start in starts:
-            if start < ends[endIdx]:
-                room += 1
-            else:
-                endIdx += 1
-        return room
+        if not intervals:
+            return 0
+        starts = sorted(i[0] for i in intervals)
+        ends = sorted(i[1] for i in intervals)
+        ans = 1
+        cur = 1
+        last_end_idx = 0
+        for i in range(1, len(starts)):
+            s = starts[i]
+            if s >= ends[last_end_idx]:
+                cur -= 1 
+                last_end_idx += 1
+            cur += 1
+            ans = max(ans, cur)
+        return ans
