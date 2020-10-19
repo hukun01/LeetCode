@@ -1,6 +1,7 @@
 class Solution:
     def minDominoRotations(self, A: List[int], B: List[int]) -> int:
         '''
+        Array.
         A critical observation is that, either A and B both match with A[0],
         or they both match with B[0]. Otherwise matching can't be done.
         To prove this, consider A as [a, b, b], B as [c, b, b], they can't match.
