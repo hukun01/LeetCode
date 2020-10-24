@@ -12,13 +12,11 @@ class Solution:
         because we already sorted by age.
         '''
         players = sorted((a, s) for a, s in zip(ages, scores))
-        ans = 0
         n = len(ages)
-        f = [0] * (n + 1)
-        for i, (a, s) in enumerate(players):
-            f[i] = s
+        f = [0] * n
+        for i, (_, score) in enumerate(players):
+            f[i] = score  # base case, where we start with current player.
             for j in range(i):
-                if players[j][1] <= s:
-                    f[i] = max(f[i], f[j] + s)
-            ans = max(ans, f[i])
-        return ans
+                if players[j][1] <= score:
+                    f[i] = max(f[i], f[j] + score)
+        return max(f)

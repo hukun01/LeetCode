@@ -2,6 +2,7 @@
 class Solution:
     def find132pattern(self, nums: List[int]) -> bool:
         '''
+        Stack.
         Reverse the input array, so our target transforms to:
         finding 231 pattern.
         For each number n, we find the number '2', s3, in the 231 pattern,
