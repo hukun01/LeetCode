@@ -22,7 +22,7 @@ class Solution:
             return farthestNode, farthestDist, len(visited) == len(cities)
 
         def diameterOfTree(cities):
-            anyNode = cities[0]
+            anyNode = next(iter(cities))
             farthestNode, _, is_valid_tree = bfs(anyNode, cities)
             if not is_valid_tree:
                 return 0
@@ -36,7 +36,7 @@ class Solution:
             
         ans = [0] * (n - 1)
         for state in range(1, 2 ** n):
-            cities = [i for i in range(n) if (state >> i) & 1 == 1]
+            cities = {i for i in range(n) if (state >> i) & 1 == 1}
             d = diameterOfTree(cities)
             if d > 0: ans[d - 1] += 1
         return ans
