@@ -11,9 +11,9 @@ class Solution:
         '''
         if not nums:
             return 0
-        dp = collections.defaultdict(collections.Counter)
+        dp = defaultdict(Counter)
         dp[0][-math.inf] = 1
-        
+
         # LIS_list: index is length of LIS, value is
         # the smallest ending number with that length.
         lisList = []

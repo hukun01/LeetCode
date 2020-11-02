@@ -1,3 +1,4 @@
+# 431. Encode N-ary Tree to Binary Tree
 """
 # Definition for a Node.
 class Node(object):
@@ -21,12 +22,8 @@ class Codec:
     
     Essentially, let rc manage its unbounded siblings with its left child chain.
     '''
-    def encode(self, root):
-        """Encodes an n-ary tree to a binary tree.
-        
-        :type root: Node
-        :rtype: TreeNode
-        """
+    # Encodes an n-ary tree to a binary tree.
+    def encode(self, root: 'Node') -> TreeNode:
         if not root:
             return None
         current = node = TreeNode(root.val)
@@ -38,12 +35,8 @@ class Codec:
                 current = current.left
         return node
 
-    def decode(self, data):
-        """Decodes your binary tree to an n-ary tree.
-        
-        :type data: TreeNode
-        :rtype: Node
-        """
+	# Decodes your binary tree to an n-ary tree.
+    def decode(self, data: TreeNode) -> 'Node':
         if not data:
             return None
         node = Node(data.val, [])

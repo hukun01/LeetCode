@@ -5,6 +5,15 @@ class RandomizedCollection:
         Initialize your data structure here.
         """
         '''
+
+        to insert a val in O(1), we need either array/list or dict
+        to remove a val in O(1), we need hash data structure, can be a dict
+        to getRamdom in O(1), we need randomly accessible data structures, an array
+        to achieve them all with duplicates
+        we need a dict {val:(idx, count)}, whose idx is the position in the list,
+        when we remove val, we get its idx, and count, if count > 0, we decrement it, and remove it;
+        if count == 0, we remove the entry from the dict.
+        To remove the val, we swap it with the tail of the list, and pop the list.
         Use a defaultdict(set) to store the val: {idx1, idx2} mapping.
         Remember to update the idx when removing a val.
         '''
