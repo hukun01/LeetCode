@@ -2,6 +2,7 @@
 class Solution:
     def mostVisited(self, n: int, rounds: List[int]) -> List[int]:
         '''
+        Brain teaser.
         Only think about the extra part of all rounds, no need to simulate.
         The extra part is defined by the start and end of total rounds.
         '''

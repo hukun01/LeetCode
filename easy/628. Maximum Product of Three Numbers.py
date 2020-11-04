@@ -5,7 +5,7 @@ class Solution:
         If there is no negative numbers in the biggest 3, apparently
         the biggest 3 will be used for product.
         If there are negative numbers in the biggest 3, the smallest 2
-        numbers must all be negative, then biggest1 * smallest1 * smallest3
+        numbers must all be negative, then biggest1 * smallest1 * smallest2
         is the max product.
         If all biggest 3 are negative, the biggest 3 will still make
         the biggest product.

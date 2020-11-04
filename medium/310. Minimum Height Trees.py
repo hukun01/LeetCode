@@ -2,28 +2,28 @@
 class Solution:
     def findMinHeightTrees(self, n: int, edges: List[List[int]]) -> List[int]:
         '''
-        Topological sorting.
+        Topological sort.
         The roots with min heights must be the ones in the middle.
         Start from the leaves (nodes with one neighbor), remove them
         from the tree, and remove them from their neighbors, so some
         of the neighbors become leaves. Keep doing this until the total
         number of nodes become 1 or 2, then the current leaves would be
-        the roots with min heights.
-        One edge case is that if there is no edges and just 1 node, [0]
+        the roots with min heights. It's one or two because either can
+        form a tree where we can find min height trees, it can't go up to
+        3 otherwise the graph must have a cycle.
+        One edge case is that if there is 0 edges and just 1 node, [0]
         is the answer.
         '''
-        tree = [set() for _ in range(n)]
+        tree = defaultdict(set)
         for a, b in edges:
             tree[a].add(b)
             tree[b].add(a)
-        leaves = [node for node, neighbors in enumerate(tree) if len(neighbors) == 1]
+        leaves = [node for node, neighbors in tree.items() if len(neighbors) <= 1]
         while n > 2:
             n -= len(leaves)
-            new_leaves = []
             for l in leaves:
-                single_neighbor = tree[l].pop()
-                tree[single_neighbor].remove(l)
-                if len(tree[single_neighbor]) == 1:
-                    new_leaves.append(single_neighbor)
-            leaves = new_leaves
-        return leaves if leaves else [0]
+                for neighbor in tree[l]:
+                    tree[neighbor].remove(l)
+                tree.pop(l)
+            leaves = [node for node, neighbors in tree.items() if len(neighbors) <= 1]
+        return leaves or [0]
