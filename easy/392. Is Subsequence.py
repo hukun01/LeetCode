@@ -3,6 +3,8 @@ class Solution:
     def isSubsequence(self, s: str, t: str) -> bool:
         '''
         1/2 Greedy. The key is to write concise code.
+        Time O(max(S, T))
+        Space O(1)
         '''
         s_idx = t_idx = 0
         while s_idx < len(s) and t_idx < len(t):

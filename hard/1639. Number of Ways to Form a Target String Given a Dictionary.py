@@ -20,9 +20,12 @@ class Solution:
             return 0
         f = [[0] * (t + 1) for _ in range(w + 1)]
         f[0][0] = 1
-        count = [Counter(word[i] for word in words) for i in range(w)]
-        for i in range(1, w+1, 1):
-            f[i][0] = 1
-            for j in range(1, min(i+1, t + 1), 1):
-                f[i][j] = (f[i-1][j] + f[i-1][j-1] * count[i-1][target[j-1]]) % MOD
+        for k in range(1, w + 1):
+            freqs = Counter()
+            for word in words:
+                freqs[word[k-1]] += 1
+            f[k][0] = 1
+            for i in range(1, t + 1):
+                f[k][i] = f[k-1][i] + f[k-1][i-1] * freqs[target[i-1]]
+                f[k][i] %= MOD
         return f[w][t]
