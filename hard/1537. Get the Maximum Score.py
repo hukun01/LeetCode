@@ -6,7 +6,7 @@ class Solution:
         Imagine the 2 arrays are 2 linked lists, and 2 lists interleaves
         at the common values.
         If there's any common value, we can only select one of the
-        two paths with greater sum. Same applies to the path segment
+        two paths with the greater sum. Same applies to the path segment
         between common values.
         Keep track of the sums for the two paths a and b, and move
         the step in the array with smaller value, because we don't want
