@@ -21,8 +21,7 @@ class Solution:
         '''
         ans = a = b = 0
         i = j = 0
-        n1, n2 = len(A), len(B)
-        while i < n1 and j < n2:
+        while i < len(A) and j < len(B):
             if A[i] < B[j]:
                 a += A[i]
                 i += 1
