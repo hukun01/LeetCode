@@ -12,20 +12,18 @@ class Solution:
 
         Also, we can eliminate smaller digits if there's any large digit with the same cost.
         '''
-        big = {}
+        bigger_cost_to_idx = {}
         for i, c in enumerate(cost):
-            big[c] = i + 1
-            
-        cost = list(map(tuple, big.items()))
+            bigger_cost_to_idx[c] = i + 1
 
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(t):
             if t == 0:
                 return -1
             if t < 0:
                 return 0
             m = 0
-            for c, digit in cost:
+            for c, digit in bigger_cost_to_idx.items():
                 x = dfs(t - c)
                 if x == 0:
                     continue
@@ -35,12 +33,13 @@ class Solution:
                     m = max(m, digit)
             return m
         x = dfs(target)
-        return str(x) if x else '0'
-    
+        return str(x)
         '''
         2/2 Bottom up DP. Same idea as 1/2 without the trivial optimization with elimination.
         '''
         dp = [0] + [-1] * target
         for t in range(1, target + 1):
-            dp[t] = max((dp[t - c] * 10 + i + 1 for i, c in enumerate(cost) if t - c >= 0), default=-1)
+            dp[t] = max(
+                (dp[t - c] * 10 + i + 1 for i, c in enumerate(cost) if t - c >= 0),
+                default=-1)
         return str(max(dp[t], 0))
