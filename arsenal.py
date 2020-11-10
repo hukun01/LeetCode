@@ -5,6 +5,8 @@ A collection of useful data structures.
 '''
 One-dimensional binary indexed tree. An optional initialize() is provided
 to initialize the tree in O(n) time.
+
+See more in https://www.topcoder.com/thrive/articles/Binary%20Indexed%20Trees
 '''
 class BinaryIndexedTree:
     def __init__(self, n):
@@ -20,9 +22,15 @@ class BinaryIndexedTree:
                 self.sums[parent_idx] += self.sums[i]
 
     def low_bit(self, i):
+        '''
+        Isolate the last bit from i.
+        '''
         return i & (-i)
 
     def update(self, i, val):
+        '''
+        Add the frequency at index i by val.
+        '''
         while i < len(self.sums):
             self.sums[i] += val
             i += self.low_bit(i)

@@ -15,7 +15,7 @@ class Solution:
         return ans[::-1]
 
         '''
-        2/2. Fenwick tree/BinaryIndexedTree.
+        2/2. Fenwick tree/Binary Indexed Tree.
         A trick here is to convert the original numbers into relative
         ranks, this is to avoid making the BIT's array too big.
         '''
