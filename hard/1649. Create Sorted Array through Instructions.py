@@ -3,6 +3,8 @@ class Solution:
     def createSortedArray(self, instructions: List[int]) -> int:
         '''
         1/2 Using SortedList from sortedcontainers module.
+        Time: O(NlogN) where N is the max of instructions.
+        Space: O(N)
         '''
         from sortedcontainers import SortedList
         MOD = 10 ** 9 + 7
@@ -16,8 +18,7 @@ class Solution:
         '''
         2/2 Binary Indexed Tree.
         Have a BIT that tracks the frequency for each index in instructions.
-        Time: O(NlogN) where N is the max of instructions.
-        Space: O(N)
+        Same as #1, but requires no external package.
         '''
         MOD = 10 ** 9 + 7
         tree = BinaryIndexedTree(max(instructions))

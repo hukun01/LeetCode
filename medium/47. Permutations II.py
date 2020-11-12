@@ -5,14 +5,14 @@ class Solution:
         DFS with backtrack. No sorting needed.
         Similar to 1079 Letter Tile Possibilities, use a counter to avoid duplicate usage.
         '''
-        counter = collections.Counter(nums)
+        counter = Counter(nums)
         ans = []
         def dfs(curr):
             if len(curr) == len(nums):
                 ans.append(curr[:])
                 return
             for n in counter:
-                if counter[n] <= 0:
+                if counter[n] == 0:
                     continue
                 curr.append(n)
                 counter[n] -= 1
