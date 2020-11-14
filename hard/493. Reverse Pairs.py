@@ -26,10 +26,10 @@ class Solution:
             sorted(set(nums + [2*a for a in nums])), start = 1) }
         tree = BinaryIndexedTree(len(num_to_rank))
         ans = 0
-        for j, num_j in enumerate(nums):
-            i = tree.getPrefixSum(num_to_rank[num_j * 2])
-            ans += j - i
-            tree.update(num_to_rank[num_j], 1)
+        for j in range(len(nums) - 1, -1, -1):
+            a = nums[j]
+            ans += tree.getPrefixSum(num_to_rank[a] - 1)
+            tree.update(num_to_rank[2 * a], 1)
         return ans
 
 class BinaryIndexedTree:
