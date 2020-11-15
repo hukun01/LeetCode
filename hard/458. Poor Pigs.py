@@ -18,6 +18,9 @@ class Solution:
         y = T + 1, and y^x >= buckets, and we want to know x.
         With (T + 1) ^ x >= buckets, we have x >= log(buckets, (T + 1)), so
         x is the ceiling of that log.
+
+        Time: O(1)
+        Space: O(1)
         '''
         states = minutesToTest // minutesToDie + 1
         return math.ceil(math.log(buckets, states))
