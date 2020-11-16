@@ -17,8 +17,10 @@ class Solution:
         so the upper bound needs to be greater than max(forbidden) + a + b.
         Alternatively, we can use 6001 as the upper bound based on data range.
 
-        Time: O((x / a) * (x / b)).
-        Space: O(x + a + b)
+        Time: O(E + V) where E is the number of edges in the search graph,
+        V is the number of verticies in the graph. E is (x/a * x/b), V is
+        approximate to E as each node has no more than 2 outdegrees.
+        Space: O(V)
         '''
         f = set(forbidden)
         q = deque([(0, 0)]) # (cur, back)
