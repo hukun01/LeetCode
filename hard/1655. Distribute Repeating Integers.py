@@ -29,7 +29,7 @@ class Solution:
         freqs = list(Counter(nums).values())
         N = len(freqs)
         m = len(quantity)
-        
+
         state_sum = Counter()
         for state in range(1 << m):
             for i in range(m):
@@ -41,7 +41,7 @@ class Solution:
             f[i][0] = True
 
         for i in range(1, N + 1):
-            for state in range(1 << m):
+            for state in range(1, 1 << m):
                 f[i][state] = f[i-1][state]
                 subset = state
                 while subset and not f[i][state]:
