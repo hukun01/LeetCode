@@ -9,7 +9,8 @@ class Interval:
 class Solution:
     def employeeFreeTime(self, schedule: '[[Interval]]') -> '[Interval]':
         '''
-        Similar to merge intervals, we need to chain up all interval list, sort by start time,
+        Array.
+        Similar to 56. Merge Intervals, we need to chain up all interval list, sort by start time,
         and start merging. Note that we only need to keep the last interval.
         '''
         lastInterval = None
