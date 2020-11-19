@@ -1,3 +1,4 @@
+# 394. Decode String
 class Solution:
     def decodeString(self, s: str) -> str:
         stack = [["", 1]]
