@@ -14,5 +14,5 @@ class Solution:
                 stack[-1][0] += subString * repeat
             else:
                 stack[-1][0] += c
-        
+
         return stack[0][0]
