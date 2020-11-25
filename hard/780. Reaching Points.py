@@ -9,8 +9,9 @@ class Solution:
         (tx, ty) comes from either:
         1. (tx' + k*ty, ty)
         2. (tx, ty' + k*tx)
-        So tx' = tx % ty, if tx > ty
-        or ty' = ty % tx, if ty > tx
+
+        So tx' = tx - k*ty = tx % ty, if tx > ty
+        or ty' = ty - k*tx = ty % tx, if ty > tx
 
         To handle cases like (1, 10000) where tx << ty, we use modulo, 
         otherwise the subtraction would take linear time.

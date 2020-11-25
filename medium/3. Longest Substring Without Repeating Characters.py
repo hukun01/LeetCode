@@ -2,7 +2,10 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         """
-        Sliding window technique with dictionary { char: index } and two indices.
+        Sliding window.
+        Use a dictionary { char: index } to record the last index that
+        char appeared, and use two indices (lastIdx and currentIdx) to
+        determine the length.
         """
         letters = {}
         ans, lastIdx = 0, 0
