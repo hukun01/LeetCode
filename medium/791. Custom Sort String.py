@@ -5,7 +5,7 @@ class Solution:
         Also notice that if T has a character that appears more than once, 
         they all need to be in the same order as the single character appears in S.
         '''
-        counter = collections.Counter(T)
+        counter = Counter(T)
         answer = []
         for c in S:
             if c in counter:

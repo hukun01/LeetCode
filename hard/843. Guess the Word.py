@@ -26,7 +26,7 @@ class Solution:
 
         score = 0
         while score < 6:
-            count = [collections.Counter(w[i] for w in wordlist) for i in range(6)]
+            count = [Counter(w[i] for w in wordlist) for i in range(6)]
             guess = max(wordlist, key=lambda w: sum(count[i][c] for i, c in enumerate(w)))
             score = master.guess(guess)
             wordlist = [w for w in wordlist if similar(w, guess) == score]
@@ -46,7 +46,7 @@ class Solution:
             return sum(c1 == c2 for c1, c2 in zip(w1, w2))
         score = 0
         while score != 6:
-            words = collections.Counter()
+            words = Counter()
             for w1, w2 in itertools.combinations(wordlist, 2):
                 if similar(w1, w2):
                     words[w1] += 1

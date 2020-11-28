@@ -50,11 +50,11 @@ class Solution:
         ans = 0
         sorted_presums = sorted(presums)
         for sum_j in presums:
-            idx_l = bisect.bisect_right(sorted_presums, sum_j - lower)
-            idx_r = bisect.bisect_left(sorted_presums, sum_j - upper)
+            idx_l = bisect_right(sorted_presums, sum_j - lower)
+            idx_r = bisect_left(sorted_presums, sum_j - upper)
             sum_i_count = tree.get(idx_l) - tree.get(idx_r)
             ans += sum_i_count
-            idx = bisect.bisect_left(sorted_presums, sum_j) + 1
+            idx = bisect_left(sorted_presums, sum_j) + 1
             tree.add(idx, 1)
         return ans
 

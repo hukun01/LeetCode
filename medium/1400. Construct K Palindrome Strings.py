@@ -3,7 +3,7 @@ class Solution:
     def canConstruct(self, s: str, k: int) -> bool:
         if k > len(s):
             return False
-        count = collections.Counter(s)
+        count = Counter(s)
         least = 0
         most = 0
         for v in count.values():

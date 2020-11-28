@@ -23,13 +23,13 @@ class Solution:
         2/2 DP.
         Let f[i][j] denote whether the first i numbers can add up to a sum j.
 
-        Then f[i][j] = f[i-1][j] if we don't pick the i-th number, or it equals to 
-        f[i-1][j-nums[i]] if we pick the i-th number.
+        Then f[i][j] = f[i-1][j] if we don't pick the i-th number, or it
+        equals to f[i-1][j-nums[i]] if we pick the i-th number.
 
-        Note that f[i][j] is determined by f[i-1], so we can reduce the 2d array into 1d.
-        Hence, f[j] = f[j] or f[j-nums[i]]
-        Note that we need to reversely traverse the inner loop to ensure that we don't erase
-        our own footprints.
+        Note that f[i][j] is determined by f[i-1], so we can reduce the
+        2d array into 1d. Hence, f[j] = f[j] or f[j-nums[i]]
+        Note that we need to reversely traverse the inner loop to ensure
+        that we don't erase our own footprints.
         '''
         total = sum(nums)
         if total % 2 == 1:

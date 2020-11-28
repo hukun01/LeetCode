@@ -18,7 +18,7 @@ class Solution:
         # the smallest ending number with that length.
         lisList = []
         for x in nums:
-            lisLen = bisect.bisect_left(lisList, x)
+            lisLen = bisect_left(lisList, x)
             if lisLen == len(lisList):
                 lisList.append(x)
             else:

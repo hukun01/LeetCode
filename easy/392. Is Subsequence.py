@@ -27,7 +27,7 @@ class Solution:
             idx[c].append(i)
         prev = 0
         for i, c in enumerate(s):            
-            j = bisect.bisect_left(idx[c], prev)
+            j = bisect_left(idx[c], prev)
             if j == len(idx[c]):
                 return False
             prev = idx[c][j] + 1

@@ -5,7 +5,7 @@ class Solution(object):
         Use one function - find inclusive lower bound - to find {target}, and {target + 1},
         then its [index1, index2 - 1], if index1 exists.
 
-        Can also use bisect.bisect_left and bisect.bisect_right.
+        Can also use bisect_left and bisect_right.
         """
         def inclusiveLowerBound(target):
             l, h = 0, len(nums)

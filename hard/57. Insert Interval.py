@@ -5,7 +5,7 @@ class Solution:
         Find the insertion point with binary search, then do normal
         interval merge.
         '''
-        start = bisect.bisect(intervals, newInterval)
+        start = bisect(intervals, newInterval)
         ans = []
         for s, e in intervals[:start] + [newInterval] + intervals[start:]:
             if not ans or s > ans[-1][1]:

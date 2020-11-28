@@ -1,4 +1,4 @@
-from heapq import *
+# 295. Find Median from Data Stream
 class MedianFinder:
     '''
     Use two heaps, one storing the smaller half of the data stream,

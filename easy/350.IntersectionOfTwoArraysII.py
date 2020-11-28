@@ -22,7 +22,7 @@ class Solution:
                 i1 += 1
                 i2 += 1
             elif nums1[i1] > nums2[i2]:
-                i2 = bisect.bisect_right(nums2, nums2[i2])
+                i2 = bisect_right(nums2, nums2[i2])
             else:
-                i1 = bisect.bisect_right(nums1, nums1[i1])
+                i1 = bisect_right(nums1, nums1[i1])
         return result

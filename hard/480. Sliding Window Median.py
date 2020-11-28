@@ -18,6 +18,6 @@ class Solution:
             bisect.insort(window, n)
             if len(window) == k:
                 ans.append(window[k//2] if k % 2 == 1 else (window[k//2] + window[(k - 1)//2]) / 2)
-                idx = bisect.bisect_left(window, nums[i - k + 1])
+                idx = bisect_left(window, nums[i - k + 1])
                 window.pop(idx)
         return ans

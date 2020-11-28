@@ -13,7 +13,7 @@ class Solution:
     def pickIndex(self) -> int:
         w = random.randrange(self.runningSums[-1])
 
-        # Alternative: using built-in module: return bisect.bisect(self.a, r)
+        # Alternative: using built-in module: return bisect(self.a, r)
 
         return self.findLowerBound(self.runningSums, w)
     

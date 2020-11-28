@@ -13,7 +13,7 @@ class Solution:
         Note that, for input like "AAB", we won't have two "AAB" in the result, because we are iterating on the keys,
         which are "AB".
         '''
-        letters = collections.Counter(tiles)
+        letters = Counter(tiles)
         def dfs():
             total = 0
             for l, count in letters.items():

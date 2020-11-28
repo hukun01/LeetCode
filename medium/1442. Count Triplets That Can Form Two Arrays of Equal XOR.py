@@ -38,8 +38,8 @@ class Solution:
         for i in arr:
             preXors.append(preXors[-1] ^ i)
 
-        total = collections.Counter()
-        count = collections.Counter()
+        total = Counter()
+        count = Counter()
         ans = 0
         for k, prefix in enumerate(preXors):
             ans += count[prefix] * (k - 1) - total[prefix]

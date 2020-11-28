@@ -15,7 +15,7 @@ class Solution:
         def lis(arr):
             dp = []
             for a in arr:
-                i = bisect.bisect_left(dp, a)
+                i = bisect_left(dp, a)
                 if i == len(dp):
                     dp.append(a)
                 else:
