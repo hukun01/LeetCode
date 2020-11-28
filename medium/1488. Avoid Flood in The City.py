@@ -24,11 +24,11 @@ class Solution:
                 rain_days = lake_to_rain_days[lake]
                 rain_days.popleft()
                 if rain_days:
-                    heapq.heappush(closest, rain_days[0])
+                    heappush(closest, rain_days[0])
             else:
                 if not closest:
                     continue
-                ans[day] = rains[heapq.heappop(closest)]
+                ans[day] = rains[heappop(closest)]
         return ans
     
         '''

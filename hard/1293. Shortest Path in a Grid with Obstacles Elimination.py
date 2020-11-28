@@ -18,7 +18,7 @@ class Solution:
         R, C = len(grid), len(grid[0])
         seen = set()
         while q:
-            steps, r, c, k = heapq.heappop(q)
+            steps, r, c, k = heappop(q)
             if grid[r][c] == 1:
                 if k == 0:
                     continue
@@ -34,5 +34,5 @@ class Solution:
                 if (nr, nc, k) in seen:
                     continue
                 seen.add((nr, nc, k))
-                heapq.heappush(q, (steps + 1, nr, nc, k))
+                heappush(q, (steps + 1, nr, nc, k))
         return -1

@@ -34,14 +34,14 @@ class Solution:
         ans = [0] * len(workers)
         usedBikes = set()
         sortedBikes = [distances[i].pop() for i in range(len(workers))]
-        heapq.heapify(sortedBikes)
+        heapify(sortedBikes)
         while sortedBikes:
-            d, wIdx, bIdx = heapq.heappop(sortedBikes)
+            d, wIdx, bIdx = heappop(sortedBikes)
             if bIdx not in usedBikes:
                 ans[wIdx] = bIdx
                 usedBikes.add(bIdx)
             else:
-                heapq.heappush(sortedBikes, distances[wIdx].pop())
+                heappush(sortedBikes, distances[wIdx].pop())
         return ans
         '''
         2/2 Bucket sort

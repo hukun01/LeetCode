@@ -35,7 +35,7 @@ class AutocompleteSystem:
         tops = []
         def dfs(node, currSentence):
             if node.times > 0:
-                heapq.heappush(tops, (-node.times, "".join(currSentence)))
+                heappush(tops, (-node.times, "".join(currSentence)))
             for child in node.children.values():
                 currSentence.append(child.c)
                 dfs(child, currSentence)
@@ -43,7 +43,7 @@ class AutocompleteSystem:
         dfs(self.currNode, self.search)
         result = []
         while tops and len(result) < 3:
-            pair = heapq.heappop(tops)
+            pair = heappop(tops)
             result.append(pair[1])
         return result
 

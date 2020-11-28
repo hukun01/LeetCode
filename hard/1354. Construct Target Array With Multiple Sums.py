@@ -27,7 +27,7 @@ class Solution:
             return target == [1]
         total = sum(target)
         target = [-a for a in target]
-        heapq.heapify(target)
+        heapify(target)
         while (biggest := -target[0]) > 1:
             other_sum = total - biggest
 

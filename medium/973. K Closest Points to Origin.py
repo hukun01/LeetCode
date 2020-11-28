@@ -56,8 +56,8 @@ class Solution:
         dist = lambda i: points[i][0] ** 2 + points[i][1] ** 2
         ans = []
         for i, point in enumerate(points):
-            heapq.heappush(ans, (-dist(i), point))
+            heappush(ans, (-dist(i), point))
             if len(ans) > K:
-                heapq.heappop(ans)
+                heappop(ans)
         return [a[1] for a in ans]
         '''

@@ -13,10 +13,10 @@ class Solution:
             maps[city].append((price, nextCity))
         trips = [(0, src, K + 1)]
         while trips:
-            cost, city, hops = heapq.heappop(trips)
+            cost, city, hops = heappop(trips)
             if city == dst:
                 return cost
             if hops > 0:
                 for price, nextCity in maps[city]:
-                    heapq.heappush(trips, (cost + price, nextCity, hops - 1))
+                    heappush(trips, (cost + price, nextCity, hops - 1))
         return -1

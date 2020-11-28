@@ -10,9 +10,9 @@ class Solution:
         ans = []
         for n, f in Counter(nums).items():
             if len(ans) == k:
-                heapq.heappushpop(ans, (f, n))
+                heappushpop(ans, (f, n))
             else:
-                heapq.heappush(ans, (f, n))
+                heappush(ans, (f, n))
         return [p[1] for p in ans]
 
         '''

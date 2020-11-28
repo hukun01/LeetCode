@@ -22,10 +22,10 @@ class Solution:
         qSum = 0
         qHeap = []
         for price, q in pricesAndQualities:
-            heapq.heappush(qHeap, -q)
+            heappush(qHeap, -q)
             qSum += q
             if len(qHeap) > K:
-                qSum += heapq.heappop(qHeap)
+                qSum += heappop(qHeap)
             if len(qHeap) == K:
                 res = min(res, qSum * price)
         return res

@@ -28,8 +28,8 @@ class Solution:
         jobs = list(zip(startTime, endTime, profit))
         for s, e, p in sorted(jobs):
             while schedule and schedule[0][0] <= s:
-                _, last_profit = heapq.heappop(schedule)
+                _, last_profit = heappop(schedule)
                 curr_max_profit = max(curr_max_profit, last_profit)
-            heapq.heappush(schedule, (e, p + curr_max_profit))
+            heappush(schedule, (e, p + curr_max_profit))
 
         return max(j[1] for j in schedule)

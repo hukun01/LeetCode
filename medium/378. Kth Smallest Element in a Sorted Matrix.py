@@ -21,12 +21,12 @@ class Solution:
         b = matrix
         n = len(b)
         for c in range(n):
-            heapq.heappush(heap, (b[0][c], 0, c))
+            heappush(heap, (b[0][c], 0, c))
         ans = 0
         for _ in range(k):
-            ans, r, c = heapq.heappop(heap)
+            ans, r, c = heappop(heap)
             if r + 1 < n:
-                heapq.heappush(heap, (b[r + 1][c], r + 1, c))
+                heappush(heap, (b[r + 1][c], r + 1, c))
         return ans
         '''
         2/2 Another instance for binary searching the *value* spaces.

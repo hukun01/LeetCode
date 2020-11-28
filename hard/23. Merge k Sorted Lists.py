@@ -18,12 +18,12 @@ class Solution:
         heap = []
         for i, head in enumerate(lists):
             if head:
-                heapq.heappush(heap, (head.val, i, head))
+                heappush(heap, (head.val, i, head))
         dummy = prev = ListNode(0)
         while heap:
-            val, idx, node = heapq.heappop(heap)
+            val, idx, node = heappop(heap)
             prev.next = node
             prev = node
             if node.next:
-                heapq.heappush(heap, (node.next.val, idx, node.next))
+                heappush(heap, (node.next.val, idx, node.next))
         return dummy.next

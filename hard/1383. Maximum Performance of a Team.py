@@ -14,9 +14,9 @@ class Solution:
         totalSp = 0
         mySpeed = []
         for e, s in engineers:
-            heapq.heappush(mySpeed, s)
+            heappush(mySpeed, s)
             totalSp += s
             if len(mySpeed) > k:
-                totalSp -= heapq.heappop(mySpeed)
+                totalSp -= heappop(mySpeed)
             ans = max(ans, totalSp * e)
         return ans % (10 ** 9 + 7)

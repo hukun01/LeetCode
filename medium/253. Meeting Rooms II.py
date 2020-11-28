@@ -17,8 +17,8 @@ class Solution:
         heap = []
         for s, e in sorted(intervals):
             while heap and heap[0] <= s:
-                heapq.heappop(heap)
-            heapq.heappush(heap, e)
+                heappop(heap)
+            heappush(heap, e)
             rooms = max(rooms, len(heap))
         return rooms
 

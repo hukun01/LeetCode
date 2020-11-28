@@ -15,11 +15,11 @@ class Solution:
         events.sort(reverse=True)
         for start in range(minS, maxE + 1):
             while events and events[-1][0] <= start:
-                heapq.heappush(heap, events.pop()[1])
+                heappush(heap, events.pop()[1])
             while heap and heap[0] < start:
-                heapq.heappop(heap)
+                heappop(heap)
             if heap:
-                heapq.heappop(heap)
+                heappop(heap)
                 ans += 1
         return ans
         '''
