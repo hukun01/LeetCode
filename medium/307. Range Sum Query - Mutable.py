@@ -1,7 +1,4 @@
 # 307. Range Sum Query - Mutable
-
-low_bit = lambda x: x & (-x)
-
 class NumArray:
     '''
     Fenwick tree, Binary Indexed Tree (BIT).

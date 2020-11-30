@@ -1,3 +1,4 @@
+# 773. Sliding Puzzle
 class Solution:
     def slidingPuzzle(self, board: List[List[int]]) -> int:
         '''
@@ -26,5 +27,5 @@ class Solution:
                     visited.add(newNode)
                     queue.append(newNode)
             steps += 1
-                    
+
         return -1

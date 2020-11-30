@@ -19,6 +19,8 @@ class Solution:
 
         Time: O(n) where n is the length of the nums array.
         Space: O(k)
+        Overall, in any problem that boils down to comparing two nearby
+        elements, mono stack is a good thing to try.
         '''
         n = len(num)
         keep = n - k
