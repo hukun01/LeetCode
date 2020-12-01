@@ -4,12 +4,9 @@ class Solution:
         '''
         Difference array.
         Different rotation k leads to different total score, namely,
-        scores[k] = scores[k-1] + diff[k], where diff[k] is the difference
-        brought by the k-th rotation.
+        let scores[k] be the total score with rotation k.
 
-        As A[i] falls in [0, len(A)], but 0 and len(A) values don't impact
-        the total score regardless of k. Every other A[i] has up to two
-        intervals of k values, in which it will get one point:
+        Every A[i] has up to two intervals of k, in which it will get 1 point:
             1. A[i] <= i, intervals are
                 a. [0, i - A[i]], A[i] moves left until A[i] reaches i-th.
                 b. [i+1, n-1], A[i] wraps around until A[i] reaches (i+1)th.
@@ -17,9 +14,15 @@ class Solution:
 
         Given the intervals of k for each A[i] that gains one point, our goal
         is to find the most overlapped intervals. It's similar to applying +1
-        update to various intervals in the range of [0, len(A)], and find the
-        largest update. This is where difference array helps. For more about
+        update to various intervals in the range of [0, len(A)], each interval
+        is updated up to n times. Then find the largest updated point after all
+        updates are done. However, updating scores for every A[i] means O(n^2)
+        time, too slow. This is where difference array helps. For more about
         difference array, see 1109. Corporate Flight Bookings.
+        Let scores[k] = scores[k-1] + diff[k], where diff[k] is the difference
+        brought by updating from (k-1) to k rotations. We store the updates in
+        diff in O(1) time, and get the final result once by accumulating diff,
+        with O(n) time.
 
         Time: O(n)
         Space: O(n)
@@ -35,5 +38,5 @@ class Solution:
             else:
                 diff[i+1] += 1
                 diff[i - a + n + 1] -= 1
-        score = list(itertools.accumulate(diff))[:-1]
+        score = list(accumulate(diff))[:-1]
         return score.index(max(score))
