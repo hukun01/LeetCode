@@ -17,8 +17,7 @@ class Solution:
         update to various intervals in the range of [0, len(A)], each interval
         is updated up to n times. Then find the largest updated point after all
         updates are done. However, updating scores for every A[i] means O(n^2)
-        time, too slow. This is where difference array helps. For more about
-        difference array, see 1109. Corporate Flight Bookings.
+        time, too slow. This is where difference array helps.
         Let scores[k] = scores[k-1] + diff[k], where diff[k] is the difference
         brought by updating from (k-1) to k rotations. We store the updates in
         diff in O(1) time, and get the final result once by accumulating diff,
@@ -26,6 +25,8 @@ class Solution:
 
         Time: O(n)
         Space: O(n)
+
+        Similar to 370. Range Addition.
         '''
         n = len(A)
         diff = [0] * (n + 1)

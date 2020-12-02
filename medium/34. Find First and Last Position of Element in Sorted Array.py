@@ -2,15 +2,19 @@
 class Solution(object):
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         """
-        Use one function - find inclusive lower bound - to find {target}, and {target + 1},
-        then its [index1, index2 - 1], if index1 exists.
+        Binary search.
+        Use one function - find inclusive lower bound - to find {target}, and
+        {target + 1}, then its [index1, index2 - 1], if index1 exists.
 
         Can also use bisect_left and bisect_right.
+
+        Time: O(n log(n)), where n is len(nums)
+        Space: O(1)
         """
         def inclusiveLowerBound(target):
             l, h = 0, len(nums)
             while l < h:
-                m = l + (h - l) // 2
+                m = (l + h) // 2
                 if nums[m] < target:
                     l = m + 1
                 else:

@@ -1,62 +1,54 @@
-class Node:
-    def __init__(self, c):
-        self.c = c
-        self.times = 0
-        self.children = {}
+Trie = lambda: defaultdict(Trie)
 
 class AutocompleteSystem:
     '''
     Use trie tree to record all sentences and times.
-    Use DFS to find all applicable sentences; use heap to find the top sentences.
+    Use DFS to find all applicable sentences; use heap to find the top
+    sentences.
     '''
     def __init__(self, sentences: List[str], times: List[int]):
-        self.root = Node("")
-        self.setupTrie(sentences, times)
-        self.reset()
-            
-    def reset(self):
-        self.currNode = self.root
-        self.search = []
-        
-    def setupTrie(self, sentences: List[str], times: List[int]):
-        for sentence, time in zip(sentences, times):
-            parent = self.root
-            for i, c in enumerate(sentence):
-                if c in parent.children:
-                    child = parent.children[c]
-                else:
-                    child = Node(c)
-                    parent.children[c] = child
-                if i == len(sentence) - 1:
-                    child.times = time
-                parent = child
-    
-    def find(self):
-        tops = []
-        def dfs(node, currSentence):
-            if node.times > 0:
-                heappush(tops, (-node.times, "".join(currSentence)))
-            for child in node.children.values():
-                currSentence.append(child.c)
-                dfs(child, currSentence)
-                currSentence.pop()
-        dfs(self.currNode, self.search)
-        result = []
-        while tops and len(result) < 3:
-            pair = heappop(tops)
-            result.append(pair[1])
-        return result
+        self.root = Trie()
+        for s, t in zip(sentences, times):
+            node = self.root
+            for c in s:
+                node = node[c]
+            if '#' not in node:
+                node['#'] = 0
+            node['#'] += t
+        self._reset()
 
     def input(self, c: str) -> List[str]:
-        if c == "#":
-            self.currNode.times += 1
-            self.reset()
+        if c == '#':
+            if '#' not in self.curr:
+                self.curr['#'] = 0
+            self.curr['#'] += 1
+            self._reset()
             return []
-        self.search.append(c)
-        if c not in self.currNode.children:
-            self.currNode.children[c] = Node(c)
-        self.currNode = self.currNode.children[c]
-        return self.find()
+        self.prefix.append(c)
+        self.curr = self.curr[c]
+        return self._find()
+        
+    def _dfs(self, node, suffix, results):
+        if not node:
+            return
+        if '#' in node:
+            times = node['#']
+            results.append((-times, suffix[:]))
+        for char, next_node in node.items():
+            if char != '#':
+                suffix.append(char)
+                self._dfs(next_node, suffix, results)
+                suffix.pop()
+    
+    def _find(self):
+        results = []
+        self._dfs(self.curr, [], results)
+        results = nsmallest(3, results)
+        return [''.join(self.prefix + suffix) for _, suffix in results]
+        
+    def _reset(self):
+        self.curr = self.root
+        self.prefix = []
 
 # Your AutocompleteSystem object will be instantiated and called as such:
 # obj = AutocompleteSystem(sentences, times)

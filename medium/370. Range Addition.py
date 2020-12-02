@@ -2,19 +2,30 @@
 class Solution:
     def getModifiedArray(self, length: int, updates: List[List[int]]) -> List[int]:
         '''
-        Array.
-        The technique is to have a rolling update array that first collects
-        the start and end positions for each udpate interval, and record the
-        delta, by adding `delta` to start, and minus `delta` to (end+1).
-        Later we compute prefix sum for this array, and the `delta` in start
-        will be accumulated to every position after it, until (end+1), after
-        which the accumulated `delta` will be negated.
+        Difference array.
+        This is the inverse of prefix sums:  diff[i] = nums[i] - nums[i - 1].
+        Based on this we know: 
+            1. nums[i] = diff[i] + nums[i - 1]
+            2. nums[0] = diff[0]
+        Then we can get nums by accumulating diff.
+
+        The diff array first collects the start and end positions for each
+        udpate interval, and record the delta, by adding `delta` to start,
+        and minus `delta` to (end+1). Later we accumulate diff array, the
+        `delta` in start will be accumulated to every position after it,
+        until (end+1), after which the accumulated `delta` will be negated.
+
+        Difference array provides O(1) update to any intervals in an array,
+        with the cost of O(n) query. Hence, this technique is often used in
+        scenarios where frequent update operations are applied to various
+        intervals, and our goal is to get the result array AFTER all the
+        operations.
+
+        Time: O(length)
+        Space: O(length)
         '''
-        ans = [0] * length
-        for s, e, d in updates:
-            ans[s] += d
-            if e + 1 < length:
-                ans[e + 1] -= d
-        for i in range(1, length):
-            ans[i] += ans[i-1]
-        return ans
+        diff = [0] * (length + 1)
+        for s, e, inc in updates:
+            diff[s] += inc
+            diff[e + 1] -= inc
+        return list(accumulate(diff[:-1]))

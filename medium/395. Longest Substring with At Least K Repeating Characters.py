@@ -31,34 +31,33 @@ class Solution:
         In this case, c <= n / k.
         Note that also upper bound <= 26 as Counter() only covers unique chars.
         '''
+        def longest_substr_with_n_unique(num_unique_target):
+            freqs = Counter()
+            num_unique = num_at_least_k = begin = end = ans = 0
+            while end < len(s):
+                char = s[end]
+                if freqs[char] == 0:
+                    num_unique += 1
+                freqs[char] += 1
+                if freqs[char] == k:
+                    num_at_least_k += 1
+                end += 1
+
+                while num_unique > num_unique_target:
+                    char = s[begin]
+                    if freqs[char] == k:
+                        num_at_least_k -= 1
+                    freqs[char] -= 1
+                    if freqs[char] == 0:
+                        num_unique -= 1
+                    begin += 1
+
+                if num_unique == num_at_least_k:
+                    ans = max(ans, end - begin)
+            return ans
+
         upper_bound = sum(v >= k for v in Counter(s).values())
         ans = 0
         for num_unique_target in range(1, upper_bound + 1):
-            ans = max(ans, self.longest_substr_with_n_unique(s, k, num_unique_target))
-        return ans
-
-    def longest_substr_with_n_unique(self, s, k, num_unique_target):
-        freqs = Counter()
-        num_unique = num_at_least_k = begin = end = ans = 0
-        while end < len(s):
-            char = s[end]
-            if freqs[char] == 0:
-                num_unique += 1
-            freqs[char] += 1
-            if freqs[char] == k:
-                num_at_least_k += 1
-            end += 1
-
-            while num_unique > num_unique_target:
-                char = s[begin]
-                if freqs[char] == k:
-                    num_at_least_k -= 1
-                freqs[char] -= 1
-                if freqs[char] == 0:
-                    num_unique -= 1
-                begin += 1
-
-            if num_unique == num_at_least_k:
-                ans = max(ans, end - begin)
-
+            ans = max(ans, longest_substr_with_n_unique(num_unique_target))
         return ans

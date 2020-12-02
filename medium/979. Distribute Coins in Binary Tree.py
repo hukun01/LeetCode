@@ -15,16 +15,19 @@ class Solution:
         coin from parents.
         The total number of coins that need to be passed through each node is
         the number of moves.
-        Similar to 517. Super Washing Machines
+
+        Time: O(n) where n is the number of nodes in tree.
+        Space: O(n) if tree is degenerated to a list.
+
+        Similar to 517. Super Washing Machines.
         '''
-        ans = 0
+        self.ans = 0
         def dfs(node):
             if not node:
                 return 0
-            left = dfs(node.left)
-            right = dfs(node.right)
-            nonlocal ans
-            ans += abs(left) + abs(right)
-            return node.val + left + right - 1
+            left_excess = dfs(node.left)
+            right_excess = dfs(node.right)
+            self.ans += abs(left_excess) + abs(right_excess)
+            return node.val + left_excess + right_excess - 1
         dfs(root)
-        return ans
+        return self.ans
