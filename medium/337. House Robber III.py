@@ -1,3 +1,4 @@
+# 337. House Robber III
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, x):
@@ -8,8 +9,8 @@
 class Solution:
     def rob(self, root: TreeNode) -> int:
         '''
-        Brute force: We can use a dict to cache all the (node, canRob) entries, but that
-        would require us to traverse the nodes twice.
+        Brute force: We can use a dict to cache all the (node, canRob) entries,
+        but that would require us to traverse the nodes twice.
         A better approach is to have the recursive method return a tuple.
         In the tuple, the first element records the money we got by not robbing
         the current node; the second element records the money we got by
@@ -20,9 +21,9 @@ class Solution:
                 return 0, 0
             skipLeft, robLeft = robWithSelection(node.left)
             skipRight, robRight = robWithSelection(node.right)
-            
+
             skipNode = max(robLeft, skipLeft) + max(robRight, skipRight)
             robNode = skipLeft + skipRight + node.val
-            
+
             return skipNode, robNode
         return max(robWithSelection(root))

@@ -1,5 +1,13 @@
+# 398. Random Pick Index
 class Solution:
+    '''
+    Reservoir sampling.
 
+    Time: O(n) where n is len(nums).
+    Space: O(1)
+
+    Same as 382. Linked List Random Node
+    '''
     def __init__(self, nums: List[int]):
         self.data = nums
 

@@ -1,11 +1,16 @@
+# 241. Different Ways to Add Parentheses
 class Solution:
     def diffWaysToCompute(self, input: str) -> List[int]:
         '''
-        For each symbol, we can add or not, a pair of parenthesis around its equation
-        If input[i] is a symbol:
-            check(input[:i]) x check(input[i+1:])
-        
-        x is to get the combination between two lists based on the symbol
+        Recursion.
+        For each symbol, we can add or not, a pair of parenthesis around its
+        equation. If input[i] is a symbol, add the cross product of left and
+        right sub-expressions: check(input[:i]) x check(input[i+1:]).
+
+        Time: O(n^2) where n is len(input), also assuming roughly half of the
+        chars are symbols that will lead to string slicing and recursion.
+        Space: O(n^2), but can be simplified to O(1) by using index to replace
+        string slicing.
         '''
         if input.isdigit():
             return [int(input)]
