@@ -4,6 +4,10 @@ class Solution:
         '''
         BFS.
         The key observation is that R and C are very small.
+
+        Time: O(2 ^ (RC))
+        Space: O((RC) (2 ^ (RC))), RC for each state, totally 2 ^ (RC) states.
+
         Similar to 773. Sliding Puzzle.
         '''
         R, C = len(mat), len(mat[0])
@@ -12,7 +16,7 @@ class Solution:
             return ''.join(str(c) for c in arr1d)
 
         dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-        
+
         def flip(r, c,state):
             ans = [int(c) for c in state]
             ans[r * C + c] ^= 1

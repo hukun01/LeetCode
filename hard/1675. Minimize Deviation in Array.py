@@ -64,15 +64,8 @@ class Solution:
           until becoming 1).
     Space: O(n)
     '''
-        possible_maxs = []
-        cur_min = inf
-        for a in nums:
-            if a % 2 == 0:
-                possible_maxs.append(-a)
-                cur_min = min(cur_min, a)
-            else:
-                possible_maxs.append(-a * 2)
-                cur_min = min(cur_min, a*2)
+        possible_maxs = [-a * 2 if a % 2 == 1 else -a for a in nums]
+        cur_min = -max(possible_maxs)
         heapify(possible_maxs)
         ans = inf
         while possible_maxs:

@@ -5,7 +5,8 @@ class Solution:
         Math.
         Simulation method is trivial and takes O(sqrt(candies)) time,
         here is the math solution that takes O(n) time.
-        Let x be the count of complete gifts, we have
+        Let x be the count of complete gifts, which is also the last/biggest
+        number of gifts we have even given. Then we have
         candies >= x * (1+x) / 2 > x*x / 2, so sqrt(2 * candies) > x,
         note that int((2 * candies) ** 0.5) is in range [x, x+1], so
         need to double check in case it's x+1 instead of x.

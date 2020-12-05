@@ -11,6 +11,11 @@ class Solution:
         we only use once.
         On the other hand, if we do plain binary search on [0, min(R, C)], and check
         the whole matrix for every possible value, the time would be O(RC * min(R, C)).
+
+        Time: O(RC)
+        Space: O(RC)
+
+        Similar to 304. Range Sum Query 2D - Immutable.
         '''
         R, C = len(mat), len(mat[0])
         pre = [[0] * (C + 1) for _ in range(R + 1)]
@@ -27,7 +32,7 @@ class Solution:
             for c in range(C + 1):
                 length = ans + 1
                 while r + length <= R and c + length <= C and \
-                        squareSum(r, c, r + length, c + length) <= threshold:
+                      squareSum(r, c, r + length, c + length) <= threshold:
                     ans = length
                     length += 1
         return ans
