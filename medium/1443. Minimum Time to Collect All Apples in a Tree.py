@@ -2,7 +2,11 @@
 class Solution:
     def minTime(self, n: int, edges: List[List[int]], hasApple: List[bool]) -> int:
         '''
+        Postorder DFS.
         Build the tree and do DFS.
+
+        Time: O(n)
+        Space: O(n)
         '''
         tree = [[] for _ in range(n)]
         for f, t in edges:
