@@ -5,8 +5,8 @@ class Solution:
         State compression DFS.
         The key is to change the caching state, from all possible subsets,
         to available elements from nums. This reduces state space from
-        k(n^(n/k)) (up to 2 * 16^8 when n = 16, k = 2) to n(2^n) (up to
-        16 * 2^16, aka, 2^20).
+        k(n^(n/k)) (up to 2 * 16^8 when n = 16, k = 2, aka, 2^33) to n(2^n) (
+        up to 16 * 2^16, aka, 2^20).
         The DFS recursion returns the min score from arr split into subsets
         of target_size, one subset at a time. Leverage built-in combinations()
         to get candidate subsets.
@@ -14,8 +14,7 @@ class Solution:
         Time: O(n 2^n) where n is len(nums)
         Space: O(2^n)
         '''
-        n = len(nums)
-        target_size = n // k
+        target_size = len(nums) // k
 
         @lru_cache(None)
         def dfs(arr):
@@ -29,5 +28,4 @@ class Solution:
                 ans = min(ans, max(a) - min(a) + dfs(tuple(others)))
             return ans
 
-        ans = dfs(tuple(nums))
-        return ans if ans != inf else -1
+        return ans if (ans := dfs(tuple(nums))) != inf else -1

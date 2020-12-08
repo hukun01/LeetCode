@@ -10,24 +10,26 @@ class Solution:
 
         Note that when processing division, we want to round down the floating
         number, instead of integer division, because in Py, -2//2 = -2.
+
+        Similar to 224. Basic Calculator.
+
         Time: O(n) where n is the numer of chars in str s.
         Space: O(n).
         '''
         stack = []
         num = 0
         last_sign = '+'
-        for i, c in enumerate(s):
+        for c in s + '$':
             if c.isdigit():
                 num = num * 10 + int(c)
-
-            if c in '+-*/' or i == len(s) - 1:
+            elif c in '+-*/$':
                 if last_sign == '+':
                     stack.append(num)
-                if last_sign == '-':
+                elif last_sign == '-':
                     stack.append(-num)
-                if last_sign == '*':
+                elif last_sign == '*':
                     stack.append(stack.pop() * num)
-                if last_sign == '/':
+                elif last_sign == '/':
                     stack.append(int(stack.pop() / num))
                 num = 0
                 last_sign = c
@@ -44,11 +46,11 @@ class Solution:
         '''
         ans = curr = prev = 0
         last_sign = '+'
-        for i, c in enumerate(s):
+        for c in s + '$':
             if c.isdigit():
                 curr = curr * 10 + int(c)
 
-            if c in '+-*/' or i == len(s) - 1:
+            if c in '+-*/$':
                 if last_sign in '+-':
                     ans += prev
                     prev = curr if last_sign == '+' else -curr
