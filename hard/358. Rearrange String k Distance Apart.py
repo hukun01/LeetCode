@@ -19,7 +19,7 @@ class Solution:
         max_count = freqs[0][0]
         if (max_count - 1) * k + sum(c[0] == max_count for c in freqs) > len(s):
             return ""
-        
+
         buckets = [[] for _ in range(max_count)]
         i = 0
         for count, char in freqs:

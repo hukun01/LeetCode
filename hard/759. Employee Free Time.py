@@ -10,16 +10,23 @@ class Solution:
     def employeeFreeTime(self, schedule: '[[Interval]]') -> '[Interval]':
         '''
         Array.
-        Similar to 56. Merge Intervals, we need to chain up all interval list, sort by start time,
-        and start merging. Note that we only need to keep the last interval.
+        Counting free time directly is not straightforward, instead, count the
+        overall working time, and the common free time is the gap between each
+        working intervals.
+        Similar to 56. Merge Intervals, we need to chain up all interval list,
+        sort by start time, and start merging. Note that we only need to keep
+        the last interval.
+
+        Time: O(n) where n is len(schedule)
+        Space: O(n) to store output
         '''
-        lastInterval = None
+        last_interval = None
         ans = []
         for s in sorted(itertools.chain(*schedule), key=lambda x: x.start):
-            if lastInterval is not None and s.start <= lastInterval.end:
-                lastInterval.end = max(lastInterval.end, s.end)
+            if last_interval is not None and s.start <= last_interval.end:
+                last_interval.end = max(last_interval.end, s.end)
             else:
-                if lastInterval is not None:
-                    ans.append(Interval(lastInterval.end, s.start))
-                lastInterval = s
+                if last_interval is not None:
+                    ans.append(Interval(last_interval.end, s.start))
+                last_interval = s
         return ans

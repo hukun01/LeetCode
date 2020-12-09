@@ -3,22 +3,28 @@ class Solution:
     def singleNumber(self, nums: List[int]) -> List[int]:
         '''
         Bit manipulation.
-        Find the xor 'xor' of all numbers.
-        Find the rightmost 1-bit in (x^y), aka, rightmost 'rightmost_bit' between x and y.
+        Let a, b be these two one-time elements. Let 'xor' be the xor of all
+        numbers, we have xor = (a^b).
+        Find the lowest 1-bit in 'xor' by 'xor & -xor', this is also the
+        tehcnique used in Binary Indexed Tree. This is the bit where a and b
+        differs.
         Iterate through nums, except some number pairs, only one number will
-        share the rightmost 1-bit with 'rightmost_bit', xor all such numbers, we will
-        get one number x.
-        The other number would just be xor ^ x.
+        also have this lowest bit set, so xor all such numbers, we will get
+        number 'a'
+        The other number would just be xor ^ a.
+
+        Time: O(n) where n is len(nums)
+        Space: O(1)
         '''
         xor = 0
         for num in nums:
             xor ^= num
 
-        rightmost_bit = xor & (-xor)
+        lowest_bit = xor & (-xor)
 
-        x = 0
+        a = 0
         for num in nums:
-            if num & rightmost_bit:
-                x ^= num
+            if num & lowest_bit:
+                a ^= num
 
-        return [x, xor^x]
+        return [a, xor^a]

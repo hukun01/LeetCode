@@ -5,8 +5,8 @@ class Solution:
         1/2 Two sum.
         Same as 2sum problem, except that it's doing product instead of sum.
 
-        Time: O(max(m^2, n^2)) where m, n is the size of nums1, nums2, respectively.
-        Space: O(max(m, n)) for the seen dictionaries.
+        Time: O(max(m^2, n^2)) where m, n is size of nums1, nums2, respectively.
+        Space: O(max(m^2, n^2)) for the seen dictionaries.
         '''
         def get_seen(arr):
             seen = Counter()
@@ -26,6 +26,9 @@ class Solution:
         duplicate numbers into counts.
         This has the best actual performance as it reduces duplicate numbers
         and search space.
+
+        The key is to count the triplets of identical numbers with
+        comb(count, 2).
 
         Time: O(max(mlogm, nlogn) + mn)
         where m, n is the unique numbers count of nums1, nums2.
@@ -61,7 +64,8 @@ class Solution:
         This handles duplicates without having to sort the arrays,
         has the second best runtime performance.
 
-        Time: O(mn) where m, n is the unique numbers count of nums1, nums2.
+        Time: O(max(m^2, n^2) + mn)
+        where m, n is the unique numbers count of nums1, nums2.
         Space: O(max(m^2, n^2)) for the cache.
         '''
         nums1 = list(Counter(nums1).items())

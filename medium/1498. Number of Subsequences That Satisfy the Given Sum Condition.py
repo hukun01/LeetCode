@@ -7,11 +7,15 @@ class Solution:
         element order doesn't matter. We can sort the nums to make
         min() and max() operations fast.
         In any subarray where nums[l] + nums[h] <= target, all permutations
-        starting with nums[l] in nums[l:h+1] are counted, so it's 2 ** (h - l).
+        starting with nums[l] in nums[l:h+1] are counted, so it's 2 ** (h - l),
+        namely, each element in [l+1:h+1] can be selected, or not.
         Note that we use the built-in pow() with mod parameter, the math.pow()
         doesn't have mod parameter.
         If the subarray is too big, move h to the smaller end, otherwise, try
         l to the bigger end.
+
+        Time: O(n log(n)) from sort
+        Space: O(n) from sort
         '''
         nums.sort()
         ans = 0

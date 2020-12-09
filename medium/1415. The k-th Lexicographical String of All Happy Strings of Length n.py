@@ -6,6 +6,9 @@ class Solution:
         Except that we can reuse the letters if they don't conflict.
         Also, the first letter comes from "abc", while the rest comes
         from any other two letters.
+
+        Time: O(n)
+        Space: O(n)
         '''
         abc = "abc"
         abc_len = len(abc)

@@ -8,6 +8,9 @@ class Solution:
         and the index. For example, if left_max <= right_max,
         (left_max - height[left]) is the exact water we can store,  because if
         we have more water, it will leak from the left(lower) wall.
+
+        Time: O(n) where n is len(height).
+        Space: O(1)
         '''
         ans = 0
         left, right = 0, len(height) - 1

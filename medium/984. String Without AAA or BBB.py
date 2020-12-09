@@ -11,7 +11,6 @@ class Solution:
             buckets.append(x)
         num_buckets = len(buckets)
         bucket_idx = 0
-        for _ in range(second):
+        for bucket_idx in range(second):
             buckets[bucket_idx % num_buckets] += y
-            bucket_idx += 1
-        return ''.join(buckets[:min(num_buckets, bucket_idx + 1)])
+        return ''.join(buckets)
