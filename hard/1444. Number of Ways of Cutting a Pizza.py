@@ -21,7 +21,7 @@ class Solution:
         MOD = 10 ** 9 + 7
 
         # r,c is the top left point in the matrix
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(r, c, cuts):
             if cuts == 0:
                 if isValid(r, c):

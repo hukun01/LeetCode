@@ -6,7 +6,7 @@ class Solution:
         Similar to LCS problems. One trick here is to not take the subroutine's return value,
         if it's negative. This part is similar to the max subarray sum problem.
         '''
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(i, j):
             if i == -1 or j == -1:
                 return -math.inf

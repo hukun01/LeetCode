@@ -6,7 +6,7 @@ class Solution:
         but otherwise it's a straightforward DFS with cache.
         '''
         R, C = len(grid), len(grid[0])
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(row, c1, c2):
             if row == R or not 0 <= c1 < C or not 0 <= c2 < C:
                 return 0

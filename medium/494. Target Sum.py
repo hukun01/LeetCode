@@ -46,7 +46,7 @@ class Solution:
         '''
         3/3 DFS with memoization.
         '''
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(idx, currSum):
             if idx == len(nums):
                 if currSum == S:

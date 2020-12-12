@@ -5,7 +5,7 @@ class Solution:
         1/2 Memoized DFS is straightforward and fast enough to pass, but
         there is another solution with much better time and space complexities.
         '''
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(i, left):
             for j in range(i, len(s)):
                 if s[j] == '(':

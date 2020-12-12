@@ -7,7 +7,7 @@ class Solution:
         2/2 Bottom up DP with preprocessed prefix sums array.
         Note that prefix sums array can be useful in dealing with interval sums.
         '''
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(i, k):
             if i == len(A):
                 return 0

@@ -3,7 +3,7 @@ class Solution:
     def minDistance(self, word1: str, word2: str) -> int:
         w1, w2 = word1, word2
         
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def match(i1, i2):
             if i1 == -1:
                 return i2 + 1

@@ -7,7 +7,7 @@ class Solution:
         '''
         if len(s1) + len(s2) != len(s3):
             return False
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def match(i1, i2):
             if i1 == -1 and i2 == -1:
                 return True

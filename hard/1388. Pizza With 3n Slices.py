@@ -13,7 +13,7 @@ class Solution:
         A = A[idx:] + A[0:idx]
 
         # helper returns the max size if we take 'k' non-adjacent slices from the first 'i' elements.
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def helper(k, i):
             if k * 2 - 1 > i:
                 return -math.inf

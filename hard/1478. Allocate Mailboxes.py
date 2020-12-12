@@ -13,7 +13,7 @@ class Solution:
         n = len(houses)
 
         # Compute the distance with one mailbox in [start, end]
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def getCost(start, end):
             median = houses[(start + end) // 2]
             return sum(abs(median - houses[j]) for j in range(start, end + 1))
@@ -27,7 +27,7 @@ class Solution:
             m1, m2 = (start + end) // 2, (start + end + 1) // 2
             return (pre_sums[end + 1] - pre_sums[m2]) - (pre_sums[m1 + 1] - pre_sums[start])
 
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(pos, k):
             if pos + k >= n:
                 return 0

@@ -16,7 +16,7 @@ class Solution:
             for sIdx in skillIdxs:
                 skillToPeople[sIdx].append(pIdx)
 
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(skillsNeeded):
             if skillsNeeded == 0:
                 return []

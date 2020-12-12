@@ -8,7 +8,7 @@ class Solution:
         elif p[n] == '*': dp[m][n] = dp[m][n-2] or // a* counts as empty
             if p[n-1] in (s[m], '.'): dp[m][n] = dp[m-1][n] // a* counts as one or more a
         '''
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def isMatched(m, n):
             result = False
             if n == -1:

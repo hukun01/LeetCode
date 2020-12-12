@@ -7,7 +7,7 @@ class Solution:
         MOD = 10 ** 9 + 7
         dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
         
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def find(r, c, times):
             if not (0 <= r < m and 0 <= c < n):
                 return 1

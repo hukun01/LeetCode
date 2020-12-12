@@ -40,7 +40,7 @@ class Solution:
         Note that the squares here is different that it doesn't have 0.
         '''
         squares = [i * i for i in range(1, int(n ** 0.5) + 1)]
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def find(n):
             if n == 0:
                 return 0

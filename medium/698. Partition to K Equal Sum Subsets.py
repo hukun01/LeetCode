@@ -10,6 +10,9 @@ class Solution:
         Another key is to backtrack, because one valid set may cause another
         one invalid, so we need to be able to revert and try other paths.
 
+        Yet another key is to break early when one bucket isn't feasible to
+        hold any value.
+
         Time: O(k! k^(n-k)) where n is len(nums), we call (k!) times of dfs(),
         and each dfs() takes k^(n-k) steps for each bucket.
         Space: O(n)
@@ -22,12 +25,12 @@ class Solution:
         def dfs(i):
             if i == len(nums):
                 return True
-            for j in range(k):
-                buckets[j] += nums[i]
-                if buckets[j] <= target and dfs(i + 1):
+            for b_idx in range(k):
+                buckets[b_idx] += nums[i]
+                if buckets[b_idx] <= target and dfs(i + 1):
                     return True
-                buckets[j] -= nums[i]
-                if buckets[j] == 0:
+                buckets[b_idx] -= nums[i]
+                if buckets[b_idx] == 0:
                     break
             return False
         return dfs(0)

@@ -21,7 +21,7 @@ class Solution:
 
         '''
         wordDict = set(wordDict)
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(start):
             if start == len(s):
                 return True

@@ -4,12 +4,12 @@ class Solution:
         '''
         DFS with memoization.
         '''
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def cost(i, j):
             return sum(c1 != c2 for c1, c2 in zip(s[i:j+1], s[i:j+1][::-1])) // 2
     
         n = len(s)
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(i, k):
             if n-i == k:
                 return 0

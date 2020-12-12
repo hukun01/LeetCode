@@ -13,7 +13,7 @@ class Solution:
         If i == j, means we only have "_a_", this is 1 palindrome,
         if i != j, means we have "a_a", this is 2 palindromes, as '_' can be any chars, or empty.
         '''
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dp(s, e):
             count = 0
             for c in 'abcd':

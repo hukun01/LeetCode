@@ -6,7 +6,7 @@ class Solution:
         Kinda of brute force DFS.
         '''
         n = len(ring)
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(ringIdx, keyIdx):
             if keyIdx == len(key):
                 return 0

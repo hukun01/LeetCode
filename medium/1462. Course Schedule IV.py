@@ -10,7 +10,7 @@ class Solution:
         for i, j in P:
             graph[j].append(i)
 
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(i, j):
             if i == j:
                 return True

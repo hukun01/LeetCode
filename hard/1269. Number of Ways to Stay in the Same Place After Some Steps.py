@@ -3,7 +3,7 @@ class Solution:
         '''
         DFS with memoization and pruning.
         '''
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(pos, stepsLeft):
             if pos < 0 or pos == arrLen:
                 return 0

@@ -10,7 +10,7 @@ class Solution:
             'u': 'a'
         }
         
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(lastChar, currLen):
             if currLen == n:
                 return 1

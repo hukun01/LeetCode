@@ -8,7 +8,7 @@ class Solution:
         size1, size2 = len(cost), len(cost[0])
         min_arr = [min(x) for x in zip(*cost)]
 
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dp(i, mask):
             if i == size1:
                 return sum(min_arr[j] for j in range(size2) if not (mask & (1 << j)))

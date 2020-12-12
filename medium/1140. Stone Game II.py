@@ -13,7 +13,7 @@ class Solution:
         for i in range(len(piles) - 2, -1, -1):
             suffixSums[i] += suffixSums[i + 1]
 
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(i, m):
             if i + 2 * m >= len(piles):
                 return suffixSums[i]

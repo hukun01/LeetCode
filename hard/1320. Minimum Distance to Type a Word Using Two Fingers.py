@@ -20,7 +20,7 @@ class Solution:
             r2, c2 = letters[char2]
             return abs(r1 - r2) + abs(c1 - c2)
         
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs(f1, f2, i):
             if i == len(word):
                 return 0
@@ -51,7 +51,7 @@ class Solution:
             r2, c2 = letters[char2]
             return abs(r1 - r2) + abs(c1 - c2)
 
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def dfs2(other, i):
             if i == len(word):
                 return 0

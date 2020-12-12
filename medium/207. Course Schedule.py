@@ -31,7 +31,7 @@ class Solution:
 
         path = [False] * numCourses
         
-        @functools.lru_cache(None)
+        @lru_cache(None)
         def has_cycle(current):
             if path[current]:
                 return True
