@@ -23,10 +23,10 @@ class Solution:
         whether the current element is the largest, but just replace with it.
         Time and Space: same as above.
         '''
-        lens = [math.inf] * len(nums)
+        lens = [inf] * len(nums)
         for a in nums:
             lens[bisect_left(lens, a)] = a
-        return bisect_left(lens, math.inf)
+        return bisect_left(lens, inf)
         '''
         2/2 DP
 
