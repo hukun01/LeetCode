@@ -6,13 +6,14 @@ class Solution:
         Memoization seems unintuitive at first glance, because after bursting
         the first nums[i], its adjacent elements are affected, thus the future
         score is affected. This issue makes the problem impossible for DP.
-        
+
         Now, think reversely, would the score be affected if bursting the
         *last* nums[i]? No. If we know we are going to burst nums[i] as the
         last balloon in (left, right) exclusively, the balloons are separated
         into 2 parts, left part is (left, i), right part is (i, right).
         We can try each possible i in (left, right), and handle left and
         right parts accordingly.
+        Note the subprocedures should cover i as i-th balloon is available.
 
         Let f[i][j] be the max coins from bursting balloons between (i, j)
         exclusively,
