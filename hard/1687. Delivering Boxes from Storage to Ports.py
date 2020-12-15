@@ -22,6 +22,9 @@ class Solution:
         in O(1) time. We keep track of all g[j] based on all seen f[i], and
         pop out g[j] that expires due to box count and weight constraints.
 
+        Note that we need to skip updating g[j] when j == n, because moves[j+1]
+        is invalid and g[j] is useless.
+
         Time: O(n)
         Space: O(n)
 

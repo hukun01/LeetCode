@@ -1,13 +1,18 @@
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
         """
-        This is the same as the 70. Climbing Stairs, but the trick is to return the min of 
-        the cost at (i-2th stair, i-1th stair), because both a and b reaches the top.
+        DP.
+        This is the same as the 70. Climbing Stairs, but the trick is to
+        return the min of the cost at (i-2th stair, i-1th stair), because both
+        f1 and f2 reaches the top. Note f1 is f[i-1] and f2 is f[i-2] where
+        f[i] is the min cost to climb to i-th stair.
+
+        Time: O(n) where n is len(cost)
+        Space: O(1)
         """
-        # a denotes the cost to start from the i-2th stair; 
-        # b denotes the cost to start from the i-1th stair
-        a, b = cost[0], cost[1]
-        for c in cost[2:]:
-            x = c + min(a, b) # can only climb after paying the cost!
-            a, b = b, x
-        return min(a, b)
+        f1 = cost[0]
+        f2 = 0
+        for c in cost[1:]:
+            fi = min(f1, f2) + c
+            f1, f2 = fi, f1
+        return min(f1, f2)

@@ -13,9 +13,12 @@ class Solution:
         Yet another key is to break early when one bucket isn't feasible to
         hold any value.
 
-        Time: O(k! k^(n-k)) where n is len(nums), we call (k!) times of dfs(),
-        and each dfs() takes k^(n-k) steps for each bucket.
+        Time: O(k! k^(n-k)) where n is len(nums), we call at most (k!) times
+              of dfs(), and each dfs() takes k^(n-k) steps for each bucket.
+              Note that with pruning the actual search paths are much less.
         Space: O(n)
+
+        Similar to 473. Matchsticks to Square
         '''
         target, remaining = divmod(sum(nums), k)
         if remaining != 0:
