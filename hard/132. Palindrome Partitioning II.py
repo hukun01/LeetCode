@@ -9,11 +9,14 @@ class Solution:
 
         Time: O(n^2) where n is len(s), based on below process.
               check all k in [l, r]: # O(n)
-                check all s[k:r] # O(n)
+                check all s[k:r] # O(n) after caching all is_palin info.
         Space: O(n^2)
         '''
-        def is_palin(x):
-            return x == x[::-1]
+        n = len(s)
+        is_palin = [[False] * (n + 1) for _ in range(n + 1)]
+        for l in range(n+1):
+            for r in range(l, n+1):
+                is_palin[l][r] = s[l:r] == s[l:r][::-1]
 
         @cache
         def dfs(l, r):
@@ -21,7 +24,7 @@ class Solution:
                 return 0
             ans = inf
             for k in range(l, r):
-                if is_palin(s[k:r]):
+                if is_palin[k][r]:
                     ans = min(ans, (k > l) + dfs(l, k))
             return ans
 
