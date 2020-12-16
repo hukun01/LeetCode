@@ -3,14 +3,20 @@ class Solution:
     def areConnected(self, n: int, threshold: int, queries: List[List[int]]) -> List[bool]:
         '''
         UF.
-        The key is to enumerate all the number pairs that whose common
-        divisor is greather than threshold, namely, >= (threshold + 1).
-        We can enumerate (a, b) pairs where a is range(threshold + 1, n + 1, 1),
-        b is range(a + a, n + 1, a).
-        Calculating GCD for each pair would be too slow.
+        The key is to enumerate all the number pairs that whose common divisor
+        is greather than threshold, namely, >= (threshold + 1).
+        We can enumerate (a, b) pairs where
+        a from range(threshold + 1, n + 1, 1), b from range(a + a, n + 1, a).
+
+        Note that calculating GCD for each pair takes O(log(n)) that would be
+        too slow.
+
+        Time: O((n-k) n/k) outer loop is O(n-k), inner loop is O(n/k), UF
+              operations are amortized O(1).
+        Space: O(n)
         '''
         uf = UnionFind(n + 1)
-        for a in range(threshold + 1, n + 1, 1):
+        for a in range(threshold + 1, n + 1):
             for b in range(a + a, n + 1, a):
                 uf.union(a, b)
         return [uf.find(a) == uf.find(b) for a, b in queries]

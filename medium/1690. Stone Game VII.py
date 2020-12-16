@@ -16,8 +16,8 @@ class Solution:
             = alice_total_score - bob_total_score
         Same applies when Bob plays first in the subarray.
 
-        One key is to call cache_clear() at the end, or do lru_cache(1000*2).
-        Otherwise it will TLE due to memory consumption.
+        One key is to call cache_clear() at the end, otherwise it will TLE due
+        to memory consumption.
 
         Time: O(n^2) where n is len(stones)
         Space: O(n^2)
