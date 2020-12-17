@@ -2,21 +2,26 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         '''
-        Backtrack DFS, we check whether an element has been visited, if yes, skip;
-        if not, continue to DFS with an expanded current list
+        Backtrack DFS
+        Wheck whether an element has been visited, if yes, skip; if not,
+        continue to DFS with an expanded current list.
+
+        Time: O(n!) where n is len(nums)
+        Space: O(n(n!))
         '''
         ans = []
-        def dfs(used, comb):
-            if len(comb) == len(nums):
-                ans.append(comb[:])
+        n = len(nums)
+        def dfs(used, curr):
+            if len(curr) == n:
+                ans.append(curr[:])
                 return
-            for i in range(len(nums)):
+            for i in range(n):
                 if i in used:
                     continue
-                comb.append(nums[i])
+                curr.append(nums[i])
                 used.add(i)
-                dfs(used, comb)
-                comb.pop()
+                dfs(used, curr)
+                curr.pop()
                 used.remove(i)
         dfs(set(), [])
         return ans

@@ -3,13 +3,19 @@ class Solution:
     def minimumEffort(self, tasks: List[List[int]]) -> int:
         '''
         Greedy.
-        At task 't', we need 'm' energy to start it, 'a' energy to finish it, so
-        we save (saved := m - a) energy after 't'.
-        At the next task 't2', we need ('m2' - prev_saved) energy to start, a2 to finish.
-        We need sum(a) at the minimum, the goal is to minimize the extra energy
-        for starting. To do that, we want to maximize 'prev_saved' as soon as possible
-        when going through the tasks.
-        Hence, we sort the tasks by 'saved', reversely.
+        At task 't', we need 'm' energy to start it, 'a' energy to finish it,
+        so we save (saved := m - a) energy after 't'.
+        At the next task 't2', we need ('m2' - prev_saved) energy to start, a2
+        to finish. We need sum(a) at the minimum, the goal is to minimize the
+        extra energy for starting. To do that, we want to maximize 'prev_saved'
+        as soon as possible when going through the tasks. Hence, we sort the
+        tasks by 'saved', reversely. The process is as below:
+            If prev_saved >= m, we can do the task without extra cost;
+            If prev_saved < m, we need to increase prev_saved to m, and add
+            extra cost 'm - prev_saved'.
+            We ensure prev_saved >= m no matter what it is, then we consume it
+            to do the current task, aka, 'prev_saved -= a'.
+
         Time: O(nlogn) where n is the length of tasks array.
         Space: O(n) for sorting.
         '''

@@ -5,8 +5,8 @@ class Solution:
         DFS.
         Simplified graph coloring problem. Build the graph, in which an edge
         represents the dislike between two nodes. DFS on the graph and ensure
-        each node is assigned to one color, while all its neighbors are assigned
-        to the other color.
+        each node is assigned to one color, while all its neighbors are
+        assigned to the other color.
         '''
         graph = defaultdict(set)
         for i, j in dislikes:
@@ -21,7 +21,7 @@ class Solution:
                 return colors[node] == c
             colors[node] = c
             return all(dfs(nei, c ^ 1) for nei in graph[node])
-        
+
         for node in range(1, N + 1):
             if node not in colors and not dfs(node, 0):
                 return False

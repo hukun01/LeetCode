@@ -39,7 +39,7 @@ class Solution:
         As using sortedcontainers is kinda cheating, we often need to go down
         the path employing a BIT, to do the same thing.
         Here we compute the whole presums first, and keep a sorted copy of it.
-        Use a BIT to keep track of the frequencies of the indicies of 
+        Use a BIT to keep track of the frequencies of the *indicies* of
         'sum_j - lower' and 'sum_j - upper', then 'sum_i_count' is the
         frequency diff between these two indicies.
         Note as BIT doesn't use index 0, when adding sum_j's index we need to

@@ -21,7 +21,7 @@ class Solution:
         '''
         # BIT works with positive indicies, so start = 1.
         num_to_rank = { v: i for i, v in enumerate(sorted(set(nums)), start = 1) }
-        
+
         tree = BinaryIndexedTree(len(num_to_rank))
         ans = []
         for a in nums[::-1]:
