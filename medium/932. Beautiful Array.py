@@ -7,14 +7,23 @@ class Solution:
         Given A[k] * 2 != A[i] + A[j],
         1. Addition to every element: (A[k] + x) * 2 != (A[i] + x) + (A[j] + x)
         2. Deletion: same as addition
-        3. Multiplication: A[k] * 2 != A[i] + A[j], so (A[k] * x) * 2 != (A[i] * x) + (A[j] * x)
+        3. Multiplication: (A[k] * x) * 2 != (A[i] * x) + (A[j] * x)
 
-        With the observations above, we can easily construct any beautiful array.
-        Assume we have a beautiful array A with length N
+        Another key is to concat two beautiful arrays, if we have below:
+            A1 = A * 2 - 1 is beautiful with only [odds] from 1 to N * 2 - 1
+            A2 = A * 2 is beautiful with only [even] from 2 to N * 2
+        Then: B = A1 + A2 is a beautiful array with length N * 2
+        This works because A1 and A2 by themselves are already beautiful, and
+        when they merge, any i,j,k from the middle part can't break the rule,
+        because B[i] + B[j] is odd.
 
-        A1 = A * 2 - 1 is beautiful with only [odds] from 1 to N * 2 -1
-        A2 = A * 2 is beautiful with only [even] from 2 to N * 2
-        B = A1 + A2 beautiful array with length N * 2
+        Finally, the process is to
+        1. start from a simple beautiful array [1];
+        2. apply above update operations to make an odd value array A1 and an
+           even value array A2 from #1;
+        3. concat A1 and A2 to make a bigger beautiful array;
+        4. Once we exceed N, we take the first N elements <= N, as it's ok to
+           skip bigger elements without breaking the beauty of the array.
         """
         A = [1]
         while len(A) < N:
