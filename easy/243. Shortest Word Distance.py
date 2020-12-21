@@ -2,12 +2,10 @@
 class Solution:
     def shortestDistance(self, words: List[str], word1: str, word2: str) -> int:
         ans = inf
-        i1 = i2 = None
+        seen = {}
+        targets = {word1:word2, word2:word1}
         for i, w in enumerate(words):
-            if w == word1:
-                i1 = i
-            elif w == word2:
-                i2 = i
-            if i1 != None and i2 != None:
-                ans = min(ans, abs(i1 - i2))
+            if w in targets and targets[w] in seen:
+                ans = min(ans, i - seen[targets[w]])
+            seen[w] = i
         return ans
