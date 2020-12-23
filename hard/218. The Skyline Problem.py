@@ -3,6 +3,9 @@ class Solution:
     def getSkyline(self, buildings: List[List[int]]) -> List[List[int]]:
         '''
         Sort + Priority queue.
+        Scan through the sorted buildings, and compare each one with the
+        current heighest building in effect, record if there's a difference.
+
         For each building, it has two intervals, one is [left, height, right],
         another is [right, 0, inf]. We need the second one to tell when the
         building is out of scope, and to record the key point on the bottom
