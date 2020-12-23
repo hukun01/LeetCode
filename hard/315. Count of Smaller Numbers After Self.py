@@ -5,6 +5,9 @@ class Solution:
         1/2 Using SortedList from sortedcontainers module.
         From right to left, insert each element into the sorted list,
         and the insertion index is the count of the smaller elements.
+
+        Time: O(n log(n))
+        Space: O(n)
         '''
         from sortedcontainers import SortedList
         seen = SortedList()
@@ -17,7 +20,11 @@ class Solution:
         '''
         2/2. Fenwick tree/Binary Indexed Tree.
         A trick here is to convert the original numbers into relative
-        ranks, this is to avoid making the BIT's array too big.
+        ranks, this is to avoid making the BIT's array too big. This technique
+        is called Discretization.
+
+        Time: O(n log(n))
+        Space: O(n)
         '''
         # BIT works with positive indicies, so start = 1.
         num_to_rank = { v: i for i, v in enumerate(sorted(set(nums)), start = 1) }
@@ -34,23 +41,14 @@ class BinaryIndexedTree:
     def __init__(self, n):
         self.sums = [0] * (n + 1)
 
-    # O(n) initialization. Better than using update() which leads to O(Ologn).
-    def initialize(self, nums):
-        assert len(nums) + 1 == len(self.sums)
-        
-        for i, a in enumerate(nums, start = 1):
-            self.sums[i] += a
-            if (parent_idx := i + self.low_bit(i)) <= len(nums):
-                self.sums[parent_idx] += self.sums[i]
-        
     def low_bit(self, i):
-        return i & (-i)
-        
+        return i & -i
+
     def update(self, i, val):
         while i < len(self.sums):
             self.sums[i] += val
             i += self.low_bit(i)
-    
+
     def getPrefixSum(self, i):
         ans = 0
         while i > 0:

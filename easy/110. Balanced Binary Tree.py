@@ -1,18 +1,18 @@
+# 110. Balanced Binary Tree
 # Definition for a binary tree node.
 # class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
-        def isBalanced(self, root: TreeNode) -> bool:
-        """
-        :type root: TreeNode
-        :rtype: bool
-        """
-        """ 1/2: Intuitive recursive approach with getDepth, but not efficient!
+    def isBalanced(self, root: TreeNode) -> bool:
+        '''
+        1/2: Intuitive recursive approach with getDepth, but not efficient!
 
+        Time: O(n^2) where n is the number of nodes
+        Space: O(h) where h is the height of the tree
+        '''
         def getDepth(root):
             if not root:
                 return 0
@@ -24,12 +24,16 @@ class Solution:
         if abs(left - right) > 1:
             return False
         return self.isBalanced(root.left) and self.isBalanced(root.right)
-        """
-        """
-        2/2: DFS recursive approach with getDepth, return -1 to indicate the tree is not balanced.
-        The getDepth() here actually bears two messages, one is the actual depth if return non-negative value,
-        another is to indicate that the tree is not balanced by returning -1.
-        """
+        '''
+        2/2: DFS recursive approach with getDepth, return -1 to indicate the
+        tree is not balanced.
+        The getDepth() here actually bears two messages, one is the actual
+        depth if return non-negative value, another is to indicate that the
+        tree is not balanced by returning -1.
+
+        Time: O(n)
+        Space: O(h)
+        '''
         def getDepth(node):
             if not node:
                 return 0
