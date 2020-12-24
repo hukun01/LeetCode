@@ -18,3 +18,20 @@ class Solution:
             if n < bucket:
                 return int(str(start + n // digits)[n % digits])
             n -= bucket
+        '''
+        Another implementation.
+        '''
+        n -= 1
+        base = 1
+        block_size = 9
+        digits = 1
+        total_digits = 0
+        while n > total_digits + block_size * digits:
+            total_digits += block_size * digits
+            digits += 1
+            base += block_size
+            block_size *= 10
+        k = n - total_digits
+        num_idx = k // digits
+        digit_idx = k % digits
+        return str(base + num_idx)[digit_idx]

@@ -4,7 +4,7 @@ class Solution:
         '''
         1/2 Sorting
         Keep track of an interval [begin, end], in which 'furthest' tracks
-        the largest index we can reach from the *reachable, *continuous
+        the largest distance we can reach from the *reachable, *continuous
         clips intervals that starts on or before 'cur_end'.
 
         From 'furthest' we start our next exploration in the continuous clips.
