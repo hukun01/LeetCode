@@ -2,29 +2,33 @@
 class Solution:
     def findMaximumXOR(self, nums: List[int]) -> int:
         '''
-        Trie.
-        From left to right bits, find the max possible prefix by XORing
-        the bits from each number with any one of the other numbers seen.
-        '''
-        L = len(bin(max(nums))) - 2
-        # We want to check the more significant bits first, hence the reverse.
-        nums = [[(x >> i) & 1 for i in range(L)[::-1]] for x in nums]
-        Trie = lambda: defaultdict(Trie)
-        trie = Trie()
-        max_xor = 0
-        for num in nums:
-            node = trie
-            xor_node = trie
-            curr_xor = 0
-            for bit in num:
-                curr_xor <<= 1
-                node = node[bit]
+        Bit-wise Trie.
+        Build a bit-wise trie that tracks the 0s and 1s for each number.
+        For each number, find the max xor with any of other numbers in trie.
+        From left (the most significant) to right bits, at every bit, greedily
+        choose the bit that would xor to 1 with the bit of current number.
 
-                xor_bit = 1 - bit
-                if xor_bit in xor_node:
-                    curr_xor |= 1
-                    xor_node = xor_node[xor_bit]
+        Time: O(32n) where n is len(nums)
+        Space: O(n)
+        '''
+        Trie = lambda: defaultdict(Trie)
+        root = Trie()
+        # Build the trie with nums
+        for a in nums:
+            node = root
+            for i in range(31, -1, -1):
+                i_th_bit = (a >> i) & 1
+                node = node[i_th_bit]
+        ans = 0
+        for a in nums:
+            node = root
+            max_xor_with_a = 0
+            for i in range(31, -1, -1):
+                i_th_bit = (a >> i) & 1
+                if (i_th_bit ^ 1) in node:
+                    max_xor_with_a |= (1 << i)
+                    node = node[i_th_bit ^ 1]
                 else:
-                    xor_node = xor_node[bit]
-            max_xor = max(max_xor, curr_xor)
-        return max_xor
+                    node = node[i_th_bit]
+            ans = max(ans, max_xor_with_a)
+        return ans
