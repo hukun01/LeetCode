@@ -10,8 +10,8 @@ class Solution:
                 stack.append(["", int(num)])
                 num = ""
             elif c == ']':
-                subString, repeat = stack.pop()
-                stack[-1][0] += subString * repeat
+                sub_string, repeat = stack.pop()
+                stack[-1][0] += sub_string * repeat
             else:
                 stack[-1][0] += c
 

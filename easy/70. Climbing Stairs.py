@@ -1,8 +1,9 @@
+# 70. Climbing Stairs
 class Solution:
     def climbStairs(self, n: int) -> int:
-        """
-        This is the same as the 746. Min Cost Climbing Stairs, just without cost.
-        """
+        '''
+        Same as the 746. Min Cost Climbing Stairs, just without cost.
+        '''
         # 'a' denotes the #ways to start from the i-2th stair;
         # 'b' denotes the #ways to start from the i-1th stair.
         a = b = 1
