@@ -1,7 +1,12 @@
+# 443. String Compression
 class Solution:
     def compress(self, chars: List[str]) -> int:
         '''
-        
+        Control flow.
+        The key is to have clear and concise logic.
+
+        Time: O(n) where n is len(chars)
+        Space: O(1)
         '''
         idx = i = 0
         while i < len(chars):
@@ -16,5 +21,5 @@ class Solution:
                 for c in str(count):
                     chars[idx] = c
                     idx += 1
-        
+
         return idx

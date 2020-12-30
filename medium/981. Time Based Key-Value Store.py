@@ -1,17 +1,21 @@
+# 981. Time Based Key-Value Store
 class TimeMap:
     '''
     Use two dict to store timestamp and values separately,
     keep appending timestamp and value in set().
     In get(), just binary search the upper bound of the target timestamp in times,
     and use the index to look up values.
+
+    Time: set() O(1), get() O(log(n)) where n is the current len(values)
+    Space: O(n)
     '''
 
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        self.times = collections.defaultdict(list)
-        self.values = collections.defaultdict(list)
+        self.times = defaultdict(list)
+        self.values = defaultdict(list)
 
     def set(self, key: str, value: str, timestamp: int) -> None:
         self.times[key].append(timestamp)
