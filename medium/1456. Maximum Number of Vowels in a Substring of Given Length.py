@@ -2,20 +2,19 @@
 class Solution:
     def maxVowels(self, s: str, k: int) -> int:
         '''
-        Use two pointers to track the vowels count in the
-        sliding window of size k.
-        Using deque is sub-optimal because of the space cost of storing
-        the elements in the deque.
+        Sliding window.
+        Use two pointers to track vowels count in the sliding window of size k.
+        Note that using a deque is sub-optimal because of the space cost.
+
+        Time: O(n) where n is len(s)
+        Space: O(1)
         '''
-        v = set('aeiou')
-        count = sum(c in v for c in s[:k])
-        ans = count
-        i1 = 0
-        for i2 in range(k, len(s)):
-            if s[i2] in v:
-                count += 1
-            if s[i1] in v:
-                count -= 1
-            i1 += 1
-            ans = max(ans, count)
+        vowels = set('aeiou')
+        cur = left = ans = 0
+        for right, char in enumerate(s):
+            cur += int(char in vowels)
+            while right - left + 1 > k:
+                cur -= int(s[left] in vowels)
+                left += 1
+            ans = max(ans, cur)
         return ans

@@ -2,43 +2,53 @@ class Solution:
     def gameOfLife(self, board: List[List[int]]) -> None:
         """
         Do not return anything, modify board in-place instead.
-        
+        """
+        '''
+        State machine.
         To solve it in-place, we need to make use of each element itself to
         store the next state.
-        We can add 2 to each cell whenever they should be live in the next round;
-        When counting neighbors, we check whether the cell >= 2, if so, that 
-        means we added 2 to it, so we subtract 2 from it, and use the result as
-        the neighbor.
-        1 means it is 1, next round it'll be 0.
-        2 means it is 0, next round it'll be 1.
-        3 means it is 1, next round it'll be 1.
-        Note that for cell that dies in the next round, we do NOT want to set it to 0 during the process!
 
-        At the end, we need to go through the board and set every cell to 1 if it's >= 2,
-        and set the cell to 0 otherwise.
-        """
-        rows = len(board)
-        cols = len(board[0])
-        def countNeighbors(r, c):
-            total = 0
-            for i in range(max(0, r-1), min(rows, r+2)):
-                for j in range(max(c-1, 0), min(cols, c+2)):
-                    if board[i][j] > 1:
-                        neighbor = board[i][j] - 2
+        Have a set of intermediate states as below.
+        Let 2 be the state for 'dying' from 'live' to die.
+        Let 3 be the state for 'living' from 'live' to live.
+        Let 4 be the state for 'reproducing' from 'dead' to live.
+
+        Then traverse the board twice. First time we update to the
+        intermediate states. In this traversal, treat 2 and 3 as live, and 4
+        as dead. In the second traversal, we update 2 to dead, and 3,4 to live.
+
+        Time: O(RC)
+        Space: O(1)
+        '''
+        R, C = len(board), len(board[0])
+        def count_neighbors(r, c):
+            lives = 0
+            for dr in range(-1, 2):
+                for dc in range(-1, 2):
+                    nr, nc = r + dr, c + dc
+                    if not 0 <= nr < R or not 0 <= nc < C:
+                        continue
+                    if (nr, nc) == (r, c):
+                        continue
+                    
+                    if board[nr][nc] in {1, 2, 3}:
+                        lives += 1
+            return lives
+
+        for r in range(R):
+            for c in range(C):
+                lives = count_neighbors(r, c)
+                if board[r][c] == 1:
+                    if 2 <= lives <= 3:
+                        board[r][c] = 3
                     else:
-                        neighbor = board[i][j]
-                    total += neighbor
-            return total - board[r][c]
-        
-        for r in range(rows):
-            for c in range(cols):
-                liveNeighbors = countNeighbors(r, c)
-                if liveNeighbors == 3 or (liveNeighbors == 2 and board[r][c] == 1):
-                    board[r][c] += 2
-                # Note that we can't set board[r][c] to 0 in the else branch yet
-        for r in range(rows):
-            for c in range(cols):
-                if board[r][c] > 1:
-                    board[r][c] = 1
+                        board[r][c] = 2
                 else:
+                    if lives == 3:
+                        board[r][c] = 4
+        for r in range(R):
+            for c in range(C):
+                if board[r][c] == 2:
                     board[r][c] = 0
+                elif board[r][c] in {3, 4}:
+                    board[r][c] = 1

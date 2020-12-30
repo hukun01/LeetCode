@@ -9,6 +9,9 @@ class Solution:
         We only need to count the differences between target and the first
         half of the numbers smaller than target.
         The total of an arithmetic sequence is (a0 + ax) * count // 2
+
+        Time: O(1)
+        Space: O(1)
         '''
         target = n
         count = n // 2

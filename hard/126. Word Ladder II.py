@@ -1,7 +1,42 @@
 class Solution:
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
         '''
-        Use 2-end BFS to find the layers where we could get the paths, and
+        1/2 BFS.
+        Let layer[word] be the list of paths that ends at word.
+        newlayer[new_w] = [p + [new_w] for p in layer[word]] for all 'new_w'
+        that's one char away from 'word'.
+
+        Also remember to eliminate the used words in new layer from words, to
+        reduce repetitive search.
+
+        Time: O(V + E * p * w) where V is len(wordList), E is the number of
+              edges, aka, number of 1-char away word pairs. p is the length
+              of path, w is the length of a word.
+        Space: O(p^2 * w)
+        '''
+        words = set(wordList)
+        layer = {}
+        layer[beginWord] = [[beginWord]]
+        letters = "abcdefghijklmnopqrstuvwxyz"
+
+        while layer:
+            newlayer = defaultdict(list)
+            for w, paths_to_w in layer.items():
+                if w == endWord: 
+                    return paths_to_w
+
+                for i in range(len(w)):
+                    for c in letters:
+                        new_w = w[:i] + c + w[i+1:]
+                        if new_w in words:
+                            newlayer[new_w] += [p + [new_w] for p in paths_to_w]
+
+            words -= set(newlayer.keys()) # this is critical for time
+            layer = newlayer
+
+        return []
+        '''
+        2/2 Use 2-end BFS to find the layers where we could get the paths, and
         use DFS to find the paths.
         '''
         wordSet = set(wordList)
@@ -29,7 +64,7 @@ class Solution:
                 begins.append(nextSet)
         bfsFindLayers()
         ans = []
-        
+
         # remember to swap two sets to ensure they are ordered
         if beginWord not in begins[0]:
             begins, ends = ends, begins
