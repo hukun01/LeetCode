@@ -1,17 +1,20 @@
+# 739. Daily Temperatures
 class Solution:
-    def dailyTemperatures(self, temperatures):
-        """
-        :type temperatures: List[int]
-        :rtype: List[int]
+    def dailyTemperatures(self, T: List[int]) -> List[int]:
+        '''
+        Monotonic stack
+        Store the index of the previous temperatures in a stack, when seeing
+        a new temperature t, if last temperature < t, pop stack and mark that
+        previous index using the current distance.
 
-        Store the index in a stack, when seeing a new temperature, if the last temperature in stack is lower, 
-        pop that out and mark that index distance as the answer at the last index; otherwise, keep it 0.
-        """
-        stack = [] # store the INDEX
-        ans = [0 for i in temperatures]
-        for i, t in enumerate(temperatures):
-            while stack and t > temperatures[stack[-1]]:
-                idx = stack.pop() # each idx would be accessed ONCE at most
-                ans[idx] = i - idx
-            stack.append(i)
+        Time: O(n) where n is len(T)
+        Space: O(n)
+        '''
+        prev_temp_idx = []
+        ans = [0] * len(T)
+        for i, t in enumerate(T):
+            while prev_temp_idx and T[prev_temp_idx[-1]] < t:
+                prev_i = prev_temp_idx.pop()
+                ans[prev_i] = i - prev_i
+            prev_temp_idx.append(i)
         return ans

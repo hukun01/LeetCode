@@ -13,7 +13,9 @@ class Solution:
         Key is to understand the special shape of the tree.
         Then to flip it, just reverse from root to all its left node,
         and link the right nodes based on the example.
-        O(n) space where n is the number of tree nodes
+
+        Time: O(n) where n is tree size
+        Space: O(n)
         '''
         if not root:
             return None
@@ -32,17 +34,19 @@ class Solution:
         '''
         2/2 Reverse the root-left branch in place.
         This is like reversing a linked list.
-        O(1) space.
+
+        Time: O(n)
+        Space: O(1)
         '''
         cur = root
         last_right = prev = None
         while cur:
             nex = cur.left
-            
+
             cur.left = last_right
             last_right = cur.right
             cur.right = prev
-            
+
             prev = cur
             cur = nex
         return prev

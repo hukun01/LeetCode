@@ -1,3 +1,4 @@
+# 146. LRU Cache
 class Node:
     def __init__(self, key, val):
         self.key = key
@@ -6,6 +7,13 @@ class Node:
         self.next = None
         
 class LRUCache:
+    '''
+    Create a Node class.
+    Use a map and a doubly-linked list with DUMMY head and tail to build the
+    cache.
+    Helper methods: AddToHead(node), and Remove(node).
+    Remember also build the prev & next links bewteen head and tail.
+    '''
 
     def __init__(self, capacity: int):
         self.capacity = capacity
@@ -17,7 +25,7 @@ class LRUCache:
         
     def _addToHead(self, node):
         self.nodes[node.key] = node
-        
+
         node.next = self.head.next
         self.head.next.prev = node
         self.head.next = node

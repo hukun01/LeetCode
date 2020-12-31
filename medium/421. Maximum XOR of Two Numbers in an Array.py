@@ -19,6 +19,7 @@ class Solution:
             for i in range(31, -1, -1):
                 i_th_bit = (a >> i) & 1
                 node = node[i_th_bit]
+
         ans = 0
         for a in nums:
             node = root
