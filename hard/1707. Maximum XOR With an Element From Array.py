@@ -2,7 +2,7 @@
 class Solution:
     def maximizeXor(self, nums: List[int], queries: List[List[int]]) -> List[int]:
         '''
-        1/2 Bit-wise trie + sort.
+        1/3 Bit-wise trie + sort, offline query.
         Sort the queries by 'm', for all numbers <= m, add them to the bit-wise
         trie. Then query the trie and greedily find the max possible xor
         between x and any of the existing numbers in trie.
@@ -53,7 +53,7 @@ class Solution:
             ans[q_i] = query(x)
         return ans
         '''
-        2/2 Sort + binary search.
+        2/3 Sort + binary search, online query.
         Sort the nums, and for each query (x, m), find the best possible
         number within [:bound(m)], which can be located by binary search. The
         best number has the opposite bit at every possible positions, comparing
@@ -103,3 +103,69 @@ class Solution:
             return num ^ x
 
         return [query(x, m) if nums[0] <= m else -1 for x, m in queries]
+        
+        '''
+        3/3 Augmented bit-wise Trie with min val in node, NO sort, online query
+
+        In 1/3 we leverage sorted nums and sorted queries to focus on eligible
+        numbers when finding the number that leads to the greatest xor with x.
+        It's considered offline, because we need to know what the biggest
+        *future* query's m is, before we process nums.
+
+        Here it is an online algorithm, which processes all numbers, and answer
+        any queries that come up later, without knowing *future* queries.
+
+        Time: O(n + q)
+        Space: O(n + q)
+
+        Note that this approach is much slower, due to the Node class overhead
+        in Python, we use a special attribute '__slots__' to fix a bit, but
+        it may hit TLE again in the future.
+        '''
+        root = Node()
+        for a in set(nums):
+            root.add(a)
+        
+        min_a = min(nums)
+
+        ans = []
+        for x, m in queries:
+            if m < min_a:
+                ans.append(-1)
+            else:
+                ans.append(x ^ root.query(x, m))
+        
+        return ans
+    
+
+class Node:
+    __slots__ = ('kid', 'val', 'min')
+    
+    def __init__(self):
+        self.kid = [None, None]
+        self.val = None
+        self.min = inf
+    
+    def add(self, num):
+        node = self
+        for i in range(31, -1, -1):
+            i_th_bit = (num >> i) & 1
+            if node.kid[i_th_bit] is None:
+                node.kid[i_th_bit] = Node()
+            node = node.kid[i_th_bit]
+            node.min = min(node.min, num)
+
+        node.val = num
+    
+    def query(self, x, m):
+        node = self
+        ans = 0
+        for i in range(31, -1, -1):
+            i_th_bit = (x >> i) & 1
+            pref = i_th_bit ^ 1
+            if node.kid[pref] is not None and node.kid[pref].min <= m:
+                node = node.kid[pref]
+            else:
+                node = node.kid[i_th_bit]
+            
+        return node.val

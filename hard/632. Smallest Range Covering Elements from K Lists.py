@@ -20,12 +20,12 @@ class Solution:
         ans = [-1e5, 1e5]
         right = max(a[0] for a in nums)
         while left_pos:
-            left, left_i, pos = heappop(left_pos)
+            left, list_i, left_i = heappop(left_pos)
             if right - left < ans[1] - ans[0]:
                 ans = [left, right]
-            if pos + 1 == len(nums[left_i]):
+            if left_i + 1 == len(nums[list_i]):
                 break
-            new_val_from_i = nums[left_i][pos + 1]
-            right = max(right, new_val_from_i)
-            heappush(left_pos, (new_val_from_i, left_i, pos + 1))
+            new_val_from_list_i = nums[list_i][left_i + 1]
+            right = max(right, new_val_from_list_i)
+            heappush(left_pos, (new_val_from_list_i, list_i, left_i + 1))
         return ans

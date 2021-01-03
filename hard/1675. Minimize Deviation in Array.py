@@ -30,20 +30,20 @@ class Solution:
         ans = self.smallestRange(possible)
         return ans[1] - ans[0]
 
-    def smallestRange(self, nums: List[List[int]]) -> List[int]:
-        starts = [(a[0], i, 0) for i, a in enumerate(nums)]
+    def smallestRange(self, num_lists: List[List[int]]) -> List[int]:
+        starts = [(a[0], i, 0) for i, a in enumerate(num_lists)]
         heapify(starts)
         ans = [1, 1e9]
-        end = max(a[0] for a in nums)
+        end = max(a[0] for a in num_lists)
         while starts:
-            start, start_i, pos = heappop(starts)
+            start, list_idx, start_i = heappop(starts)
             if end - start < ans[1] - ans[0]:
                 ans = [start, end]
-            if pos + 1 == len(nums[start_i]):
+            if start_i + 1 == len(num_lists[list_idx]):
                 break
-            start = nums[start_i][pos + 1]
+            start = num_lists[list_idx][start_i + 1]
             end = max(end, start)
-            heappush(starts, (start, start_i, pos + 1))
+            heappush(starts, (start, list_idx, start_i + 1))
         return ans
     '''
     2/2 Priority queue
@@ -52,29 +52,33 @@ class Solution:
     max, or increase min. To reduce the search space, we can increase all odd
     numbers by doubling them, then later we just need to check if we should
     decrease them.
-    Maintain a heap with possible max numbers, if seeing an even number, we 
-    just add it; if seeing an odd number a, add a*2. A heap helps tracking new
-    values added as the max numbers. Also find the cur_min in this process.
-    Now we go over all possible max numbers in the heap, until a max number
-    cannot be further decreased (by being divided by 2). If a max number can
-    be divided by 2, we also need to update cur_min.
+    Maintain a max-heap with possible max numbers, if seeing an even number, we 
+    just add it; if seeing an odd number a, add a*2. A max-heap helps tracking
+    new values added as the max numbers.
+    Also find the cur_min in the max-heap.
+    Now we can't further increase any max numbers, just try decreasing them,
+    and compare them with cur_min to get the min deviation.
+    Go over all possible max numbers in the max-heap, until a max number
+    cannot be further decreased (by being divided by 2).
+    If a max number can be divided by 2, divide it, add it back to max-heap,
+    and also update cur_min.
 
     Time: O(k log(n)) where n is len(nums), k is n * log(m), where m is the
           largest number that is also a power of 2 (so it can be divided by 2
           until becoming 1).
     Space: O(n)
     '''
-        possible_maxs = [-a * 2 if a % 2 == 1 else -a for a in nums]
-        cur_min = -max(possible_maxs)
-        heapify(possible_maxs)
-        ans = inf
-        while possible_maxs:
-            cur_max = -heappop(possible_maxs)
-            ans = min(ans, abs(cur_max - cur_min))
-            if cur_max % 2 == 0:
-                cur_max //= 2
-                cur_min = min(cur_min, cur_max)
-                heappush(possible_maxs, -cur_max)
-            else:
-                break
-        return ans
+    possible_maxs = [-a * 2 if a % 2 == 1 else -a for a in nums]
+    cur_min = -max(possible_maxs)
+    heapify(possible_maxs)
+    ans = inf
+    while possible_maxs:
+        cur_max = -heappop(possible_maxs)
+        ans = min(ans, abs(cur_max - cur_min))
+        if cur_max % 2 == 0:
+            cur_max //= 2
+            cur_min = min(cur_min, cur_max)
+            heappush(possible_maxs, -cur_max)
+        else:
+            break
+    return ans

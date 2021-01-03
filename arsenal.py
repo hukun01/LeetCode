@@ -42,6 +42,47 @@ class BinaryIndexedTree:
             i -= self.low_bit(i)
         return ans
 
+class BinaryIndexedTree2D:
+    '''
+    The main difference between 1D and 2D BITs is that, in 2D, for every 'r',
+    we need to update/query all 'c', in a nested loop. Similar logic applies
+    to more dimensions.
+    '''
+    def __init__(self, r, c):
+        self.data = [[0] * (c + 1) for _ in range(r + 1)]
+        self.R = r + 1
+        self.C = c + 1
+
+    def low_bit(self, i):
+        '''
+        Isolate the last bit from i.
+        '''
+        return i & (-i)
+    
+    def update(self, r, c, v):
+        while r < self.R:
+            self.update_c(r, c, v)
+            r += self.low_bit(r)
+            
+    def update_c(self, r, c, v):
+        while c < self.C:
+            self.data[r][c] += v
+            c += self.low_bit(c)
+    
+    def query(self, r, c):
+        ans = 0
+        while 0 < r:
+            ans += self.query_c(r, c)
+            r -= self.low_bit(r)
+        return ans
+    
+    def query_c(self, r, c):
+        ans = 0
+        while 0 < c:
+            ans += self.data[r][c]
+            c -= self.low_bit(c)
+        return ans
+
 '''
 A sliding window that maintains the current maximum.
 In every iteration, user is supposed to call pop_expired() before calling max().
