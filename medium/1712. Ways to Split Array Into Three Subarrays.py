@@ -11,6 +11,10 @@ class Solution:
         2*presums[left] <= presums[right] <= (presums[-1] + presums[left]) // 2.
         Hence, we can find the min and max 'right' using binary search.
 
+        Note that the 'right_lb' is the inclusive index that satisfies the
+        above equation, while 'right_ub' is the exclusive index where
+        'right_ub - 1' satisfies the above equation.
+
         Time: O(n log(n)) where n is len(nums)
         Space: O(n)
         '''
@@ -38,6 +42,11 @@ class Solution:
         increase, so right_lb only moves right. Same as right_ub.
         As right_lb and right_ub only increase, we can track them outside of
         the for loop where we identify them for each 'left'.
+
+        Note that the 'right_lb' is the inclusive index that satisfies the
+        above equation, while 'right_ub' is the exclusive index where
+        'right_ub - 1' satisfies the above equation. Hence, the 2 inner while
+        loops are actually quite different, although they look similar.
 
         Time: O(n)
         Space: O(n)

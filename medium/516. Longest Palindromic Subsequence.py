@@ -2,6 +2,7 @@
 class Solution:
     def longestPalindromeSubseq(self, s: str) -> int:
         '''
+        DP.
         Let f[i][j] be the length of the longest palindrome in
         s[i:j].
         Transitions:

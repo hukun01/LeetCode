@@ -35,7 +35,7 @@ class Solution:
 
         return ans
         '''
-        1/2 Union Find.
+        2/2 Union Find.
         The key is to group points with the same values by their rows and cols.
         Instead of point-point connection which would be too many, we track the
         row level connections and col level connections. For the same point,
