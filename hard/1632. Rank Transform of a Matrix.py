@@ -85,8 +85,6 @@ class Solution:
             for points in value2index[val].values():
                 rank = max(max(rowmax[r], colmax[c]) + 1 for r, c in points)
                 for r, c in points:
-                    answer[r][c] = rank
-                    rowmax[r] = max(rowmax[r], rank)
-                    colmax[c] = max(colmax[c], rank)
+                    rowmax[r] = colmax[c] = answer[r][c] = rank
 
         return answer

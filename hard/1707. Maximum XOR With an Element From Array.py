@@ -93,7 +93,7 @@ class Solution:
                 plus = num + i_th_bit
                 if nums[start] >= plus:
                     num = plus
-                elif nums[stop-1] >= plus:
+                elif nums[stop - 1] >= plus:
                     cut = bisect_left(nums, plus, start, stop)
                     if x & i_th_bit:
                         stop = cut

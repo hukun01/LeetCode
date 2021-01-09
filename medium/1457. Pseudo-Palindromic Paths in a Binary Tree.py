@@ -12,6 +12,9 @@ class Solution:
         We can use an integer as a bit set to record the values we have seen,
         because the value range is small as [1, 9].
         With XOR operation, we only keep the values that occur in odd times.
+
+        Time: O(n) where n is len(tree)
+        Space: O(n)
         '''
         def dfs(node, bit):
             if not node:
@@ -19,30 +22,30 @@ class Solution:
             bit ^= 1 << (node.val - 1)
             ans = dfs(node.left, bit) + dfs(node.right, bit)
             if node.left == node.right == None:
-                if bit & (bit - 1) == 0: # check if bit is a power of 2.
+                if bit & (bit - 1) == 0: # reset the lowest bit
                     ans += 1
             return ans
 
         return dfs(root, 0)
         '''
-        2/2 DFS with counter of the values.
+        2/2 DFS with counter of the values. This uses more space in practice
+        but can handle any potential values other than digits.
+
+        Time: O(n) where n is len(tree)
+        Space: O(n)
         '''
-        self.ans = 0
-        def isPalin(count):
-            odds = [v for v in count.values() if v % 2 != 0]
-            return len(odds) == 0 or (len(odds) == 1 and odds[0] % 2 == 1)
-            
-        def dfs(node, count):
+        def preorder(node, val2freq):
             if not node:
-                return
-            count[node.val] += 1
-            if node.left == node.right == None:
-                if isPalin(count):
-                    self.ans += 1
-            else:
-                dfs(node.left, count)
-                dfs(node.right, count)
-            count[node.val] -= 1
-    
-        dfs(root, Counter())
-        return self.ans
+                return 0
+
+            ans = 0
+            val2freq[node.val] += 1
+            if not node.left and not node.right:
+                ans += int(sum(v % 2 == 1 for v in val2freq.values()) <= 1)
+
+            ans += preorder(node.left, val2freq)
+            ans += preorder(node.right, val2freq)
+            val2freq[node.val] -= 1
+            return ans
+
+        return preorder(root, Counter())
