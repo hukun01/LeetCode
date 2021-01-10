@@ -2,7 +2,7 @@
 class Solution:
     def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
         '''
-        1/2 DFS with backtracking.
+        1/3 DFS with backtracking.
         The key difference between finding a subset vs finding k subsets,
         is that in the latter, we keep track of count, and only return true
         when count is 0. We also need to ensure the total sum is k * target.
@@ -38,7 +38,35 @@ class Solution:
             return False
         return dfs(0)
         '''
-        2/2 Bitmask DP.
+        2/3 Another DFS backtrack.
+        The key here is to avoid going down the same search path, to break
+        symmetry. If buckets = [4,2,2,2,2] and we want to '+x', then adding to
+        any '2' is the same, we should only check one '2'.
+
+        '''
+        target, remaining = divmod(sum(nums), k)
+        if remaining != 0:
+            return False
+        buckets = [0] * k
+        nums.sort(reverse=True)
+
+        def dfs(i):
+            if i == len(nums):
+                return True
+            seen = set() # record the searched summ
+            for i in range(k):
+                if buckets[i] in seen: continue
+                if buckets[i] + nums[i] <= target:
+                    seen.add(buckets[i])
+                    buckets[i] += nums[i]
+                    if dfs(i + 1):
+                        return True
+                    buckets[i] -= nums[i]
+            return False
+
+        return dfs(0)
+        '''
+        3/3 Bitmask DP.
 
         Each number has two states, used or not, so there are 2^n total states.
         Let f[used] be the answer with numbers used marked as 1.
