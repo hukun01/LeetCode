@@ -2,12 +2,17 @@
 class Solution:
     def longestSubarray(self, nums: List[int], limit: int) -> int:
         '''
-        Use two sliding windows to record the max and min, when
-        their diff is greater than limit, pop out the left side.
+        Sliding windows.
+
+        Use two sliding windows to record the max and min, when their diff is
+        greater than limit, pop out the left side from both windows.
+
+        Time: O(n) where n is len(nums)
+        Space: O(n)
         '''
         ans = left = 0
-        maxW = collections.deque() # maxW[0] tracks the max since 'left' index
-        minW = collections.deque() # minW[0] tracks the min since 'left' index
+        maxW = deque() # maxW[0] tracks the max since 'left' index
+        minW = deque() # minW[0] tracks the min since 'left' index
         for right, a in enumerate(nums):
             # Note that in below 2 loops, only 1 will run in each iteration
             while maxW and maxW[-1] < a:
