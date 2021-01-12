@@ -7,7 +7,7 @@ class Solution:
 
         Whenever a location (x, y) is occupied, any other locations
         (r, c) where r + c == x + y or r - c == x - y would be invalid.
-        This is because if (r, c) satifies above equations, it will be on
+        This is because if (r, c) satisfies above equations, it will be on
         one of the two diagonal lines: y = x + b, or y = -x + b.
         And if r + c == x + y == b, then they are on the same line.
         Same applies to r - c == x - y == -b.

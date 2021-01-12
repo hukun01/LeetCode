@@ -10,22 +10,25 @@ class Solution:
         Time: O(n) where n is len(nums)
         Space: O(n)
         '''
-        ans = left = 0
-        maxW = deque() # maxW[0] tracks the max since 'left' index
-        minW = deque() # minW[0] tracks the min since 'left' index
+        max_q = deque()
+        min_q = deque()
+        left = ans = 0
         for right, a in enumerate(nums):
-            # Note that in below 2 loops, only 1 will run in each iteration
-            while maxW and maxW[-1] < a:
-                maxW.pop()
-            while minW and minW[-1] > a:
-                minW.pop()
-            maxW.append(a)
-            minW.append(a)
-            if maxW[0] - minW[0] > limit:
-                if maxW[0] == nums[left]:
-                    maxW.popleft()
-                if minW[0] == nums[left]:
-                    minW.popleft()
+            while max_q and nums[max_q[-1]] <= a:
+                max_q.pop()
+            max_q.append(right)
+
+            while min_q and nums[min_q[-1]] >= a:
+                min_q.pop()
+            min_q.append(right)
+
+            if nums[max_q[0]] - nums[min_q[0]] > limit:
+                if max_q[0] == left:
+                    max_q.popleft()
+                if min_q[0] == left:
+                    min_q.popleft()
                 left += 1
+            
             ans = max(ans, right - left + 1)
+        
         return ans
