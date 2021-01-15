@@ -5,21 +5,23 @@ class Solution:
         DP.
         Overall, DP is often a natural fit for string problems
         about subsequence count or match.
-        
+
         To find the min distance, we need to find the length of
         longest common subsequence (LCS) between w1 and w2.
-        
+
         Let f[i1][i2] be the length of LCS between w1[:i1] and w2[:i2].
-        
+
         Transitions:
         if w1[i1-1] == w2[i2-1]:
             f[i1][i2] = f[i1-1][i2-1] + 1
         else:
             f[i1][i2] = max(f[i1-1][i2], f[i1][i2-1]).
             Here we skip w1[i1-1] or w2[i2-1] if w1[i1-1] != w2[i2-1].
-        
+
         Then ans = len(w1) - lcsLen + len(w2) - lcsLen
-        
+
+        Time: O(l1 l2)
+        Space: O(l1 l2)
         Note that f[i] only depends on f[i-1], so space complexity can be reduced to
         O(n) where n is the length of the shorter string.
         '''
