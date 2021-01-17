@@ -15,20 +15,16 @@ class Solution:
         return math.comb(n + num_separator, num_separator)
         '''
         2/2 DP.
-        A bit better than complete brute force. Maybe more intuitive.
+        Let f[i, char] be the count of i-length string ending at char
+        f[i+1, char] = sum(f[i, smaller_char])
         '''
-        @lru_cache(None)
-        def dfs(prev, size):
-            if size == n:
-                return 1
-            if prev == 5:
-                return 0
-            if prev < 0:
-                new = 0
-            else:
-                new = prev
-            ans = 0
-            for nxt in range(new, 5, 1):
-                ans += dfs(nxt, size + 1)
-            return ans
-        return dfs(-1, 0)
+        vowels = 'aeiou'
+        f = {char: 1 for char in vowels}
+        for _ in range(2, n + 1):
+            f2 = Counter()
+            for char, count in f.items():
+                for v in vowels:
+                    if v >= char:
+                        f2[v] += f[char]
+            f = f2
+        return sum(f.values())
