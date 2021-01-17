@@ -2,24 +2,17 @@
 class Solution:
     def reorganizeString(self, S: str) -> str:
         '''
-        Buckets.
+        Sort + assign to buckets.
         Similar to 358. Rearrange String k Distance Apart.
         '''
-        k = 2
-        freqs = sorted([[c, b] for b, c in Counter(S).items()], reverse=True)
-        max_count = freqs[0][0]
-        if (max_count - 1) * k + sum(max_count == c[0] for c in freqs) > len(S):
+        freqs = sorted(Counter(S).items(), key=lambda i: i[1], reverse=True)
+        buckets = freqs[0][1]
+        if buckets > len(S) - buckets + 1:
             return ""
-
-        buckets = [[] for _ in range(max_count)]
-        i = 0
-        for count, char in freqs:
-            if count == max_count:
-                for bucket in buckets:
-                    bucket.append(char)
-            else:
-                for _ in range(count):
-                    buckets[i].append(char)
-                    i = (i + 1) % (max_count - 1)
-
-        return ''.join(itertools.chain(*buckets))
+        ans = [[] for _ in range(buckets)]
+        bucket_idx = 0
+        for num, count in freqs:
+            for _ in range(count):
+                ans[bucket_idx].append(num)
+                bucket_idx = (bucket_idx + 1) % len(ans)
+        return ''.join(chain(*ans))

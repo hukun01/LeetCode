@@ -15,7 +15,7 @@ class Solution:
         Space: O(1)
         '''
         MOD = 10 ** 9 + 7
-        ans = left = 0
+        ans = 0
         count = Counter({0: 1})
         prefix_sum = 0
         for a in arr:

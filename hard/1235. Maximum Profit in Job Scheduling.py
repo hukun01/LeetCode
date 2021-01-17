@@ -22,6 +22,7 @@ class Solution:
         We end the iteration with a list of schedules that are mutually
         incompatible, and we find the best profit out of them.
         '''
+        # represents the max profit from all compatible schedules so far.
         curr_max_profit = 0
         schedule = []
         jobs = list(zip(startTime, endTime, profit))

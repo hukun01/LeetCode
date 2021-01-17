@@ -2,19 +2,15 @@
 class Solution:
     def rearrangeBarcodes(self, barcodes: List[int]) -> List[int]:
         '''
-        Heap.
+        Sort + assign to buckets.
         Similar to 767. Reorganize String.
         '''
-        freqs = sorted([[c, b] for b, c in Counter(barcodes).items()], reverse=True)
-        max_count = freqs[0][0]
-        buckets = [[] for _ in range(max_count)]
-        i = 0
-        for c, b in freqs:
-            if c == max_count:
-                for bucket in buckets:
-                    bucket.append(b)
-            else:
-                for _ in range(c):
-                    buckets[i].append(b)
-                    i = (i + 1) % (max_count - 1)
-        return list(itertools.chain(*buckets))
+        freqs = sorted(Counter(barcodes).items(), key=lambda i: i[1], reverse=True)
+        buckets = freqs[0][1]
+        ans = [[] for _ in range(buckets)]
+        bucket_idx = 0
+        for num, count in freqs:
+            for _ in range(count):
+                ans[bucket_idx].append(num)
+                bucket_idx = (bucket_idx + 1) % len(ans)
+        return list(chain(*ans))

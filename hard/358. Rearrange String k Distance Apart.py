@@ -12,26 +12,25 @@ class Solution:
         and we keep the bucket index for adding the next char.
         Finally, concat all buckets.
 
-        Note that if the (total length + (k - 1)) // k is less than the
-        highest char frequency, then there's no way to reorganize.
+        Note that if the (len(s) + (k - 1)) // k is less than the highest char
+        frequency, then there's no way to reorganize.
+
+        To ensure k distance, the key is to distinguish the buckets that should
+        be full vs the final bucket that doesn't need to be full.
+        If count == buckets, we should assign char to every bucket; Otherwise,
+        only assign to the first (buckets - 1) buckets.
         '''
-        freqs = sorted([[c, b] for b, c in Counter(s).items()], reverse=True)
-        max_count = freqs[0][0]
-        if (max_count - 1) * k + sum(c[0] == max_count for c in freqs) > len(s):
+        freqs = sorted(Counter(s).items(), key=lambda i: i[1], reverse=True)
+        buckets = freqs[0][1]
+        if (buckets - 1) * k + sum(c[1] == buckets for c in freqs) > len(s):
             return ""
-
-        buckets = [[] for _ in range(max_count)]
-        i = 0
-        for count, char in freqs:
-            if count == max_count:
-                for bucket in buckets:
-                    bucket.append(char)
-            else:
-                for _ in range(count):
-                    buckets[i].append(char)
-                    i = (i + 1) % (max_count - 1)
-
-        return ''.join(itertools.chain(*buckets))
+        ans = [[] for _ in range(buckets)]
+        bucket_idx = 0
+        for char, count in freqs:
+            for _ in range(count):
+                ans[bucket_idx].append(char)
+                bucket_idx = (bucket_idx + 1) % (len(ans) - (count != buckets))
+        return ''.join(chain(*ans))
         '''
         2/2 Heap.
         Use a heap to store all the (count, char) tuples from S.
