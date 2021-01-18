@@ -1,8 +1,14 @@
+# 1072. Flip Columns For Maximum Number of Equal Rows
 class Solution:
     def maxEqualRowsAfterFlips(self, matrix: List[List[int]]) -> int:
         '''
-        The key is to count the number of 'pattern' of each row, if 2 rows have the same 0/1 pattern,
-        any number of their columns can be flipped to make them uni-value.
+        Hashmap.
+        The key is to count the number of 'pattern' of each row, if 2 rows have
+        the same 0/1 pattern, any number of their columns can be flipped to
+        make them uni-value.
+
+        Time: O(RC) where R is len(matrix), C is len(matrix[0])
+        Space: O(RC)
         '''
         counter = Counter()
         for row in matrix:
