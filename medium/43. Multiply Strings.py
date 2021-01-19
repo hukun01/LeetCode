@@ -5,6 +5,9 @@ class Solution:
         Control flow.
         From right to left in each number, multiply every pair
         of digits, and add them together.
+
+        Time: O(l1 * l2) where l1 is len(num1), l2 is len(num2)
+        Space: O(l1 + l2)
         '''
         len1, len2 = len(num1), len(num2)
         ans = [0] * (len1 + len2)

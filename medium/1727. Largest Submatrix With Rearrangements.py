@@ -16,11 +16,10 @@ class Solution:
         ans = 0
         for r in range(R):
             for c in range(C):
-                if matrix[r][c] > 0 and r - 1 >= 0:
-                    matrix[r][c] += matrix[r-1][c]
-            
-            sorted_row = sorted(matrix[r], reverse=True)
-            for i in range(C):
-                ans = max(ans, sorted_row[i] * (i + 1))
+                if r - 1 >= 0 and matrix[r][c] == 1:
+                    matrix[r][c] += matrix[r - 1][c]
 
+            row = sorted(matrix[r], reverse=True)
+            for c, h in enumerate(row):
+                ans = max(ans, (c + 1) * h)
         return ans
