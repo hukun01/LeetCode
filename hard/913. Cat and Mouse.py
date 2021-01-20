@@ -24,22 +24,26 @@ class Solution:
 
         During the above process, whenever we find the start_state in winner
         record, we can end the game.
+
+        Time: O(V^3) where V is the number of vertices. There are V^2 states,
+             and each state can have up to (V-1) edges.
+        Space: O(V^2)
         '''
         DRAW, MOUSE_WIN, CAT_WIN = 0, 1, 2
-        MOUSE_MOVE, CAT_MOVE = 0, 1
-        START_STATE = (1, 2, MOUSE_MOVE)
+        MOUSE_TURN, CAT_TURN = 'M', 'C'
+        START_STATE = (1, 2, MOUSE_TURN)
         HOLE = 0
         N = len(graph)
         outdegree = {}
         for mouse_pos in range(N):
             for cat_pos in range(N):
-                outdegree[(mouse_pos, cat_pos, MOUSE_MOVE)] = len(graph[mouse_pos])
-                outdegree[(mouse_pos, cat_pos, CAT_MOVE)] = len(graph[cat_pos]) - (HOLE in graph[cat_pos])
+                outdegree[(mouse_pos, cat_pos, MOUSE_TURN)] = len(graph[mouse_pos])
+                outdegree[(mouse_pos, cat_pos, CAT_TURN)] = len(graph[cat_pos]) - (HOLE in graph[cat_pos])
 
         winner = {}
-        queue = deque() # store (mouse_pos, cat_pos, turn, who_win)
+        queue = deque() # (mouse_pos, cat_pos, turn, who_win)
         for pos in range(N):
-            for turn in (MOUSE_MOVE, CAT_MOVE):
+            for turn in (MOUSE_TURN, CAT_TURN):
                 winner[(HOLE, pos, turn)] = MOUSE_WIN
                 queue.append((HOLE, pos, turn, MOUSE_WIN))
                 if pos != HOLE:
@@ -47,27 +51,27 @@ class Solution:
                     queue.append((pos, pos, turn, CAT_WIN))
 
         def prev_states(mouse_pos, cat_pos, turn):
-            if turn == CAT_MOVE:
-                return [(pos, cat_pos, MOUSE_MOVE) for pos in graph[mouse_pos]]
+            if turn == CAT_TURN:
+                return [(pos, cat_pos, MOUSE_TURN) for pos in graph[mouse_pos]]
 
-            return [(mouse_pos, pos, CAT_MOVE) for pos in graph[cat_pos] if pos != HOLE]
+            return [(mouse_pos, pos, CAT_TURN) for pos in graph[cat_pos] if pos != HOLE]
 
         while queue:
             mouse_pos, cat_pos, turn, who_win = queue.popleft()
-            for prev_mouse, prev_cat, prev_turn in prev_states(mouse_pos, cat_pos, turn):
-                prev_state = (prev_mouse, prev_cat, prev_turn)
+            for prev_mouse_pos, prev_cat_pos, prev_turn in prev_states(mouse_pos, cat_pos, turn):
+                prev_state = (prev_mouse_pos, prev_cat_pos, prev_turn)
                 if prev_state in winner:
                     continue
 
-                if (prev_turn == MOUSE_MOVE and who_win == MOUSE_WIN) or \
-                        (prev_turn == CAT_MOVE and who_win == CAT_WIN):
+                if (prev_turn == MOUSE_TURN and who_win == MOUSE_WIN) or \
+                        (prev_turn == CAT_TURN and who_win == CAT_WIN):
                     winner[prev_state] = who_win
-                    queue.append((prev_mouse, prev_cat, prev_turn, who_win))
+                    queue.append((prev_mouse_pos, prev_cat_pos, prev_turn, who_win))
                 else:
                     outdegree[prev_state] -= 1
                     if outdegree[prev_state] == 0:
                         winner[prev_state] = who_win
-                        queue.append((prev_mouse, prev_cat, prev_turn, who_win))
+                        queue.append((prev_mouse_pos, prev_cat_pos, prev_turn, who_win))
 
             if START_STATE in winner:
                 return winner[START_STATE]
@@ -93,8 +97,8 @@ class Solution:
         Overall, DFS approach is a lot simpler, but it's unclear whether the
         above rule #3 is correct.
 
-        Time: O(n^3) where n is len(graph)
-        Space: O(n^3)
+        Time: O(V^3)
+        Space: O(V^3)
         '''
         DRAW, MOUSE_WIN, CAT_WIN = 0, 1, 2
         HOLE = 0
