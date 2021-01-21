@@ -6,22 +6,27 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def pathSum(self, root: TreeNode, sum: int) -> List[List[int]]:
+    def pathSum(self, root: TreeNode, targetSum: int) -> List[List[int]]:
         '''
         DFS
         Standard preorder traversal.
         '''
         self.ans = []
-        def preorder(node, path = [], curr_sum = 0):
+        def preorder(node, path = [], cur_sum = 0):
             if not node:
                 return
+
             path.append(node.val)
-            curr_sum += path[-1]
+            cur_sum += path[-1]
+
             if node.left == node.right == None:
-                if curr_sum == sum:
+                if cur_sum == targetSum:
                     self.ans.append(path[:])
-            preorder(node.left, path, curr_sum)
-            preorder(node.right, path, curr_sum)
-            curr_sum -= path.pop()
+
+            preorder(node.left, path, cur_sum)
+            preorder(node.right, path, cur_sum)
+
+            cur_sum -= path.pop()
+
         preorder(root)
         return self.ans

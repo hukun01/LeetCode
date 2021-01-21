@@ -32,7 +32,7 @@ class Solution:
                     if grid[r][c] == '#': continue
                     yield (r, c)
 
-        def last_positions(pos, jump):
+        def prev_positions(pos, jump):
             r, c = pos
             yield r, c
             for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
@@ -51,9 +51,9 @@ class Solution:
                 queue.append((pos, food_pos, turn, CAT_WIN))
                 queue.append((pos, pos, turn, CAT_WIN))
 
-            G_mouse[pos] = set(last_positions(pos, mouseJump))
-            G_cat[pos] = set(last_positions(pos, catJump))
-        
+            G_mouse[pos] = set(prev_positions(pos, mouseJump))
+            G_cat[pos] = set(prev_positions(pos, catJump))
+
         outdegree = Counter()
         for mouse_pos in all_positions():
             for cat_pos in all_positions():
@@ -102,7 +102,7 @@ class Solution:
 
         food_pos = init_pos['F']
 
-        def last_positions(pos, jump):
+        def prev_positions(pos, jump):
             r, c = pos
             yield r, c
             for dr, dc in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
@@ -120,8 +120,8 @@ class Solution:
                     yield (r, c)
         
         for pos in get_all_positions():
-            G_mouse[pos] = set(last_positions(pos, mouseJump))
-            G_cat[pos] = set(last_positions(pos, catJump))
+            G_mouse[pos] = set(prev_positions(pos, mouseJump))
+            G_cat[pos] = set(prev_positions(pos, catJump))
 
         @lru_cache(None)
         def search(turn, m, c):

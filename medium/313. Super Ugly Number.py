@@ -2,24 +2,27 @@
 class Solution:
     def nthSuperUglyNumber(self, n: int, primes: List[int]) -> int:
         '''
-        Use a heap to store (x, y, i), where x is the x-th
-        ugly number, y is the last ugly number that is used
-        to multiply with primes[i] to get x.
-        In the iteration that runs (n - 1) times, each time
-        we multiply primes[i + 1] (a bigger prime) with the
-        last ugly number (a smaller ugly number comparing to x).
-        And we also multiply primes[i] (a bigger prime) with
-        x (a bigger ugly number).
-        '''
-        k = len(primes)
-        q = [(primes[0], 1, 0)]
-        x = 1
-        for _ in range(n - 1):
-            x, y, i = heappop(q)
-            
-            if i + 1 < k:
-                heappush(q, (y * primes[i + 1], y, i + 1))
-            
-            heappush(q, (x * primes[i], x, i))
+        Heap.
+        We want to generate a series of ugly numbers in acending order. This
+        is similar to merge k lists, where we multiple each prime with the
+        existing ugly numbers, and append the smallest ugly number to array.
 
-        return x
+        Use a heap to store (x, p, i), where x is the x-th ugly number, p is
+        the prime number used to multiply with ugly[i] to get x.
+
+        Note that we may have duplicate ugly numbers, need to skip them and
+        add their next ugly numbers.
+
+        Time: O(n log(k)) where k is len(primes)
+        Space: O(n) for storing 'ugly' array.
+        '''
+        ugly = [1]
+        # (ugly number, prime, index to use in 'ugly' for the next entry)
+        cand = [(p, p, 0) for p in primes]
+        for _ in range(n - 1):
+            ugly.append(cand[0][0])
+            while cand[0][0] == ugly[-1]:
+                x, p, i = heapq.heappop(cand)
+                heapq.heappush(cand, (p * ugly[i + 1], p, i + 1))
+
+        return ugly[-1]

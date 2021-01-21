@@ -14,7 +14,5 @@ class Solution:
                 cached = A[A[i] - 1]
                 A[A[i] - 1] = A[i]
                 A[i] = cached
-        for i in range(n):
-            if A[i] != i + 1:
-                return i + 1
-        return n + 1
+
+        return next((i + 1 for i in range(n) if i + 1 != A[i]), n + 1)
