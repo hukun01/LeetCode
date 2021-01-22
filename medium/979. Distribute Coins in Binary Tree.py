@@ -9,7 +9,7 @@
 class Solution:
     def distributeCoins(self, root: TreeNode) -> int:
         '''
-        Post-order traverse.
+        Greedy + Post-order traverse.
         In each dfs sub-procedure, return the number of coins that should be
         passed up to the parent. Negative number means that the child needs
         coin from parents.

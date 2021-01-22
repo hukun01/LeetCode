@@ -8,15 +8,15 @@
 
 class Solution:
     def inorderTraversal(self, root: TreeNode) -> List[int]:
-        """ 1/2 Iterative using stack: 
+        ''' 1/2 Iterative using stack: 
         To make the logic clear, use a nested function push_left_nodes()
         to push all the left children of one Node and itself into the stack.
         We push all the left children of root and root into the stack until there's no more nodes.
         Then we pop from the stack which we'd call cur. Add cur to result list.
         Iteratively call pushAllLeft() on cur's right child.
-        """
+        '''
         stack = []
-        values = []
+        ans = []
         def push_left_nodes(node, stack):
             while node:
                 stack.append(node)
@@ -24,26 +24,28 @@ class Solution:
         push_left_nodes(root, stack)
         while stack:
             node = stack.pop()
-            values.append(node.val)
+            ans.append(node.val)
             push_left_nodes(node.right, stack)
-        return values
-        """ 2/2 Morris traversal: See 0.Notes.txt
-        """
-        values = []
+        return ans
+        ''' 2/2 Morris traversal: See 0.Notes.txt
+        '''
+        ans = []
         cur = root
         while cur:
             if cur.left:
                 node = cur.left
-                while node.right != cur and node.right:
+                while node.right not in { None, cur }:
                     node = node.right
-                if not node.right:
+
+                if node.right == cur:
+                    node.right = None
+                    ans.append(cur.val)
+                    cur = cur.right
+                else:
                     node.right = cur
                     cur = cur.left
-                else:
-                    node.right = None
-                    values.append(cur.val)
-                    cur = cur.right
             else:
-                values.append(cur.val)
+                ans.append(cur.val)
                 cur = cur.right
-        return values
+
+        return ans

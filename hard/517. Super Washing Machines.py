@@ -2,34 +2,39 @@
 class Solution:
     def findMinMoves(self, machines: List[int]) -> int:
         '''
-        Two parts:
-        1. Ensure there is a solution by checking the total % len(machines) == 0.
-        2. For each machine from left to right, the max number of dresses that need 
-        to be passed through a machine is 
-        max(max(ACCUMULATED GIVE-OUT at every washer), max(GIVE OUT of every washer)).
+        Greedy.
+        The min number of moves is defined by the max throughput we ever see
+        in a machine. The throughput of a machine is the total give-out load
+        from left to right that passes this machine.
+        Note that the give-out load can be negative, meaning the machine needs
+        load.
+        The max throughput is the max of total give-out load, and each single
+        give-out load.
+        The total give-out load is the accumulated give-out load from left
+        machines to current machines, it may be negative, so we need to take
+        its absolute value.
+        For the single give-out load, we only consider positive load, because
+        for positive load L, we need at least L steps to give it out, while
+        for negative load -L, we can have less than L steps to take in loads
+        from both left and right sides.
 
-        The key is to measure the GIVE OUT, not TAKE IN, because take-in can happen
-        from both left and right, and give-out is unidirectional, and is counted as
-        one move.
+        The key is to measure the GIVE OUT load from each machine, not TAKE IN,
+        because take-in can happen from both left and right, and give-out is
+        unidirectional, and each give-out is counted as one move.
 
-        This total number can be negative, meaning that we need to get dresses 
-        from machines on the right, in that case we need to get the abs() number.
+        Time: O(n) where n is len(machines)
+        Space: O(1)
 
-        The max total number of passed dresses is the minimum number of moves.
         Similar to 979. Distribute Coins in Binary Tree
-
-        Why not use abs(load-target)? Because [-1, 2 ,-1] and [1, -2, 1] are different! 
-        The former can be balanced with 2 steps, but the latter can be balanced with
-        only 1 step! That said, giving out loads and receiving loads are different. One
-        machines can at most give 1 load each step, but can receive at most 2 loads each step.
         '''
-        total = sum(machines)
-        if total % len(machines) != 0:
+        target, remainder = divmod(sum(machines), len(machines))
+        if remainder != 0:
             return -1
-
-        target = total // len(machines)
-        ans = toRight = 0
+        ans = 0
+        total_give_out = 0 # total give out to the right machines
         for load in machines:
-            toRight += load - target
-            ans = max(ans, abs(toRight), load - target)
+            give_out = load - target
+            ans = max(ans, give_out)
+            total_give_out += give_out
+            ans = max(ans, abs(total_give_out))
         return ans
