@@ -2,50 +2,43 @@
 class Solution:
     def wordSquares(self, words: List[str]) -> List[List[str]]:
         '''
-        Trie + DFS.
-        The key is to eliminate most of the irrelevant words by prefix matching.
+        Trie + DFS backtracking.
+        Build the word square row by row, when filling (r, c), also advance
+        its vertical corresponding element (c, r).
+        Note that we don't want to advance a node twice when (r, c) == (c, r).
+        Also note that when starting filling the next row, we don't start from
+        the 0th column, but from the row-th column.
+
+        Time: O(26^W) where W is the length of a word.
+        Space: O(N W) where N is the len(words).
         '''
         Trie = lambda: defaultdict(Trie)
-        tree = Trie()
+        root = Trie()
         for w in words:
-            node = tree
+            node = root
             for c in w:
                 node = node[c]
-            node['$'] = w
-        
-        def dfs2(node, results):
-            #print(f"node {node}")
-            if '$' in node:
-                results.append(node['$'])
-                return
-            for char in node:
-                dfs2(node[char], results)
-        
-        def find_relevant(path):
-            if not path:
-                return words
-            size = len(path)
-            node = tree
-            for i in range(size):
-                c = path[i][size]
-                if not c in node:
-                    return []
-                node = node[c]
-            my_words = []
-            dfs2(node, my_words)
-            return my_words
-        
+            node['#'] = w
+
+        self.ans = []
         n = len(words[0])
-        # must be a n*n square
-            
-        ans = []
-        def dfs(path):
-            if len(path) == n:
-                ans.append(path[:])
+        def dfs(path, r, c):
+            if  r == n:
+                self.ans.append([node['#'] for node in path])
                 return
-            for w in find_relevant(path):
-                path.append(w)
-                dfs(path)
-                path.pop()
-        dfs([])
-        return ans
+
+            if c == n:
+                dfs(path, r + 1, r + 1)
+            else:
+                for next_char in path[r]:
+                    if next_char not in path[c]:
+                        continue
+                    new_path = path[:]
+                    new_path[c] = new_path[c][next_char]
+                    if r != c:
+                        new_path[r] = new_path[r][next_char]
+
+                    dfs(new_path, r, c + 1)
+
+        dfs([root] * n, 0, 0)
+        return self.ans

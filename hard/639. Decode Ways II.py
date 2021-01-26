@@ -43,4 +43,4 @@ class Solution:
                         f[i][d1] += sum_f2
                 f[i][d1] %= MOD
 
-        return sum(f[n])% MOD
+        return sum(f[n]) % MOD
