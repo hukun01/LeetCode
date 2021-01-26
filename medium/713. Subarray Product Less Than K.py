@@ -8,6 +8,7 @@ class Solution:
         Keep shrinking the window by moving left index to right, if the product
         is too big. Note that we also need to ensure left <= right in case k is
         smaller than any number and the product is always too big.
+
         A critical condition for this to work is that all nums are positive,
         otherwise we hit divide-by-zero error when moving left index.
 
@@ -15,11 +16,11 @@ class Solution:
         Space: O(1)
         '''
         ans = left = 0
-        curr_product = 1
-        for i, a in enumerate(nums):
-            curr_product *= a
-            while left <= i and curr_product >= k:
-                curr_product //= nums[left]
+        cur_product = 1
+        for right, a in enumerate(nums):
+            cur_product *= a
+            while left <= right and cur_product >= k:
+                cur_product //= nums[left]
                 left += 1
-            ans += i - left + 1
+            ans += right - left + 1
         return ans
