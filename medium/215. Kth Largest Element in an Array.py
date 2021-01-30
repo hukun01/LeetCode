@@ -28,7 +28,7 @@ class Solution:
                 else:
                     start = pivot_idx + 1
             return nums[start]
-        
+
         def partition(start, end):
             pivot_idx = random.randint(start, end)
             pivot = nums[pivot_idx]
@@ -41,5 +41,5 @@ class Solution:
             nums[end], nums[stored_idx] = nums[stored_idx], nums[end]
 
             return stored_idx # do NOT return pivot_idx!
-        
+
         return sort(0, len(nums) - 1)

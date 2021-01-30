@@ -2,19 +2,18 @@
 class Solution:
     def findDuplicates(self, nums: List[int]) -> List[int]:
         '''
-        Use nums[idx] to store the count of number with value (idx+1).
-        0 means the number is used, use negative count to avoid conflict
-        with actual values.
+        Trick.
+        Let a = nums[idx], and a-1 be the 'correct' position of a, because
+        a is in range of [1, n].
+        Make nums[a-1] negative to represent that 'a' was seen before.
+
+        Time: O(n)
+        Space: O(1)
         '''
-        i = -1
-        while (i := i + 1) < len(nums):
-            pos = nums[i] - 1
-            if pos < 0:
-                continue
-            if nums[pos] <= 0:
-                nums[pos] -= 1
-                nums[i] = 0
-            else:
-                nums[i], nums[pos] = nums[pos], -1
-                i -= 1
-        return [i + 1 for i, n in enumerate(nums) if n == -2]
+        ans = []
+        for i in range(len(nums)):
+            a = abs(nums[i])
+            if nums[a - 1] < 0:
+                ans.append(a)
+            nums[a - 1] *= -1
+        return ans

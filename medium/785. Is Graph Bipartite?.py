@@ -10,7 +10,7 @@ class Solution:
                 return node_to_color[node] == color
             node_to_color[node] = color
             return all(dfs(nei, color ^ 1) for nei in graph[node])
-        
+
         for i in range(len(graph)):
             if i not in node_to_color and not dfs(i, 0):
                 return False
