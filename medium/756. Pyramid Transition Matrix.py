@@ -2,41 +2,24 @@
 class Solution:
     def pyramidTransition(self, bottom: str, allowed: List[str]) -> bool:
         '''
-        1/2 List out all the possible next levels, and DFS on each one.
+        DFS.
+        Focus on current line and the above line.
         '''
-        graph = collections.defaultdict(list)
-        for a, b, c in allowed:
-            graph[(a, b)].append(c)
-        
-        def dfs(level):
-            if len(level) == 1:
+        rules = defaultdict(set)
+        for a in allowed:
+            rules[a[:2]].add(a[2])
+
+        def dfs(cur_level, col, next_level):
+            if 1 == len(cur_level):
                 return True
 
-            bs = [""]
-            for a, b in zip(level, level[1:]):
-                newB = []
-                for c in graph[(a, b)]:
-                    for b in bs:
-                        newB.append(b + c)
-                bs = newB
-            return any(dfs(b) for b in bs)
-        return dfs(bottom)
+            if col > len(cur_level):
+                return dfs(next_level, 2, "")
 
-        '''
-        2/2 Another flavor of DFS that focus on current line and the above line.
-        '''
-        graph = collections.defaultdict(list)
-        for a, b, c in allowed:
-            graph[(a, b)].append(c)
-        
-        def dfs2(line, start, above):
-            if len(line) == 1:
-                return True
-            if start == len(line) - 1:
-                return dfs2(above, 0, "")
-            a, b = line[start], line[start + 1]
-            for c in graph[(a, b)]:
-                if dfs2(line, start + 1, above + c):
+            part = cur_level[col-2:col]
+            for next_letter in rules[part]:
+                if dfs(cur_level, col + 1, next_level + next_letter):
                     return True
             return False
-        return dfs2(bottom, 0, "")
+
+        return dfs(bottom, 2, "")

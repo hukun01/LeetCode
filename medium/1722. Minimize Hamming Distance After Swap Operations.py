@@ -18,22 +18,17 @@ class Solution:
         for a, b in A:
             uf.union(a, b)
 
-        root2freqs = defaultdict(Counter)
+        root2idx = defaultdict(list)
         for i in range(n):
-            root2freqs[uf.find(i)][S[i]] += 1
-            
-        ans = 0
-        for i in range(n):
-            t = T[i]
-            root = uf.find(i)
-            if root2freqs[root][t] == 0:
-                ans += 1
-            else:
-                root2freqs[root][t] -= 1
+            root2idx[uf.find(i)].append(i)
 
+        ans = 0
+        for group in root2idx.values():
+            vals1 = Counter(S[i] for i in group)
+            vals2 = Counter(T[i] for i in group)
+            ans += sum((vals1 - vals2).values())
         return ans
-            
-        
+
 class UnionFind:
     def __init__(self, n):
         self.component_count = n

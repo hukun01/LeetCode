@@ -25,7 +25,7 @@ class Solution:
         '''
         target = abs(target)
         k = int((2*target)**0.5)
-        while (S := k * (k+1) / 2) < target:
+        if (S := k * (k+1) / 2) < target:
             k += 1
 
         while (S - target) % 2 == 1:

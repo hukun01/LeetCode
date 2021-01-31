@@ -74,7 +74,7 @@ class Solution:
     ans = inf
     while possible_maxs:
         cur_max = -heappop(possible_maxs)
-        ans = min(ans, abs(cur_max - cur_min))
+        ans = min(ans, cur_max - cur_min)
         if cur_max % 2 == 0:
             cur_max //= 2
             cur_min = min(cur_min, cur_max)
