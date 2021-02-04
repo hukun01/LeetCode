@@ -19,7 +19,7 @@ class Solution:
                     return i - L + 1
                 seen.add(cur)
             return 0
-            
+
         res, lo, hi = 0, 0, len(S)
         while lo < hi:
             mi = (lo + hi + 1) // 2

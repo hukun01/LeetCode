@@ -22,7 +22,7 @@ class Solution:
                         dp[l][r] = True
 
         for l in range(1, n - 1):
-            for r in range(l, n-1):
+            for r in range(l, n - 1):
                 if dp[0][l - 1] and dp[l][r] and dp[r + 1][n - 1]:
                     return True
 
