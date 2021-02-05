@@ -2,22 +2,49 @@
 class Solution:
     def longestPrefix(self, s: str) -> str:
         '''
-        1/3 Rabin Karp, or Karp Rabin algorithm, also called rolling hash.
+        1/3 Rabin Karp, also called rolling hash.
         See 28. Implement strStr() for more details.
         '''
         l = r = 0
-        alphabet_size = 128
-        pattern_hash = 1
+        R = 128
+        power = 1
         mod = 10 ** 9 + 7
         n = len(s)
         ans = 0
         for i in range(n - 1):
-            l = (l * alphabet_size + ord(s[i])) % mod
-            r = (r + pattern_hash * ord(s[n - 1 - i])) % mod
-            pattern_hash = pattern_hash * alphabet_size % mod
-            if l == r:
+            l = (l * R + ord(s[i])) % mod
+            r = (r + power * ord(s[n - 1 - i])) % mod
+            if l == r and s[:i + 1] == s[n - 1 - i:]:
                 ans = i + 1
-        return s[0:ans]
+            power = power * R % mod
+        return s[0: ans]
+        '''
+        2/3 KMP.
+        The definition of longest happy prefix is literally the same as that of
+        'fail' table in KMP. We just need to build the 'fail' table as part of
+        KMP.
+
+        See more details about KMP in 28. Implement strStr()
+
+        Time: O(n)
+        Space: O(n)
+        '''
+        def build_lps(s):
+            n = len(s)
+            lps = [0] * n
+            for i in range(1, n):
+                k = lps[i - 1]
+                while k > 0 and s[k] != s[i]:
+                    k = lps[k - 1]
+
+                if s[k] == s[i]:
+                    lps[i] = k + 1
+
+            return lps
+
+        lps = build_lps(s)
+
+        return s[:lps[-1]]
         '''
         3/3 Z Algorithm.
         Use the original Z algorithm to compute the Z values, which at each

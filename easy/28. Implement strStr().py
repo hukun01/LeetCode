@@ -58,3 +58,51 @@ class Solution:
                 return offset
 
         return -1
+        '''
+        2/2 KMP.
+        The core of KMP is to build the 'lps' table to reuse the existing info
+        gathered during the previous processing.
+        LPS stands for "Longest proper Prefix which is also Suffix".
+
+        At index i, the 'lps' table records the max length of the *proper*
+        prefix of s[:i+1] that is also the suffix of s[:i+1].
+        Let k to be such max length, to try extending it, we compare s[i] and
+        s[k], if not matched, k jumps back to lps[k] as k', where we can try
+        matching s[i+1] and s[k'], because we know s[:i+1] and s[:k'] already
+        match.
+
+        Video for reference: https://www.bilibili.com/video/BV1gt4y1B7Rx
+
+        Time: O(m + n)
+        Space: O(n)
+        '''
+        def build_lps(s):
+            n = len(s)
+            lps = [0] * n
+            for i in range(1, n):
+                k = lps[i - 1]
+                while k > 0 and s[k] != s[i]:
+                    k = lps[k - 1]
+
+                if s[k] == s[i]:
+                    lps[i] = k + 1
+
+            return lps
+
+        n = len(needle)
+        if n == 0:
+            return 0
+
+        lps = build_lps(needle)
+        k = 0
+        for i in range(len(haystack)):
+            while k > 0 and needle[k] != haystack[i]:
+                k = lps[k - 1]
+
+            if needle[k] == haystack[i]:
+                k += 1
+
+            if k == n:
+                return i - k + 1
+
+        return -1
