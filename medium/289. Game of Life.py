@@ -9,46 +9,44 @@ class Solution:
         store the next state.
 
         Have a set of intermediate states as below.
-        Let 2 be the state for 'dying' from 'live' to die.
-        Let 3 be the state for 'living' from 'live' to live.
-        Let 4 be the state for 'reproducing' from 'dead' to live.
+        let 1 continue to be the current and future living cell
+        let 2 be the current live and future dead
+        let 3 be the current dead and future living
 
         Then traverse the board twice. First time we update to the
-        intermediate states. In this traversal, treat 2 and 3 as live, and 4
-        as dead. In the second traversal, we update 2 to dead, and 3,4 to live.
+        intermediate states.
+        In the second traversal, we update 2 to dead, and 3 to live.
 
         Time: O(RC)
         Space: O(1)
         '''
         R, C = len(board), len(board[0])
-        def count_neighbors(r, c):
-            lives = 0
-            for dr in range(-1, 2):
-                for dc in range(-1, 2):
-                    nr, nc = r + dr, c + dc
-                    if not 0 <= nr < R or not 0 <= nc < C:
+        def count(r, c):
+            ans = 0
+            for r0 in range(r-1, r+2):
+                for c0 in range(c-1, c+2):
+                    if (r0, c0) == (r, c):
                         continue
-                    if (nr, nc) == (r, c):
+                    if not 0 <= r0 < R or not 0 <= c0 < C:
                         continue
-                    
-                    if board[nr][nc] in {1, 2, 3}:
-                        lives += 1
-            return lives
+                    if board[r0][c0] in {1, 2}:
+                        ans += 1
 
+            return ans
+        
         for r in range(R):
             for c in range(C):
-                lives = count_neighbors(r, c)
-                if board[r][c] == 1:
-                    if 2 <= lives <= 3:
-                        board[r][c] = 3
-                    else:
+                x = count(r, c)
+                if x not in {2, 3}:
+                    if board[r][c] == 1:
                         board[r][c] = 2
                 else:
-                    if lives == 3:
-                        board[r][c] = 4
+                    if x == 3 and board[r][c] == 0:
+                        board[r][c] = 3
+
         for r in range(R):
             for c in range(C):
                 if board[r][c] == 2:
                     board[r][c] = 0
-                elif board[r][c] in {3, 4}:
+                elif board[r][c] == 3:
                     board[r][c] = 1

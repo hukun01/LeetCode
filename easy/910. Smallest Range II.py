@@ -15,7 +15,7 @@ class Solution:
         In part1 (increasing), the min is 'A[0] + K', max is 'A[i] + K'.
         In part2 (decreasing), the max is 'A[-1] - K', min is 'A[i+1] - K'.
 
-        For each point we try, the max element among two parts is the max
+        For each point 'i' we try, the max element among two parts is the max
         between part1's max and part2's max, aka, max(A[i] + K, part2_max).
         Similarly, the min element among two parts is the min between part1's
         min and part2's min, aka, min(A[i+1] - K, part1_min).

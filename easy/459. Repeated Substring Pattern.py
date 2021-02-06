@@ -48,4 +48,4 @@ class Solution:
         lps = build_lps(s)
         n = len(s)
         pattern_size = n - lps[n - 1]
-        return pattern_size != 0 and n % pattern_size == 0
+        return pattern_size != n and n % pattern_size == 0

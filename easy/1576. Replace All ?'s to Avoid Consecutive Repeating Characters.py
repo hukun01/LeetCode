@@ -7,13 +7,16 @@ class Solution:
         enough to ensure non consecutive repeating chars. Hence we
         just use 'abc', and for each '?', we pick the one from 'abc'
         that's different than the prev and the next chars.
+
+        Time: O(n)
+        Space: O(n)
         '''
-        candidates = set('abc')
-        ans = []
-        prev = ''
-        for i, c in enumerate(s):
-            nex = s[i+1] if i+1 < len(s) else '?'
-            cur = c if c != '?' else (candidates - {prev, nex}).pop()
-            ans.append(cur)
-            prev = cur
-        return ''.join(ans)
+        arr = list(s)
+        cands = set('abc')
+        for i in range(len(arr)):
+            if arr[i] == '?':
+                left = arr[i-1] if i-1 >= 0 else None
+                right = arr[i+1] if i+1 < len(arr) else None
+                arr[i] = (cands - {left, right}).pop()
+
+        return ''.join(arr)
