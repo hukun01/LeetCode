@@ -3,7 +3,7 @@ class Solution:
     def maxNumber(self, nums1: List[int], nums2: List[int], k: int) -> List[int]:
         '''
         Divide and conquer.
-        Pick the largest number from each array with certain length k1, k2
+        Pick the largest number from each array with certain length k1, k2 such
         that k1 + k2 == k.
         Merge the two largest numbers.
         Try all the possible k1 in [0, k], and k2 == k - k1.
