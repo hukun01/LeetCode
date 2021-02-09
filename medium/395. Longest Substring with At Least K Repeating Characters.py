@@ -57,13 +57,13 @@ class Solution:
         Time: O(n U) where n is len(s), U is total number of unique chars in s.
         Space: O(U).
         '''
-        def longest_substr_with_n_unique(num_unique_target):
+        def longest_substr_with_n_unique(num_unique_limit):
             counts = Counter()
             ans = left = 0
             cur_max = cur_min = 0
             for i,c in enumerate(s):
                 counts[c] += 1
-                while len(counts) > num_unique_target:
+                while len(counts) > num_unique_limit:
                     c0 = s[left]
                     counts[c0] -= 1
                     if counts[c0] == 0:
@@ -75,8 +75,8 @@ class Solution:
 
         upper_bound = sum(v >= k for v in Counter(s).values())
         ans = 0
-        for num_unique_target in range(1, upper_bound + 1):
-            ans = max(ans, longest_substr_with_n_unique(num_unique_target))
+        for num_unique_limit in range(1, upper_bound + 1):
+            ans = max(ans, longest_substr_with_n_unique(num_unique_limit))
         return ans
 
         '''
@@ -86,7 +86,7 @@ class Solution:
         Time: O(n) where n is len(s).
         Space: O(U).
         '''
-        def longest_substr_with_n_unique(num_unique_target):
+        def longest_substr_with_n_unique(num_unique_limit):
             freqs = Counter()
             num_unique = num_at_least_k = left = ans = 0
             for i in range(len(s)):
@@ -97,7 +97,7 @@ class Solution:
                 if freqs[char] == k:
                     num_at_least_k += 1
 
-                while num_unique > num_unique_target:
+                while num_unique > num_unique_limit:
                     char = s[left]
                     if freqs[char] == k:
                         num_at_least_k -= 1
@@ -112,9 +112,6 @@ class Solution:
 
         upper_bound = sum(v >= k for v in Counter(s).values())
         ans = 0
-        for num_unique_target in range(1, upper_bound + 1):
-            ans = max(ans, longest_substr_with_n_unique(num_unique_target))
+        for num_unique_limit in range(1, upper_bound + 1):
+            ans = max(ans, longest_substr_with_n_unique(num_unique_limit))
         return ans
-        '''
-        3/3
-        '''
