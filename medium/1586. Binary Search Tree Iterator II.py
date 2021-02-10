@@ -7,39 +7,51 @@
 #         self.right = right
 class BSTIterator:
     '''
-    Stack + list.
-    Use stack to iterate forward, record all visited values, and use it to
-    iterate backward.
+    Two stacks.
+    The key is to not store all visited values in a list, as that defeats the
+    purpose of an iterator.
+
+    Use two stacks, one for next nodes, one for previous nodes.
+    The key is: when calling prev(), pop the prev_stack node and push it to the
+    next_stack, so we can take the node from the next_stack in the future calls
+    to next().
+    Note that as we push left chain into next_stack, when mixing with previous
+    node, we need to avoid pushing left chain more than once. We add a flag to
+    the stack entry called 'from_prev' meaning whether the node in next_stack
+    is from prev_stack, if so, we don't push left chain from this node, as it
+    must have been pushed before when calling next()
+
+    Time: O(n) where n is number of nodes.
+    Space: O(h) where h is tree height.
     '''
 
     def __init__(self, root: TreeNode):
-        self.stack = []
-        self.populateLeft(root)
-        self.idx = -1 # idx of the current value
-        self.vals = []
-        
-    def populateLeft(self, node):
+        self.next_stack = []
+        self.prev_stack = []
+        self._push_left(root)
+    
+    def _push_left(self, node):
         while node:
-            self.stack.append(node)
+            self.next_stack.append((node, False))
             node = node.left
 
     def hasNext(self) -> bool:
-        return self.idx + 1 < len(self.vals) or self.stack
+        return len(self.next_stack) > 0
 
     def next(self) -> int:
-        self.idx += 1
-        if self.idx == len(self.vals):
-            node = self.stack.pop()
-            self.vals.append(node.val)
-            self.populateLeft(node.right)
-        return self.vals[self.idx]
+        node, from_prev = self.next_stack.pop()
+        if not from_prev:
+            self._push_left(node.right)
+
+        self.prev_stack.append(node)
+        return node.val
 
     def hasPrev(self) -> bool:
-        return self.idx > 0
+        return len(self.prev_stack) > 1
 
     def prev(self) -> int:
-        self.idx -= 1
-        return self.vals[self.idx]
+        self.next_stack.append((self.prev_stack.pop(), True))
+        return self.prev_stack[-1].val
 
 
 # Your BSTIterator object will be instantiated and called as such:
