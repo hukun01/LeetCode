@@ -11,7 +11,7 @@ class Solution:
         If we add 'a' to an existing subseq, there must be at least 1 subseq
         ending at 'a-1', so we minus 1 from there, and add 1 for end[a].
         If we have to start a new subseq with 'a', check whether there's 'a+1'
-        and 'a+2' in the remaining numbers, if so, consume them, update 
+        and 'a+2' in the remaining numbers, if so, consume them, update
         remaining and end[a+2]; otherwise, return false.
 
         Time: O(n) where n is len(nums)

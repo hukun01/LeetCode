@@ -6,9 +6,13 @@ class Solution:
         if it's always that furthest >= i for all i, then we can jump.
         In another word, if any position > furthest, we can't jump to it.
         '''
-        furthest = 0
-        for i, n in enumerate(nums):
-            if i > furthest:
-                return False
-            furthest = max(furthest, i + n)
-        return True
+        furthest = cur = 0
+        i = 0
+        while furthest < n - 1:
+            while i <= cur:
+                furthest = max(furthest, i + nums[i])
+                i += 1
+            if furthest == cur:
+                break
+            cur = furthest
+        return furthest >= n - 1
