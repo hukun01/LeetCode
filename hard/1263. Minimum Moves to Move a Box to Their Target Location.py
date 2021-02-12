@@ -3,52 +3,47 @@ class Solution:
     def minPushBox(self, grid: List[List[str]]) -> int:
         '''
         Dijkstra.
-        can_reach() can be improved with Tarjan
+
+        A trick is that if the box can be pushed, then the player's next
+        position would be the box's current position, and vice versa.
         '''
-        dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
         R, C = len(grid), len(grid[0])
-        b_pos = s_pos = t_pos = None
-        for r in range(R):
-            for c in range(C):
-                if grid[r][c] == 'B':
-                    b_pos = (r, c)
-                if grid[r][c] == 'S':
-                    s_pos = (r, c)
-                if grid[r][c] == 'T':
-                    t_pos = (r, c)
-        def is_empty(r, c):
+        pos = {
+            grid[r][c]: (r, c)
+            for r in range(R)
+            for c in range(C)
+            if grid[r][c] in 'SBT'
+        }
+
+        box_pos = pos['B']
+        player_pos = pos['S']
+        target_pos = pos['T']
+
+        dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        pq = [(0, box_pos, player_pos)] # (push, box_pos, player_pos)
+        visited = set()
+
+        def inbound(r, c):
             return 0 <= r < R and 0 <= c < C and grid[r][c] != '#'
 
-        def can_reach(r1, c1, r2, c2, br, bc):
-            if not is_empty(r2, c2):
-                return False
-            q = [(r1, c1)]
-            used = set()
-            for r, c in q:
-                if (r, c) in used or (r, c) == (br, bc):
-                    continue
-                used.add((r, c))
-                if (r, c) == (r2, c2):
-                    return True
-                for dr, dc in dirs:
-                    nr, nc = dr + r, dc + c
-                    if is_empty(nr, nc):
-                        q.append((nr, nc))
-            return False
-        visited = set()
-        pq = [(0, b_pos, s_pos)]
         while pq:
-            steps, b_pos, s_pos = heappop(pq)
-            if (b_pos, s_pos) in visited:
+            push, box_pos, player_pos = heappop(pq)
+            if box_pos == target_pos:
+                return push
+
+            if (box_pos, player_pos) in visited:
                 continue
-            visited.add((b_pos, s_pos))
-            if b_pos == t_pos:
-                return steps
-            sr, sc = s_pos
-            br, bc = b_pos
+            visited.add((box_pos, player_pos))
+            br0, bc0 = box_pos
+            pr0, pc0 = player_pos
             for dr, dc in dirs:
-                br1, bc1 = br + dr, bc + dc
-                br2, bc2 = br - dr, bc - dc
-                if is_empty(br2, bc2) and can_reach(sr, sc, br1, bc1, br, bc):
-                    heappush(pq, (steps + 1, (br2, bc2), b_pos))
+                pr1, pc1 = dr + pr0, dc + pc0
+                br1, bc1 = dr + br0, dc + bc0
+                if inbound(pr1, pc1):
+                    if (pr1, pc1) == box_pos:
+                        if inbound(br1, bc1):
+                            heappush(pq, (push + 1, (br1, bc1), (pr1, pc1)))
+                    else:
+                        heappush(pq, (push, box_pos, (pr1, pc1)))
+
         return -1

@@ -23,7 +23,7 @@ class Solution:
             prev = node
             if node.child:
                 cached_nexts.append(node.next)
-                node.child, node = None, node.child
-            else:
-                node = node.next
+                node.next = node.child
+                node.child = None
+            node = node.next
         return head
