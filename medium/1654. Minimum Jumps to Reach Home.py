@@ -14,7 +14,8 @@ class Solution:
         we will keep going right for k times until ka >= b, this is equivalent
         to 'a + b' when working as upper bound.
         Also, when we come back, we can't land at any position in forbidden,
-        so the upper bound needs to be greater than max(forbidden) + a + b.
+        so the upper bound is also greater than max(forbidden) + a + b.
+
         Alternatively, we can use 6001 as the upper bound based on data range.
 
         Time: O(E + V) where E is the number of edges in the search graph,
@@ -30,10 +31,9 @@ class Solution:
         while q:
             for _ in range(len(q)):
                 cur, back = q.popleft()
-                if cur in f or cur < 0 or (cur, back) in visited:
+                if cur in f or not 0 <= cur <= upper or (cur, back) in visited:
                     continue
-                if cur > upper:
-                    continue
+
                 if cur == x:
                     return steps
                 visited.add((cur, back))

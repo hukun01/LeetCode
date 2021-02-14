@@ -1,3 +1,4 @@
+# 787. Cheapest Flights Within K Stops
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
         '''
@@ -8,7 +9,7 @@ class Solution:
         and still explore the other cheaper options first within the stepsLeft.
         Hence, when we get to the dst, we know the price is the lowest one.
         '''
-        maps = collections.defaultdict(list)
+        maps = defaultdict(list)
         for (city, nextCity, price) in flights:
             maps[city].append((price, nextCity))
         trips = [(0, src, K + 1)]

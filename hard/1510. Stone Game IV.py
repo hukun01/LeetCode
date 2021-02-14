@@ -9,9 +9,10 @@ cache across all test cases.
 '''
 
 class Solution:
-    @lru_cache(None)
+    @cache
     def winnerSquareGame(self, n: int) -> bool:
-        if n == 0:
-            return False
-        return any(not self.winnerSquareGame(n - x ** 2)
-                   for x in range(int(n ** 0.5), 0, -1))
+        for i in range(int(n ** 0.5), 0, -1):
+            if not self.winnerSquareGame(n - i ** 2):
+                return True
+
+        return False

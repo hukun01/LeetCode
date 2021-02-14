@@ -4,11 +4,12 @@ class Solution:
         '''
         1/2 Math.
         Imagine we are filling a n-elelment array with these 5 letters.
-        We need to make 5 sections from the array, so that the letters
-        can be placed in order.
-        We need 4 separators. There are (n + 4) options to place these 4 separators.
-        Before the 1st separator we put 'a', between the 1st and the 2nd
-        separators we put 'e', and so on.
+        We need to make 5 sections from the array, so that the letters can be
+        placed in order.
+        We need 4 separators. There are (n + 4) options to place these 4
+        separators. Before the 1st separator we put 'a', between the 1st and
+        the 2nd separators we put 'e', and so on. The number of separator
+        combinations is the number of sorted vowel strings.
         '''
         k = 5
         num_separator = k - 1

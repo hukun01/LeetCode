@@ -2,11 +2,15 @@
 class Solution:
     def backspaceCompare(self, S: str, T: str) -> bool:
         '''
+        Control flow.
         For string parsing problems, a key is to identify the exit condition,
         and use nested while loop to manage the inner condition transitions.
         '''
-        # From right to left, find the index of the first char that is effectively present (would not be deleted).
         def proceed(arr, idx):
+            '''
+            From right to left, find the index of the first char that is
+            effectively present (would not be deleted).
+            '''
             count = 0
             while idx >= 0 and (arr[idx] == '#' or count > 0):
                 if arr[idx] == '#':
