@@ -13,15 +13,22 @@ class Solution:
         Time: O(n^k) from n!/(n-k)!, where n is len(s), k is the max answer.
         Space: O(n)
         '''
-        def dfs(s, curr_set):
-            if not s:
-                return 0
-            ans = 0
-            n = len(s)
-            for i in range(1, n + 1):
-                if (part := s[:i]) not in curr_set and n - i + 1 > ans:
-                    curr_set.add(part)
-                    ans = max(ans, 1 + dfs(s[i:], curr_set))
-                    curr_set.remove(part)
-            return ans
-        return dfs(s, set())
+        n = len(s)
+        self.ans = 0
+        def dfs(i, used):
+            if i == n:
+                self.ans = max(self.ans, len(used))
+                return
+
+            for j in range(i, n):
+                part = s[i:j + 1]
+                if part in used:
+                    continue
+                if n - i + len(used) <= self.ans:
+                    continue
+                used.add(part)
+                dfs(j + 1, used)
+                used.remove(part)
+
+        dfs(0, set())
+        return self.ans

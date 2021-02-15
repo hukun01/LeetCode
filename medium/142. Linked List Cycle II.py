@@ -16,20 +16,21 @@ class Solution:
         If there is a cycle, use a slow2 from start, and progress slow and slow2 together until they intersect
         at the cycle entry.
         '''
-        if not head or not head.next:
-            return None
-        start = ListNode(0)
-        start.next = head
-        slow = fast = start
+        pre = ListNode(0)
+        pre.next = head
+        fast = slow = pre
         while fast and fast.next:
-            slow = slow.next
             fast = fast.next.next
-            if slow == fast:
-                break
-        if slow != fast:
-            return None
-        slow2 = start
-        while slow != slow2:
             slow = slow.next
-            slow2 = slow2.next
+            if fast == slow:
+                break
+
+        if not fast or not fast.next:
+            return None
+
+        new = pre
+        while slow != new:
+            slow = slow.next
+            new = new.next
+
         return slow
