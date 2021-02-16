@@ -7,6 +7,9 @@ class Solution:
         its position should be (i - 1).
         Be careful when swapping, avoid inline swap because a wrong order
         can become a bug.
+
+        Time: O(n)
+        Space: O(1)
         '''
         n = len(A)
         for i in range(n):

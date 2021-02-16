@@ -6,6 +6,9 @@ class Solution:
         From right to left in each number, multiply every pair
         of digits, and add them together.
 
+        Note about edge case '0' * '0' where answer is '0'; and '9' * '9',
+        where answer has carryover being 8, while typical carryover is 1.
+
         Time: O(l1 * l2) where l1 is len(num1), l2 is len(num2)
         Space: O(l1 + l2)
         '''
@@ -20,5 +23,5 @@ class Solution:
                 ans[p2] += last1 * last2
                 ans[p1] += ans[p2] // 10
                 ans[p2] %= 10
-        ans = ''.join(str(c) for c in ans).lstrip('0')
-        return ans if ans else '0'
+
+        return ''.join(str(c) for c in ans).lstrip('0') or '0'

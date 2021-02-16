@@ -9,63 +9,70 @@
 class Solution:
     def minCameraCover(self, root: TreeNode) -> int:
         '''
-        1/2
-        Post-order traversal.
-        
-        Use a set to keep track of the covered nodes, and add a camera to the node
-        that is not covered.
-        
-        Go to the bottom of the tree, if any of the node's children is not covered,
-        we need a camera on the node;
-        Or if the node is not covered and its parent is None, we also need a camera
-        on it, this can only be true for the root node.
-        
-        Note that we need to initialize the covered set with { None } because emtpy
-        child should be considered covered already.
+        1/2 Greedy + Post-order traversal.
+
+        We have to cover leaf nodes, and there are 2 options for that:
+        1. put a camera on the leaf node;
+        2. put a camera on the leaf node's parent.
+        Option 2 is always at least as good as option 1, so we should always
+        do option 2.
+
+        Starting from the bottom of the tree, if any of the node's children is
+        not covered, we need a camera on the node. When adding a camera, we can
+        cover the node's parent, itself, and its children.
+
+        Note that we need to initialize the covered set with { None } because
+        null child should be considered covered already.
+
+        Also, to handle an edge case [0] where root is a leaf without parent,
+        we need to check 'root not in covered' and add to answer if it's true.
+
+        Time: O(n) where n is the number of nodes.
+        Space: O(n)
         '''
-        ans = 0
+        self.ans = 0
         covered = { None }
         def dfs(parent, node):
             if not node:
                 return
             dfs(node, node.left)
             dfs(node, node.right)
-            
-            if (parent is None and node not in covered) or\
-                node.left not in covered or\
-                node.right not in covered:
-                nonlocal ans
-                ans += 1
+
+            if node.left not in covered or node.right not in covered:
+                self.ans += 1
                 covered.update({ parent, node, node.left, node.right })
+
         dfs(None, root)
-        return ans
+        return self.ans + int(root not in covered)
 
         '''
-        2/2
-        We will have to cover leaf nodes, and there are 2 options for that:
-        1. put a camera on the leaf node;
-        2. put a camera on the leaf node's parent.
-        Option 2 is always at least as good as option 1, so we should always do option 2.
-        
-        With a recursive method traversing the tree, there are 3 statuses we need to handle:
-        1. return 0 if it's a leaf, meaning that it needs to be covered by the parent;
-        2. return 1 if it's a parent of a leaf, it must have a camera;
-        3. return 2 if it's covered without a camera.
+        2/2 Greedy + Post-order traversal, space optimized.
 
+        Similar idea with 1/2, but here we leverage the return value from
+        dfs(), and no need to track all covered nodes.
 
-        ans = 0
+        Traverse the tree in post-order, there are 3 statuses to handle:
+        1. return 0 if it's a leaf: it needs to be covered by the parent;
+        2. return 1 if it's a parent of a leaf: it must have a camera;
+        3. return 2 if it's covered without a camera, either because it's None,
+           or because some of its direct children got a camera.
+
+        Time: O(n)
+        Space: O(h) where h is the tree height.
+        '''
+        self.ans = 0
         def dfs(node):
             if not node:
                 return 2
-            
+
             left = dfs(node.left)
             right = dfs(node.right)
-            if left == 0 or right == 0:
-                nonlocal ans
-                ans += 1
+            if 0 in {left, right}:
+                self.ans += 1
                 return 1
-            return 2 if left == 1 or right == 1 else 0
+
+            return 2 if 1 in {left, right} else 0
+
         if dfs(root) == 0:
-            ans += 1
-        return ans
-        '''
+            self.ans += 1
+        return self.ans

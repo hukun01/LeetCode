@@ -7,9 +7,9 @@ class Solution:
         treat it as 'pp...pp'.
         The lps table from KMP helps identify the proper prefix which is the
         substrings in [] of '[pp..p]p' and 'p[p..pp]'.
-        The length of 'p' is 'n - lps[-1]', we just need to ensure it is not 0,
-        and can divide n, this is to ensure the common prefix and suffix do not
-        share substrings that can't be formed by 'p'.
+        The length of 'p' is 'n - lps[-1]', we just need to ensure lps[-1] is
+        not 0, aka, 'p != n', and can divide n. This is to ensure the common
+        prefix and suffix do not share substrings that can't be formed by 'p'.
         s:  p  x..x p
             A   B   C
 

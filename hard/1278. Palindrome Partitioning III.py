@@ -4,20 +4,24 @@ class Solution:
         '''
         DFS with memoization.
         '''
-        @lru_cache(None)
+        @cache
         def cost(i, j):
-            return sum(c1 != c2 for c1, c2 in zip(s[i:j+1], s[i:j+1][::-1])) // 2
-    
+            part = s[i:j]
+            return sum(c1 != c2 for c1, c2 in zip(part, reversed(part))) // 2
+
         n = len(s)
-        @lru_cache(None)
-        def dfs(i, k):
-            if n-i == k:
+        @cache
+        def dfs(start, count):
+            if n - start == count:
                 return 0
-            if k == 1:
-                return cost(i, n-1)
-            ans = math.inf
-            for j in range(i+1, n-k+2):
-                ans = min(ans, dfs(j, k-1) + cost(i, j-1))
+
+            if count == 1:
+                return cost(start, n)
+
+            ans = inf
+            for cut in range(start + 1, n - count + 2):
+                ans = min(ans, dfs(cut, count - 1) + cost(start, cut))
+
             return ans
 
         return dfs(0, k)

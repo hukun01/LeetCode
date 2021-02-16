@@ -42,8 +42,8 @@ class Solution:
         for length in range(2, n):
             for left in range(n - length):
                 right = left + length
-                for i in range(left + 1, right):
+                for mid in range(left + 1, right):
                     f[left][right] = max(
                         f[left][right],
-                        nums[left] * nums[i] * nums[right] + f[left][i] + f[i][right])
+                        nums[left] * nums[mid] * nums[right] + f[left][mid] + f[mid][right])
         return f[0][n - 1]
