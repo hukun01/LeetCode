@@ -12,18 +12,16 @@ class Solution:
         Space: O(n^2)
         '''
         n = len(s)
-        dp = [[False] * n for _ in range(n)]
-        for l in range(n - 1, -1, -1):
-            for r in range(l, n):
-                if s[l] == s[r]:
-                    if l + 1 <= r - 1:
-                        dp[l][r] = dp[l + 1][r - 1]
-                    else:
-                        dp[l][r] = True
+        f = [[False] * n for _ in range(n)]
 
-        for l in range(1, n - 1):
-            for r in range(l, n - 1):
-                if dp[0][l - 1] and dp[l][r] and dp[r + 1][n - 1]:
+        for size in range(n):
+            for i in range(n - size - 1, -1, -1):
+                j = i + size
+                f[i][j] = (i + 1 >= j - 1 or f[i+1][j-1]) and s[i] == s[j]
+
+        for i in range(n-2):
+            for j in range(i + 1, n - 1):
+                if f[0][i] and f[i+1][j] and f[j+1][n-1]:
                     return True
 
         return False

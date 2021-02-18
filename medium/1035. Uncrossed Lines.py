@@ -6,9 +6,12 @@ class Solution:
         Actually a LCS problem.
 
         f[i][j] is the max number of lines with A[:i] and B[:j]
-        
+
         f[i][j] = f[i-1][j-1] + 1, if A[i-1] == B[j-1]
                 = max(f[i-1][j], f[i][j-1]), otherwise
+
+        Time: O(m n) where m is len(A) and n is len(B)
+        Space: O(m n), can be trivially reduced to O(m)
         '''
         f = [[0] * (len(B) + 1) for _ in range(len(A) + 1)]
         for i in range(1, len(A) + 1):

@@ -2,6 +2,8 @@
 class Solution:
     def canArrange(self, arr: List[int], k: int) -> bool:
         '''
+        Two sum.
+
         In a pair (a, b), to let (a + b) % k == 0, it must be that
         a % k + b % k == k.
         Hence we keep track of a % k for every element a, and ensure all
