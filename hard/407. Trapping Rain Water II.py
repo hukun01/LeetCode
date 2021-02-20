@@ -7,7 +7,8 @@ class Solution:
         The key is to notice that in the 2-d map, when there are multiple
         connected cells, the water can flow out through the lowest one. Hence,
         the lowest boundary determines the volume of water that can be trapped.
-        We need to keep track of the current lowest height, starting from the 4
+
+        We keep track of the current lowest height, starting from the 4
         walls around the map, to ensure we only start from lower positions.
         And record the current max of the seen lowest heights, this is the
         lowest boundary of its area. Then check the current lowest position's
