@@ -3,15 +3,14 @@ class Solution:
     def longestPalindromeSubseq(self, s: str) -> int:
         '''
         DP.
-        Let f[i][j] be the length of the longest palindrome in
-        s[i:j].
+        Let f[i][j] be the length of the longest palindrome in s[i:j].
         Transitions:
-        f[i][j] = f[i+1][j-1] + 2, if s[i] == s[j], in this case we
-        take the chars from both sides;
-        f[i][j] = max(f[i][j-1], f[i+1][j]), if s[i] != s[j], in this
-        case we take the longer palindrome from either dropping \
-        the right char or the left char.
-        
+        f[i][j] = f[i+1][j-1] + 2, if s[i] == s[j], in this case we take the
+        chars from both sides;
+        f[i][j] = max(f[i][j-1], f[i+1][j]), if s[i] != s[j], in this case we
+        take the longer palindrome from either dropping the right char or the
+        left char.
+
         Note that f[i][i] = 1.
         A key is that we have to start i from n-1 to 0, because
         the longer palindrome can only be built from a shorter one.
