@@ -18,12 +18,15 @@ class Solution:
         for a, b in edges:
             tree[a].add(b)
             tree[b].add(a)
-        leaves = [node for node, neighbors in tree.items() if len(neighbors) <= 1]
+        leaves = [node for node, neighbors in tree.items() if len(neighbors) == 1]
         while n > 2:
             n -= len(leaves)
+            new_leaves = []
             for l in leaves:
                 for neighbor in tree[l]:
                     tree[neighbor].remove(l)
+                    if len(tree[neighbor]) == 1:
+                        new_leaves.append(neighbor)
                 tree.pop(l)
-            leaves = [node for node, neighbors in tree.items() if len(neighbors) <= 1]
+            leaves = new_leaves
         return leaves or [0]
