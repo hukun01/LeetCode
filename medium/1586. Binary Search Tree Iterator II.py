@@ -32,15 +32,15 @@ class BSTIterator:
     
     def _push_left(self, node):
         while node:
-            self.next_stack.append((node, False))
+            self.next_stack.append((node, False)) # (node, right_visited)
             node = node.left
 
     def hasNext(self) -> bool:
         return len(self.next_stack) > 0
 
     def next(self) -> int:
-        node, from_prev = self.next_stack.pop()
-        if not from_prev:
+        node, right_visited = self.next_stack.pop()
+        if not right_visited:
             self._push_left(node.right)
 
         self.prev_stack.append(node)

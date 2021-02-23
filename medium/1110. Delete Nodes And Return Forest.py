@@ -9,7 +9,7 @@
 class Solution:
     def delNodes(self, root: TreeNode, to_delete: List[int]) -> List[TreeNode]:
         '''
-        Tree.
+        DFS.
         Key is to start from a set 'ans' with root node in it.
         Preorder iterate through the tree and delete node as we go.
         We keep going down, if a node is in delete set, discard it from 'ans'.
