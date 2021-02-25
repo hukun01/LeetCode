@@ -2,7 +2,7 @@
 class Solution:
     def numTriplets(self, nums1: List[int], nums2: List[int]) -> int:
         '''
-        1/2 Two sum.
+        1/3 Two sum.
         Same as 2sum problem, except that it's doing product instead of sum.
 
         Time: O(max(m^2, n^2)) where m, n is size of nums1, nums2, respectively.
@@ -21,7 +21,7 @@ class Solution:
         a2 = sum(seen1[a * a] for a in nums2)
         return a1 + a2
         '''
-        2/2 Optmized 2sum.
+        2/3 Optmized 2sum.
         Count the frequencies of arrays and sort them, this is to reduce
         duplicate numbers into counts.
         This has the best actual performance as it reduces duplicate numbers

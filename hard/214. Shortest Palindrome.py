@@ -30,16 +30,16 @@ class Solution:
         '''
         2/2 KMP.
         The same idea transformation can be leveraged in a different way.
-        Note that in KMP we build the 'fail' table to help us move the pattern
+        Note that in KMP we build the 'lps' table to help us move the pattern
         pointer back smartly, that table helps here.
 
         See more details about KMP in 28. Implement strStr()
 
-        To find the max 'palin' in [palin]xxx, we build the 'fail' table in
-        this string t [palin]xyz#zyx[palin], in which fail[-1] would be the
+        To find the max 'palin' in [palin]xxx, we build the 'lps' table in
+        this string t [palin]xyz#zyx[palin], in which lps[-1] would be the
         max length of proper prefix for the whole 't'.
         Note that we need to insert a '#' in the middle to ensure that the
-        max fail[i] <= len(s).
+        max lps[i] <= len(s).
 
         Time: O(n)
         Space: O(n)

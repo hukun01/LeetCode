@@ -2,27 +2,32 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         '''
-        T[i][k][0] is the max profit with 0 stock after i-th day with k transactions.
-        T[i][k][1] is the max profit with 1 stock after i-th day with k transactions.
-        Since we can do any number of transactions, k doesn't matter, can be removed.
-        T[0][0] = 0
-        T[0][1] = -prices[0]
-        
-        Transitions:
-        T[i][0] = max(T[i-1][0], T[i-1][1] + p_i)
-        T[i-1][0] means rest from last day; T[i-1][1] + p_i means sell last stock.
+        DP.
 
-        T[i][1] = max(T[i-1][1], T[i-2][0] - p_i)
-        T[i-1][1] means rest from last day; T[i-2][0] - p_i means buy after cooldown.
+        Let f[i][0] be the answer for the first i days with no stock at hand.
+        Let f[i][1] be the answer for the first i days with a stock at hand.
+        f[0] = [0, -inf]
+            means to have a stock at hand with no trade, it takes 'inf' cost.
+        f[i][0] = max(f[i-1][0], f[i-1][1] + prices[i-1])
+            f[i-1][0] means rest from last day; f[i-1][1] + prices[i-1] means
+            sell last stock.
+        f[i][1] = max(f[i-1][1], f[i-2][0] - prices[i-1])
+            f[i-1][1] means rest from last day; f[i-2][0] - prices[i-1] means
+            buy after cooldown. Note that it's f[i-2] not f[i-1].
+
+        Time: O(n)
+        Space: O(n) can be reduced to O(1)
+
+        Another great post that explains all: https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/discuss/108870/Most-consistent-ways-of-dealing-with-the-series-of-stock-problems
         '''
-        if (n := len(prices)) < 2:
+        n = len(prices)
+        if n < 2:
             return 0
-        T = [[0] * 2 for _ in range(n)]
-        T[0][1] = -prices[0]
-        for i in range(1, n):
-            T[i][0] = max(T[i-1][0], T[i-1][1] + prices[i])
-            if i >= 2:
-                T[i][1] = max(T[i-1][1], T[i-2][0] - prices[i])
-            else:
-                T[i][1] = max(T[i-1][1], -prices[i])
-        return T[-1][0]
+
+        f = [[0, 0] for _ in range(n + 1)]
+        f[0] = [0, -inf]
+        for i in range(1, n + 1):
+            f[i][0] = max(f[i-1][0], f[i-1][1] + prices[i-1])
+            f[i][1] = max(f[i-1][1], f[i-2][0] - prices[i-1])
+
+        return f[-1][0]

@@ -67,7 +67,7 @@ class Solution:
         At index i, the 'lps' table records the max length of the *proper*
         prefix of s[:i+1] that is also the suffix of s[:i+1].
         Let k to be such max length, to try extending it, we compare s[i] and
-        s[k], if not matched, k jumps back to lps[k] as k', where we can try
+        s[k], if not matched, k jumps back to lps[k-1] as k', where we can try
         matching s[i+1] and s[k'], because we know s[:i+1] and s[:k'] already
         match.
 

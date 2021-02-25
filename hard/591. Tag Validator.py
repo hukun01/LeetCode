@@ -46,9 +46,9 @@ class Solution:
             elif code[i] == '/':
                 # Closed tag
                 good, tag_name, i = get_tag(i + 1)
-                if not good or not tag_stack or tag_stack[-1] != tag_name:
+                if not good or not tag_stack or tag_stack.pop() != tag_name:
                     return False
-                tag_stack.pop()
+
                 if not tag_stack:
                     top_level_block += 1
             else:
