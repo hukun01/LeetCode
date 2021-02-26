@@ -10,7 +10,7 @@ class Solution:
         The key is to identify the difference between the number of
         inc/dec points vs the length of the subarray.
 
-        Time: O(n) where n is the length of the array A.
+        Time: O(n) where n is len(A).
         Space: O(1)
         '''
         ans = inc = dec = 0
@@ -26,6 +26,8 @@ class Solution:
                 dec += 1
             else:
                 dec = inc = 0
+
             if inc > 0 and dec > 0:
                 ans = max(ans, inc + dec + 1)
+
         return ans

@@ -30,13 +30,14 @@ class Solution:
         Time: O(n log(n)) where n is len(trips)
         Space: O(n)
         '''
-        off = []
+        passengers = []
         for n, s, e in sorted(trips, key=lambda t: (t[1], t[2])):
-            while off and off[0][0] <= s:
-                _, restored_capacity = heappop(off)
+            while passengers and passengers[0][0] <= s:
+                _, restored_capacity = heappop(passengers)
                 capacity += restored_capacity
-            if capacity < n:
-                return False
+
             capacity -= n
-            heappush(off, (e, n))
-        return True
+            if capacity < 0:
+                break
+            heappush(passengers, (e, n))
+        return capacity >= 0
