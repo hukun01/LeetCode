@@ -16,13 +16,17 @@ class Solution:
         def longestPalinSubseq(s):
             n = len(s)
             f = [[0] * n for _ in range(n)]
-            for i in range(n-1, -1, -1):
+            for i in range(n):
                 f[i][i] = 1
-                for j in range(i+1, n):
+
+            for size in range(2, n + 1):
+                for i in range(n + 1 - size):
+                    j = i + size - 1
                     if s[i] == s[j]:
                         f[i][j] = f[i+1][j-1] + 2
                     else:
                         f[i][j] = max(f[i][j-1], f[i+1][j])
+
             return f
 
         s = word1 + word2
