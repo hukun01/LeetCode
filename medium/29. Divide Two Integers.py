@@ -10,7 +10,8 @@ class Solution:
 
         Note that we need to deal with overflow as a special case.
         '''
-        if (dividend == -2147483648 and divisor == -1): return 2147483647
+        edge = 1 << 31
+        if (dividend == -edge and divisor == -1): return edge-1
         a, b, res = abs(dividend), abs(divisor), 0
         for x in range(31, -1, -1):
             if (a >> x) - b >= 0:
