@@ -14,12 +14,10 @@ class Solution:
         Space: O(1)
         '''
         num_a = sum(c == 'a' for c in s)
-        left_a = left_b = 0
-        ans = left_b + num_a - left_a
+        freq = Counter()
+        ans = freq['b'] + num_a - freq['a']
         for c in s:
-            if c == 'a':
-                left_a += 1
-            else:
-                left_b += 1
-            ans = min(ans, left_b + num_a - left_a)
+            freq[c] += 1
+            ans = min(ans, freq['b'] + num_a - freq['a'])
+
         return ans
