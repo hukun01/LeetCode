@@ -14,11 +14,12 @@ class Solution:
         Space: O(n).
         '''
         def LIS(arr):
-            dp = [math.inf] * len(arr)
+            dp = [inf] * len(arr)
             for a in arr:
                 dp[bisect_left(dp, a)] = a
-            return bisect_left(dp, math.inf)
-        ans = 0
+            return bisect_left(dp, inf)
+
+        longest_mountain = 0
         n = len(nums)
         for i in range(1, n - 1):
             left = [x for x in nums[:i] if x < nums[i]] + [nums[i]]
@@ -27,8 +28,8 @@ class Solution:
             a = LIS(left)
             b = LIS(right)
             if a >= 2 and b >= 2:
-                ans = max(ans, a + b - 1)
-        return n - ans
+                longest_mountain = max(longest_mountain, a + b - 1)
+        return n - longest_mountain
         '''
         2/2 DP optimized.
         Based on 1/2, we don't need to re-calculate LIS at every index, we can
@@ -42,18 +43,18 @@ class Solution:
         Space: O(n)
         '''
         def LIS(arr):
-            dp = [math.inf] * len(arr)
-            lens = [0] * len(arr)
-            for i, a in enumerate(arr):
+            dp = [inf] * len(arr)
+            lens = []
+            for a in arr:
                 pos = bisect_left(dp, a)
-                lens[i] = pos + 1
+                lens.append(pos + 1)
                 dp[pos] = a
             return lens
-        l1 = LIS(nums)
-        l2 = LIS(nums[::-1])[::-1]
-        ans = 0
-        n = len(nums)
-        for a, b in zip(l1, l2):
+
+        left = LIS(nums)
+        right = LIS(nums[::-1])[::-1]
+        longest_mountain = 0
+        for a, b in zip(left, right):
             if a >= 2 and b >= 2:
-                ans = max(ans, a + b - 1)
-        return n - ans
+                longest_mountain = max(longest_mountain, a + b - 1)
+        return len(nums) - longest_mountain
