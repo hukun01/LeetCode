@@ -2,21 +2,27 @@
 class Solution:
     def maximumSum(self, arr: List[int]) -> int:
         '''
-        dp[i][0] tracks the max sum without skipping anything, 
-        dp[i][1] tracks the max sum with skipping some negative element.
-        
-        dp[i][0] = max(dp[i-1][0] + arr[i], arr[i])
-        dp[i][1] = max(dp[i-1][0], dp[i-1][1] + arr[i], arr[i])
+        DP.
+        Let f[i][0] tracks the max sum with one deletion in nums[:i];
+        Let f[i][1] tracks the max sum with no deletion in nums[:i].
+
+        Range for i is [0, n), transition functions as below:
+        f[i+1][0] = max(f[i][0] + arr[i], f[i][1])
+            This means we either take arr[i] or we don't.
+
+        f[i+1][1] = max(f[i][1], 0) + arr[i]
+            This means we either add arr[i] to the previous subarray or start a
+            new one.
+
+        Time: O(n)
+        Space: O(n) can be reduced to O(1).
         '''
-        if len(arr) == 1:
-            return arr[0]
-        dp = [[0] * 2 for _ in range(2)]
-        dp[0] = [arr[0], 0]
-        ans = -float('inf')
-        for i in range(1, len(arr)):
-            curr = i % 2
-            prev = (i - 1) % 2
-            dp[curr][0] = max(arr[i], dp[prev][0] + arr[i])
-            dp[curr][1] = max(dp[prev][0], dp[prev][1] + arr[i], arr[i])
-            ans = max(ans, max(dp[curr]))
+        n = len(arr)
+        f = [[-inf, -inf] for _ in range(n+1)]
+        ans = -inf
+        for i in range(n):
+            f[i+1][0] = max(f[i][0] + arr[i], f[i][1])
+            f[i+1][1] = max(f[i][1], 0) + arr[i]
+            ans = max(ans, *f[i+1])
+
         return ans

@@ -6,12 +6,16 @@ class Solution:
         We can compare integer lists like [1, 2] < [1, 3].
         Time: O(WN) where W is the number of words, N is the length of the
         longest word.
-        Space: O(N)
-        This can be updated to compare char by char for w1 and w2 to achieve
-        O(1) space, in case N is huge.
+        Space: O(1) as there are at most 26 letters.
         '''
-        orderMap = { char: idx for idx, char in enumerate(order) }
+        pos = {c: i for i, c in enumerate(order)}
+        pos[None] = -inf
         for w1, w2 in zip(words, words[1:]):
-            if [orderMap[c] for c in w1] > [orderMap[c] for c in w2]:
-                return False
+            for c1, c2 in zip_longest(w1, w2):
+                if c1 == c2:
+                    continue
+                if pos[c1] > pos[c2]:
+                    return False
+                break
+
         return True

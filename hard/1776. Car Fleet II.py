@@ -25,7 +25,7 @@ class Solution:
             while stack:
                 last = stack[-1]
                 last_pos, last_speed = cars[last]
-                if speed > last_speed and (last_pos - pos) / (speed - last_speed) < ans[last]:
+                if speed > last_speed and (last_pos - pos) / (speed - last_speed) <= ans[last]:
                     break
                 else:
                     stack.pop()

@@ -25,10 +25,9 @@ class Solution:
         for i, a in enumerate(nums):
             if i > 0 and nums[i - 1] != a:
                 start = 0
-            size = len(ans)
-            while start < size:
-                b = ans[start]
-                ans.append(b + [a])
+
+            for j in range(start, len(ans)):
+                ans.append(ans[j] + [a])
                 start += 1
 
         return ans
