@@ -4,7 +4,7 @@ class Solution:
         '''
         Compare every pair of adjacent words.
         We can compare integer lists like [1, 2] < [1, 3].
-        Time: O(WN) where W is the number of words, N is the length of the
+        Time: O(WN) where N is the number of words, W is the length of the
         longest word.
         Space: O(1) as there are at most 26 letters.
         '''
