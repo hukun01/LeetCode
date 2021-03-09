@@ -10,10 +10,12 @@ class Solution:
         and consume the sandwich until no one prefers the current sandwich.
 
         Time: O(n) where n is len(students)
-        Space: O(n)
+        Space: O(1)
         '''
         student_counts = Counter(students)
-        sandwiches = sandwiches[::-1]
-        while sandwiches and student_counts[sandwiches[-1]] > 0:
-            student_counts[sandwiches.pop()] -= 1
-        return len(sandwiches)
+        i = 0
+        n = len(sandwiches)
+        while i < n and student_counts[sandwiches[i]] > 0:
+            student_counts[sandwiches[i]] -= 1
+            i += 1
+        return n - i

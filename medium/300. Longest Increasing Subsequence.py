@@ -6,7 +6,7 @@ class Solution:
 
         LIS_list: in this list, index is length of LIS, value is
         the smallest ending number of this LIS with the length.
-        Time: O(nlog(n)) where n is the length of nums.
+        Time: O(nlog(n)) where n is len(nums).
         Space: O(n)
         '''
         lisList = []

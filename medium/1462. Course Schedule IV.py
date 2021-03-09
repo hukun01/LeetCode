@@ -3,19 +3,19 @@ class Solution:
     def checkIfPrerequisite(self, n: int, P: List[List[int]], Q: List[List[int]]) -> List[bool]:
         '''
         1/2 DFS
-        Build a graph with each node mapping to its prereqs.
-        DFS from node i and see if j is one of its prereqs, or its prereq's prereq.
+        Build a graph with each prereq mapping to its next.
+        DFS from node a and see if b is one of its nexts, or its next's next.
         '''
-        graph = defaultdict(list)
-        for i, j in P:
-            graph[j].append(i)
+        next_nodes = defaultdict(list)
+        for a, b in P:
+            next_nodes[a].append(b)
 
-        @lru_cache(None)
-        def dfs(i, j):
-            if i == j:
+        @cache
+        def dfs(start, end):
+            if start == end:
                 return True
-            return any(dfs(x, j) for x in graph[i])
-        return [dfs(j, i) for i, j in Q]
+            return any(dfs(nex, end) for nex in next_nodes[start])
+        return [dfs(a, b) for a, b in Q]
         '''
         2/2 Floyd-Marshall algorithm.
         '''
