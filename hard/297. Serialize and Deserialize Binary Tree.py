@@ -13,7 +13,9 @@ class Codec:
         :type root: TreeNode
         :rtype: str
         """
-        """ 1/2 Recursive: build the string list in preorder.
+        '''
+        1/2 Recursive: build the string list in preorder.
+        '''
         def buildString(node, values):
             if node:
                 values.append(str(node.val))
@@ -21,14 +23,14 @@ class Codec:
                 buildString(node.right, values)
             else:
                 values.append("#")
-                
+
         values = []
         buildString(root, values)
         return ','.join(values)
-        """
-        """ 2/2 Iterative: build the string list in level order. 
+        '''
+        2/2 Iterative: build the string list in level order. 
         Use a nullCount to avoid adding '#' for the last level.
-        """
+        '''
         if not root:
             return None
         queue = collections.deque([root])
@@ -54,7 +56,9 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        """ 1/2 Recursive: the key is to pop the value list in every call.
+        '''
+        1/2 Recursive: the key is to pop the value list in every call.
+        '''
         def buildTree(values):
             strVal = values.popleft()
             if strVal == "#":
@@ -64,10 +68,9 @@ class Codec:
                 node.left = buildTree(values)
                 node.right = buildTree(values)
                 return node
-            
-        values = collections.deque(data.split(','))
+
+        values = deque(data.split(','))
         return buildTree(values)
-        """
         """ 2/2 Iterative: Same as the string building process, build nodes in level order.
         """
         if not data:

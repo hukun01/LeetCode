@@ -24,11 +24,11 @@ class Codec:
         def preorder(node):
             if not node:
                 return
-            ans.append(node)
+            ans.append(node.val)
             preorder(node.left)
             preorder(node.right)
         preorder(root)
-        return ','.join(str(n.val) for n in ans)
+        return ','.join(str(v) for v in ans)
 
     def deserialize(self, data: str) -> TreeNode:
         """Decodes your encoded data to tree.
@@ -40,14 +40,14 @@ class Codec:
             if not vals:
                 return
             val = int(vals[0])
-            if val < lb or val > ub:
+            if not lb <= val <= ub:
                 return
             vals.popleft()
             node = TreeNode(val)
             node.left = dfs(lb, val)
             node.right = dfs(val, ub)
             return node
-        return dfs(-math.inf, math.inf)
+        return dfs(-inf, inf)
 
 # Your Codec object will be instantiated and called as such:
 # Your Codec object will be instantiated and called as such:
