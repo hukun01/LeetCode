@@ -90,6 +90,10 @@ class Solution:
         return ans
         '''
         3/3 Events and line sweep.
+        The difference array technique is nice, but it would be constrained if
+        the values are huge. In that case, we need a scalable approach that
+        doesn't concern about the actual values.
+
         Similar to logic in 1/3, but opposite, based on below:
         There are 5 cases that requires different numbers of operations
         to update a and/or b to get to c, depending on which interval c
