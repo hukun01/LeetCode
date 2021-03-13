@@ -2,23 +2,25 @@
 class Solution:
     '''
     Sliding window.
-    Count the total char-frequency 'total', then iterate through s, using a
-    sliding window to collect the seen chars, when a char's frequency == the
-    total frequency, we know there's no such char on the right, and we can pop
-    it out from 'total'. And whenever len(window) == len(total), we get a good
-    split.
+    We start from index 0, the right chars frequency is the total chars
+    frequency, called 'right_count'. We then iterate through s, as we move the
+    index with char 'a', we increment left_count[a] and decrement
+    right_count[a], whenever right_count[a] == 0, we pop 'a' out.
+    Whenever len(left_count) == len(right_count), we have a good split.
 
     Time: O(n) where n is len(s)
     Space: O(1) since there are at most 26 chars.
     '''
     def numSplits(self, s: str) -> int:
-        total = Counter(s)
-        window = Counter()
+        right_count = Counter(s)
+        left_count = Counter()
         ans = 0
         for a in s:
-            window[a] += 1
-            if window[a] == total[a]:
-                total.pop(a)
-            if len(window) == len(total):
+            left_count[a] += 1
+            right_count[a] -= 1
+            if right_count[a] == 0:
+                right_count.pop(a)
+
+            if len(left_count) == len(right_count):
                 ans += 1
         return ans
