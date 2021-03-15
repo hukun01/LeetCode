@@ -134,14 +134,13 @@ class Solution:
         Space: O(n)
         '''
         n = len(nums)
-        events = []
+        deltas = Counter()
         for i in range(n // 2):
             a, b = sorted([nums[i], nums[n - 1 - i]])
 
-            events.append((a + 1, 1))
-            events.append((a + b, 1))
-            events.append((a + b + 1, -1))
-            events.append((b + limit + 1, -1))
+            deltas[a + 1] += 1
+            deltas[a + b] += 1
+            deltas[a + b + 1] -= 1
+            deltas[b + limit + 1] -= 1
 
-        events.sort()
-        return n - max(accumulate(delta for _, delta in events))
+        return n - max(accumulate(v for k, v in sorted(deltas.items(), key=lambda i: i[0])))
