@@ -14,8 +14,6 @@ class Solution:
         Time: O(n) where n is len(nums)
         Space: O(n)
         '''
-        freqs = Counter(nums)
-        degree = max(freqs.values())
         left = {}
         right = {}
         for i, a in enumerate(nums):
@@ -23,6 +21,8 @@ class Solution:
                 left[a] = i
             right[a] = i
 
+        freqs = Counter(nums)
+        degree = max(freqs.values())
         ans = len(nums)
         for a in nums:
             if freqs[a] == degree:
