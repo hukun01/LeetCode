@@ -32,4 +32,5 @@ class Solution:
                 else:
                     node = node[i_th_bit]
             ans = max(ans, max_xor_with_a)
+
         return ans
