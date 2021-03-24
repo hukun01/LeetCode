@@ -59,7 +59,7 @@ class Solution:
         best number has the opposite bit at every possible positions, comparing
         to x.
         We start by finding the 'stop' position in nums using 'm'.
-        Similar to 1/2, we try from the most significant bit to the least ones.
+        Similar to 1/3, we try from the most significant bit to the least ones.
         During the process, we track the currently identified number from its
         highest bits.
         At each bit, let 'plus' be current number + bit.
@@ -79,9 +79,9 @@ class Solution:
 
         Time: O(n log(n) + q log(n))
         Space: O(n + q)
-        Note that this solution is much faster than 1/2, althoug the
+        Note that this solution is much faster than 1/3, although the
         theorectical complexity is close. This is because space is much much
-        less here, while in 1/2 we need to store up to 2^31 Trie nodes.
+        less here, while in 1/3 we need to store up to 2^31 Trie nodes.
         '''
         nums.sort()
 
@@ -113,19 +113,19 @@ class Solution:
         *future* query's m is, before we process nums.
 
         Here it is an online algorithm, which processes all numbers, and answer
-        any queries that come up later, without knowing *future* queries.
+        any queries that come up later, without knowing about *future* queries.
 
         Time: O(n + q)
         Space: O(n + q)
 
         Note that this approach is much slower, due to the Node class overhead
-        in Python, we use a special attribute '__slots__' to fix a bit, but
-        it may hit TLE again in the future.
+        in Python, we use a special attribute '__slots__' to improve, but it
+        may hit TLE again in the future.
         '''
         root = Node()
         for a in set(nums):
             root.add(a)
-        
+
         min_a = min(nums)
 
         ans = []
@@ -134,9 +134,9 @@ class Solution:
                 ans.append(-1)
             else:
                 ans.append(x ^ root.query(x, m))
-        
+
         return ans
-    
+
 
 class Node:
     __slots__ = ('kid', 'val', 'min')
@@ -156,7 +156,7 @@ class Node:
             node.min = min(node.min, num)
 
         node.val = num
-    
+
     def query(self, x, m):
         node = self
         ans = 0
@@ -167,5 +167,5 @@ class Node:
                 node = node.kid[pref]
             else:
                 node = node.kid[i_th_bit]
-            
+
         return node.val
