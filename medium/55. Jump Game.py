@@ -2,17 +2,27 @@
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
         '''
-        Keep track of the current furthest jumpable distance,
-        if it's always that furthest >= i for all i, then we can jump.
-        In another word, if any position > furthest, we can't jump to it.
+        Record the current furthest reachable position and the current
+        position, and the index in nums.
+        Within the furthest reachable position, we pick the next furthest
+        position. If the next one cannot exceed the current furthest, we can't
+        proceed.
+
+        Time: O(n)
+        Space: O(1)
         '''
-        furthest = cur = 0
+        n = len(nums)
+        furthest = 0
         i = 0
         while furthest < n - 1:
-            while i <= cur:
-                furthest = max(furthest, i + nums[i])
+            next_furthest = furthest
+            while i <= furthest:
+                next_furthest = max(next_furthest, i + nums[i])
                 i += 1
-            if furthest == cur:
+
+            if furthest == next_furthest:
                 break
-            cur = furthest
+
+            furthest = next_furthest
+
         return furthest >= n - 1
