@@ -18,7 +18,7 @@ class Solution:
         while queue:
             taken, num_semesters = queue.popleft()
             free_courses = [x for x in range(1, n + 1) if (taken & (1 << (x - 1)) == 0) and taken & prereqs[x] == prereqs[x]]
-            for courses in itertools.combinations(free_courses, min(k, len(free_courses))):
+            for courses in combinations(free_courses, min(k, len(free_courses))):
                 new_taken = taken
                 for x in courses:
                     new_taken |= 1 << (x - 1)

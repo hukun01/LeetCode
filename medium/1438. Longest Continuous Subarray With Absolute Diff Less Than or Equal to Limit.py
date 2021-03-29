@@ -28,7 +28,7 @@ class Solution:
                 if min_q[0] == left:
                     min_q.popleft()
                 left += 1
-            
+
             ans = max(ans, right - left + 1)
-        
+
         return ans
