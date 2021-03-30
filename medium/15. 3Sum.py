@@ -2,33 +2,26 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         '''
-        This problem is an extension of twoSum problem. We sort the array to ensure that
-        triplets are internally ordered. And in each iteration, we take the current number,
-        and find the twoSum tuples from the rest of the array.
-        Also need to dedup before using the current number.
-        '''
-        nums.sort()
-        answer = set()
-        for i, a in enumerate(nums[:-2]):
-            if i-1 >= 0 and a == nums[i-1]:
-                continue
-            seen = set()
-            for c in nums[i+1:]:
-                b = 0 - a - c # b will fall into [a, c] if b can be part of an answer
-                if b in seen:
-                    answer.add((a, b, c))
-                seen.add(c)
-        return [list(triplet) for triplet in answer]
-        '''
-        Another style.
+        This problem is an extension of twoSum problem. We sort the array to
+        ensure that triplets are internally ordered. And in each iteration, we
+        fix the current number, and find the twoSum tuples from the rest of
+        the array.
+        One key about this is to dedup without using hashset. We need to skip
+        the current element if it's the same as the previous one. Same applies
+        to the inner loop that finds the twoSum tuples.
+
+        Time: O(n^2) where n is len(nums)
+        Space: O(n) we can construct an array like [-4,-3,-2,-1,0,1,2,3,4] that
+        gives the most triplets, which is n / 2.
         '''
         nums.sort()
         ans = []
-        for l in range(len(nums) - 2):
+        n = len(nums)
+        for l in range(n - 2):
             if l - 1 >= 0 and nums[l - 1] == nums[l]:
                 continue
             m = l + 1
-            r = len(nums) - 1
+            r = n - 1
             while m < r:
                 total = nums[l] + nums[m] + nums[r]
                 if total > 0:
