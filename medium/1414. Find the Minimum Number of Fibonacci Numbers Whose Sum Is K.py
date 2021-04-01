@@ -2,8 +2,15 @@
 class Solution:
     def findMinFibonacciNumbers(self, k: int) -> int:
         '''
+        Greedy + Math.
+        We try to subtract the largest possible fibonacci number from k,
+        repeatedly, because there's no benefit in skipping it.
+
         For problems that find the *number* of elements that sum up to X,
         we can use division as a repeated subtraction.
+
+        Time: O(log(k)) we at most need to use all fibonacci numbers.
+        Space: O(log(k)) we need to store this many fibonacci numbers.
         '''
         f = [1, 1]
         while f[-1] < k:

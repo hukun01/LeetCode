@@ -27,5 +27,4 @@ class Solution:
                 ans[bisect_left(ans, a)] = a
             return bisect_left(ans, inf)
 
-        envelopes.sort(key=lambda e: (e[0], -e[1]))
-        return LIS([e[1] for e in envelopes])
+        return LIS([h for _, h in sorted(envelopes, key=lambda e: (e[0], -e[1]))])
