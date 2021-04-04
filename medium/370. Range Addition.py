@@ -2,7 +2,7 @@
 class Solution:
     def getModifiedArray(self, length: int, updates: List[List[int]]) -> List[int]:
         '''
-        Difference array.
+        1/2 Difference array.
         This is the inverse of prefix sums:  diff[i] = nums[i] - nums[i - 1].
         Based on this we know: 
             1. nums[i] = diff[i] + nums[i - 1]
