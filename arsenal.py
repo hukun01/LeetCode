@@ -169,7 +169,9 @@ class SegTreeNode:
     This particular template handles range sum query. For RMQ it can be updated
     accordingly.
 
-    Also see: https://leetcode.com/articles/a-recursive-approach-to-segment-trees-range-sum-queries-lazy-propagation/
+    For general intro and lazy propagation see:
+    https://leetcode.com/articles/a-recursive-approach-to-segment-trees-range-sum-queries-lazy-propagation/
+    For discretization, see 218. The Skyline Problem.
     '''
     def __init__(self, a, b):
         # This node covers interval [a, b] inclusively.
