@@ -63,6 +63,9 @@ class Solution:
            tracking every possible x value, we map each unique building
            interval start and end to an unique index. And our segment tree
            just need to track the index space, aka, at most 10 ^ 4 nodes.
+           In discretization, note that we must sort the points before mapping
+           them to index, this ensures that the a smaller point always maps
+           to a smaller index.
 
         After building the building position to index mapping, and the tree,
         we just do a dfs to find each leaf node's start (index) and height.
@@ -111,48 +114,54 @@ class Solution:
 
 
 class SegTreeNode:
-    
     def __init__(self, a, b):
+        # This node covers interval [a, b] inclusively.
         self.a = a
         self.b = b
         self.left = self.right = None
-        self.lazy = False
         self.val = 0
+        self.lazy = False
 
+
+    def __repr__(self):
+        # This is for debug only
+        return f'[{self.a, self.b}] with val {self.val} and lazy {self.lazy}\nleft: {self.left}\nright: {self.right}'
 
     def init(self, a, b):
         if a == b:
             return
-
         m = (a + b) // 2
-        if self.left is None:
-            self.left = SegTreeNode(a, m)
-            self.right = SegTreeNode(m+1, b)
+        self.left = SegTreeNode(a, m)
+        self.right = SegTreeNode(m + 1, b)
         self.left.init(a, m)
-        self.right.init(m+1, b)
+        self.right.init(m + 1, b)
+
+
+    def propagate_lazy(self):
+        if not self.lazy:
+            return
+        self.left.val = self.right.val = self.val
+        self.left.lazy = self.right.lazy = self.lazy
+        self.lazy = False
 
 
     def update_range(self, a, b, val):
-        if self.a > b or self.b < a:
+        if a > self.b or b < self.a:
             return
 
-        if self.a == self.b:
-            self.val = max(self.val, val)
-            self.lazy = False
-            return
-
-        # Note we only use lazy update when the incoming val equal or greater
-        if self.a >= a and self.b <= b and self.val <= val:
-            self.val = val
+        # Update is applied to the first node that completely covered by
+        # [a, b], this way we don't go to each leaf node, and achieve
+        # O(log(n)) time range update.
+        if self.a >= a and self.b <= b:
+            self.val = val # we always have 'self.val <= val' because sorted.
             self.lazy = True
             return
 
-        if self.lazy:
-            self.left.val = self.right.val = self.val
-            self.left.lazy = self.right.lazy = True
-            self.lazy = False
-
-        self.val = max(self.val, val)
+        self.propagate_lazy()
 
         self.left.update_range(a, b, val)
         self.right.update_range(a, b, val)
+
+
+    def size(self):
+        return self.b - self.a + 1

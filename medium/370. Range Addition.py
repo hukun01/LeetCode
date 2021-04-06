@@ -39,6 +39,7 @@ class Solution:
 
         return [root.query_range(i, i) for i in range(length)]
 
+
 class SegTreeNode:
     def __init__(self, a, b):
         # This node covers interval [a, b] inclusively.
@@ -47,6 +48,7 @@ class SegTreeNode:
         self.left = self.right = None
         self.val = 0
         self.lazy = 0
+
 
     def __repr__(self):
         # This is for debug only
@@ -61,38 +63,46 @@ class SegTreeNode:
         self.left.init(a, m)
         self.right.init(m + 1, b)
 
+
+    def propagate_lazy(self):
+        if self.lazy == 0:
+            return
+        self.left.val += self.lazy * self.left.size()
+        self.right.val += self.lazy * self.right.size()
+        self.left.lazy += self.lazy
+        self.right.lazy += self.lazy
+        self.lazy = 0
+
+
     def update_range(self, a, b, val):
+        if a > self.b or b < self.a:
+            return
+
         # Update is applied to the first node that completely covered by
         # [a, b], this way we don't go to each leaf node, and achieve
         # O(log(n)) time range update.
         if self.a >= a and self.b <= b:
-            self.lazy += val * (self.b - self.a + 1)
+            self.val += val * self.size()
+            self.lazy += val
             return
 
-        if a > self.b or b < self.a or self.a == self.b:
-            return
+        self.propagate_lazy()
 
         self.left.update_range(a, b, val)
         self.right.update_range(a, b, val)
-    
+
+
     def query_range(self, a, b):
-        # When querying, we need to push down lazy value from upper nodes to
-        # bottom nodes. Note that we need to split the lazy values from the
-        # parent node to its children nodes based on each child's size.
-        if self.left is None:
-            self.val += self.lazy
-            self.lazy = 0
-            if a == self.a: # if true, it also means self.a == self.b
-                return self.val
+        if a > self.b or b < self.a:
             return 0
 
-        if b < self.a or a > self.b:
-            return 0
+        if self.a >= a and self.b <= b:
+            return self.val
 
-        if self.lazy != 0:
-            total_range_size = self.b - self.a + 1
-            self.left.lazy += self.lazy * (self.left.b - self.left.a + 1) // total_range_size
-            self.right.lazy += self.lazy * (self.right.b - self.right.a + 1) // total_range_size
-            self.lazy = 0
+        self.propagate_lazy()
 
         return self.left.query_range(a, b) + self.right.query_range(a, b)
+
+
+    def size(self):
+        return self.b - self.a + 1
