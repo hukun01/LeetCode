@@ -10,7 +10,7 @@ class Solution:
         Then we can get nums by accumulating diff.
 
         The diff array first collects the start and end positions for each
-        udpate interval, and record the delta, by adding `delta` to start,
+        update interval, and record the delta, by adding `delta` to start,
         and minus `delta` to (end+1). Later we accumulate diff array, the
         `delta` in start will be accumulated to every position after it,
         until (end+1), after which the accumulated `delta` will be negated.
