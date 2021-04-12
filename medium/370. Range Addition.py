@@ -12,13 +12,13 @@ class Solution:
         The diff array first collects the start and end positions for each
         update interval, and record the delta, by adding `delta` to start,
         and minus `delta` to (end+1). Later we accumulate diff array, the
-        `delta` in start will be accumulated to every position after it,
+        `delta` from start will be accumulated to every position after it,
         until (end+1), after which the accumulated `delta` will be negated.
 
         Difference array provides O(1) update to any intervals in an array,
         with the cost of O(n) query. Hence, this technique is often used in
         scenarios where frequent update operations are applied to various
-        intervals, and our goal is to get the result array AFTER all the
+        intervals, and our goal is to get the result array AFTER all the update
         operations.
 
         Time: O(length)
