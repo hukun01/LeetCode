@@ -6,10 +6,13 @@ class Solution:
         Imagine we are filling a n-elelment array with these 5 letters.
         We need to make 5 sections from the array, so that the letters can be
         placed in order.
-        We need 4 separators. There are (n + 4) options to place these 4
-        separators. Before the 1st separator we put 'a', between the 1st and
-        the 2nd separators we put 'e', and so on. The number of separator
-        combinations is the number of sorted vowel strings.
+        To make 5 sections, we need 4 bars.
+        There are (n + 4) objects (n stars and 4 bars, see below reference) in
+        the final arrangement, and we need to choose the positions for 4 bars.
+        Before the 1st bar we put 'a', between the 1st and the 2nd bars we put
+        'e', and so on.
+        The number of bar combinations is the number of sorted vowel strings.
+        Reference: https://en.wikipedia.org/wiki/Stars_and_bars_(combinatorics)
         '''
         k = 5
         num_separator = k - 1

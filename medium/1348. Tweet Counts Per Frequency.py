@@ -10,6 +10,7 @@ class TweetCounts:
     Instead, maintain mapping from the tweet to frequency map which is a
     SortedDict (not OrderedDict!). In SortedDict the keys are sorted, so the
     [startTime, endTime] range can be found in logN time via irange().
+    getTweetCountsPerFrequency() takes O(n) time.
     '''
     def __init__(self):
         self.data = defaultdict(SortedDict)

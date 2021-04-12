@@ -2,15 +2,12 @@
 class CustomStack:
     '''
     Push and pop operations are O(1) time.
-    
+
     O(n) time increment is trivial.
-    
-    To do O(1) increment, use an array inc to record the
-    latest diff that needs to be added upon pop.
-    inc[i] means from stack[0] to stack[i], all values need
-    to be incremented by inc[i].
-    
-    Also, add inc[i] to inc[i - 1] for the next pop.
+
+    To do O(1) increment, let inc[i] be the added value from stack[0] to
+    stack[i]. When poping out an element, add inc[i] to it, and, add inc[i]
+    to inc[i - 1] to propagate the added value to the next pop.
     '''
 
     def __init__(self, maxSize: int):

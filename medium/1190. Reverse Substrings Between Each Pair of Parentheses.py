@@ -6,6 +6,7 @@ class Solution:
         Use a stack to start collecting substrings that need to be
         reversed when seeing left paren, and add the reversed substring
         back when seeing right paren.
+
         Time: O(N^2)
         '''
         stack = [[]]
@@ -24,6 +25,7 @@ class Solution:
         Iterate through s, when seeing a paren, jump to its counterpart,
         and iterate to the reverse direction. When seeing a char, collect
         it in the final result.
+
         Time O(N).
         '''
         opened = []
