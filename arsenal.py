@@ -169,12 +169,17 @@ class SegTreeNode:
     This particular template handles range sum query. For RMQ it can be updated
     accordingly.
 
-    For a basic form without lazy propagation or discretization, see
+    For a basic form without lazy propagation or discretization, but with
+    dynamic insert see
     307. Range Sum Query - Mutable.
+    1348. Tweet Counts Per Frequency.
+
+    For discretization, see
+    218. The Skyline Problem
+    699. Falling Squares
 
     For general intro and lazy propagation see:
     https://leetcode.com/articles/a-recursive-approach-to-segment-trees-range-sum-queries-lazy-propagation/
-    For discretization, see 218. The Skyline Problem and 699. Falling Squares.
     '''
     def __init__(self, a, b):
         # This node covers interval [a, b] inclusively.

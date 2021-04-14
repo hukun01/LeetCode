@@ -102,7 +102,3 @@ class SegTreeNode:
         self.propagate_lazy()
 
         return max(self.left.query_range_max(a, b), self.right.query_range_max(a, b))
-
-
-    def size(self):
-        return self.b - self.a + 1

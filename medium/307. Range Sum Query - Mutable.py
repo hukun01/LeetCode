@@ -57,25 +57,23 @@ class BinaryIndexedTree:
 
 class NumArray:
     '''
-    2/2 Segment Tree (basic form)
+    2/2 Segment Tree (basic form with dynamic insert)
     No lazy propagation, no discretization. Just update_single (update_range)
     and query_range.
     '''
 
     def __init__(self, nums: List[int]):
-        n = len(nums)
-        self.root = SegTreeNode(0, n - 1)
-        self.root.init(0, n - 1)
-        for i in range(n):
-            self.root.update_single(i, nums[i])
+        self.tree = SegTreeNode(0, len(nums))
+        for i, a in enumerate(nums):
+            self.tree.insert(i, a)
 
 
     def update(self, index: int, val: int) -> None:
-        self.root.update_single(index, val)
+        self.tree.insert(index, val)
 
 
     def sumRange(self, left: int, right: int) -> int:
-        return self.root.query_range_sum(left, right)
+        return SegTreeNode.query_range_sum(self.tree, left, right)
 
 
 class SegTreeNode:
@@ -84,44 +82,36 @@ class SegTreeNode:
         self.a = a
         self.b = b
         self.left = self.right = None
-        self.val = 0
+        self.sum = 0
 
 
-    def init(self, a, b):
-        if self.a == self.b:
+    def insert(self, p, val):
+        if not self.a <= p <= self.b:
             return
 
-        m = (a + b) // 2
-        self.left = SegTreeNode(a, m)
-        self.right = SegTreeNode(m + 1, b)
-        self.left.init(a, m)
-        self.right.init(m + 1, b)
-
-
-    def update_single(self, a, val):
-        if self.a > a or self.b < a:
+        if self.a == p == self.b:
+            self.sum = val
             return
 
-        if self.a == self.b == a:
-            self.val = val
-            return
+        m = (self.a + self.b) // 2
+        self.left = self.left or SegTreeNode(self.a, m)
+        self.right = self.right or SegTreeNode(m + 1, self.b)
 
-        self.left.update_single(a, val)
-        self.right.update_single(a, val)
+        self.left.insert(p, val)
+        self.right.insert(p, val)
 
-        self.val = self.left.val + self.right.val
+        self.sum = self.left.sum + self.right.sum
 
 
-    def query_range_sum(self, a, b):
-        if self.a > b or self.b < a:
+    @staticmethod
+    def query_range_sum(node, a, b):
+        if node.a > b or node.b < a:
             return 0
 
-        if self.a >= a and self.b <= b:
-            return self.val
+        if node.a >= a and node.b <= b:
+            return node.sum
 
-        left = self.left.query_range_sum(a, b)
-        right = self.right.query_range_sum(a, b)
-        return left + right
+        return SegTreeNode.query_range_sum(node.left, a, b) + SegTreeNode.query_range_sum(node.right, a, b)
 
 
 # Your NumArray object will be instantiated and called as such:
