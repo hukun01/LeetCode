@@ -3,28 +3,25 @@
 # This is the interface that allows for creating nested lists.
 # You should not implement it, or speculate about its implementation
 # """
-#class NestedInteger(object):
-#    def isInteger(self):
+#class NestedInteger:
+#    def isInteger(self) -> bool:
 #        """
 #        @return True if this NestedInteger holds a single integer, rather than a nested list.
-#        :rtype bool
 #        """
 #
-#    def getInteger(self):
+#    def getInteger(self) -> int:
 #        """
 #        @return the single integer that this NestedInteger holds, if it holds a single integer
 #        Return None if this NestedInteger holds a nested list
-#        :rtype int
 #        """
 #
-#    def getList(self):
+#    def getList(self) -> [NestedInteger]:
 #        """
 #        @return the nested list that this NestedInteger holds, if it holds a nested list
 #        Return None if this NestedInteger holds a single integer
-#        :rtype List[NestedInteger]
 #        """
 
-class NestedIterator(object):
+class NestedIterator:
     '''
     Recursive structure to handle recursive data.
     '''
@@ -58,32 +55,43 @@ class NestedIterator(object):
     Something that works but less elegant.
     '''
 
+class NestedIterator:
+
     def __init__(self, nestedList: [NestedInteger]):
+        self.idx = 0
         self.data = nestedList
-        self.pos = 0
+        self.val = None
         self.nested_iter = None
+
+
+    def _populate(self):
+        if self.val is not None:
+            return
+
+        if self.nested_iter is not None and self.nested_iter.hasNext():
+            self.val = self.nested_iter.next()
+            return
+
+        if self.idx < len(self.data):
+            cur = self.data[self.idx]
+            self.idx += 1
+            if cur.isInteger():
+                self.val = cur
+            else:
+                self.nested_iter = NestedIterator(cur.getList())
+                self._populate()
+
 
     def next(self) -> int:
-        if self.nested_iter:
-            return self.nested_iter.next()
-        else:
-            val = self.data[self.pos].getInteger()
-            self.pos += 1
-            return val
+        self._populate()
+        ans = self.val
+        self.val = None
+        return ans
+
 
     def hasNext(self) -> bool:
-        if self.nested_iter and self.nested_iter.hasNext():
-            return True
-        self.nested_iter = None
-        if self.pos < len(self.data):
-            element = self.data[self.pos]
-            if element.isInteger():
-                return True
-            else:
-                self.nested_iter = NestedIterator(element.getList())
-                self.pos += 1
-                return self.hasNext()
-        return False
+        self._populate()
+        return self.val is not None
 
     '''
     Another style using generators.

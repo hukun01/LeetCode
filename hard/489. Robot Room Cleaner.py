@@ -39,8 +39,10 @@ class Solution:
         """
         '''
         The 'compass' moving directions need to be aligned with the turns.
-        No matter which direction the robot is facing, we need to go through all 4 directions.
-        Only when the potential new position is not cleaned, and robot can move, we will further dfs.
+        No matter which direction the robot is facing, we need to go through
+        all 4 directions.
+        Only when the potential new position is not cleaned, and robot can
+        move, we will further dfs.
 
         Robot initially face up, so we need to start with 0.
         If we keep turning left, we need to go to (-1, 0) the next;
@@ -50,7 +52,7 @@ class Solution:
         def dfs(node, currDir, cleaned):
             robot.clean()
             cleaned.add(node)
-            
+
             for _ in range(4):
                 dr, dc = compass[currDir]
                 newNode = (node[0] + dr, node[1] + dc)
@@ -58,11 +60,11 @@ class Solution:
                     dfs(newNode, currDir, cleaned)
                 robot.turnLeft()
                 currDir = (currDir+1) % 4
-            
+
             robot.turnLeft()
             robot.turnLeft()
             robot.move()
             robot.turnLeft()
             robot.turnLeft()
-                
+
         dfs((0, 0), 0, set())
