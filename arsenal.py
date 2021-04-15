@@ -12,7 +12,7 @@ class BinaryIndexedTree:
     def __init__(self, n):
         self.sums = [0] * (n + 1)
 
-    # O(n) initialization. Better than using update() which leads to O(Ologn).
+    # O(n) initialization. Better than using add() which leads to O(Ologn).
     def initialize(self, nums):
         assert len(nums) + 1 == len(self.sums)
 
@@ -27,7 +27,7 @@ class BinaryIndexedTree:
         '''
         return i & (-i)
 
-    def update(self, i, val):
+    def add(self, i, val):
         '''
         Add the frequency at index i by val.
         '''
@@ -45,7 +45,7 @@ class BinaryIndexedTree:
 class BinaryIndexedTree2D:
     '''
     The main difference between 1D and 2D BITs is that, in 2D, for every 'r',
-    we need to update/query all 'c', in a nested loop. Similar logic applies
+    we need to add/query all 'c', in a nested loop. Similar logic applies
     to more dimensions.
     '''
     def __init__(self, r, c):
@@ -59,12 +59,12 @@ class BinaryIndexedTree2D:
         '''
         return i & (-i)
     
-    def update(self, r, c, v):
+    def add(self, r, c, v):
         while r < self.R:
-            self.update_c(r, c, v)
+            self.add_c(r, c, v)
             r += self.low_bit(r)
             
-    def update_c(self, r, c, v):
+    def add_c(self, r, c, v):
         while c < self.C:
             self.data[r][c] += v
             c += self.low_bit(c)
@@ -189,7 +189,6 @@ class SegTreeNode:
         self.val = 0
         self.lazy = 0
 
-
     def __repr__(self):
         # This is for debug only
         return f'[{self.a, self.b}] with val {self.val} and lazy {self.lazy}\nleft: {self.left}\nright: {self.right}'
@@ -203,7 +202,6 @@ class SegTreeNode:
         self.left.init(a, m)
         self.right.init(m + 1, b)
 
-
     def propagate_lazy(self):
         # Optional: implement custom logic here
         if self.lazy == 0:
@@ -213,7 +211,6 @@ class SegTreeNode:
         self.left.lazy += self.lazy
         self.right.lazy += self.lazy
         self.lazy = 0
-
 
     def update_range(self, a, b, val):
         # If we need to update non-leaf nodes, do it in this method.
@@ -234,7 +231,6 @@ class SegTreeNode:
         self.left.update_range(a, b, val)
         self.right.update_range(a, b, val)
 
-
     def query_range(self, a, b):
         # Optional: implement custom query logic here.
         if a > self.b or b < self.a:
@@ -246,7 +242,6 @@ class SegTreeNode:
         self.propagate_lazy()
 
         return self.left.query_range(a, b) + self.right.query_range(a, b)
-
 
     def size(self):
         return self.b - self.a + 1
