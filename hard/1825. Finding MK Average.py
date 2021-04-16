@@ -1,7 +1,7 @@
 # 1825. Finding MK Average
 class MKAverage:
     '''
-    Binary Indexed Tree.
+    1/2 Binary Indexed Tree.
 
     We need to quickly find the sum of an interval whose elements are getting
     added at the same time. BIT is a good data structure to achieve that.
@@ -96,6 +96,66 @@ class BinaryIndexedTree:
             i -= self._low_bit(i)
         return ans
 
+
+class MKAverage:
+    '''
+    2/2 Heaps.
+
+
+    arr:    [a0, a1, a2, a3, a4, a5, a6]
+    right1:                     [a5, a6]
+    left1:  [a0, a1, a2, a3, a4]
+    right2:         [a2, a3, a4, a5, a6]
+    left2:  [a0, a1]
+
+    Similar to 480. Sliding Window Median
+    '''
+
+    def __init__(self, m: int, k: int):
+        self.m, self.k = m, k
+        self.arr = [0]*m
+        self.left1 = [(0, i) for i in range(m - k)]
+        self.right1 = [(0, i) for i in range(m - k, m)]
+        self.left2 = [(0, i) for i in range(k)]
+        self.right2 = [(0, i) for i in range(k, m)]
+        heapify(self.left1)
+        heapify(self.right1)
+        heapify(self.left2)
+        heapify(self.right2)
+        self.score = 0
+
+    def update(self, left, right, m, k, num):
+        score, T = 0, len(self.arr)
+        if num > left[0][0]:
+            heappush(left, (num, T))        
+            if self.arr[T - m] <= left[0][0]:
+                if left[0][1] >= T - m: score += left[0][0]
+                score -= self.arr[T - m]
+                heappush(right, (-left[0][0], left[0][1]))
+                heappop(left)
+        else:
+            heappush(right, (-num, T))       
+            score += num
+            if self.arr[T - m] >= left[0][0]: 
+                heappush(left, (-right[0][0], right[0][1]))
+                q = heappop(right)
+                score += q[0]
+            else:
+                score -= self.arr[T - m]
+
+        while right and right[0][1] <= T - m: heappop(right)  # lazy-deletion
+        while left and left[0][1] <= T - m: heappop(left)  # lazy-deletion
+        return score
+
+    def addElement(self, num):
+        t1 = self.update(self.left1, self.right1, self.m, self.k, num)
+        t2 = self.update(self.left2, self.right2, self.m, self.m - self.k, num)
+        self.arr.append(num)
+        self.score += (t2 - t1)
+
+    def calculateMKAverage(self):
+        if len(self.arr) < 2*self.m: return -1
+        return self.score//(self.m - 2*self.k)
 
 # Your MKAverage object will be instantiated and called as such:
 # obj = MKAverage(m, k)
