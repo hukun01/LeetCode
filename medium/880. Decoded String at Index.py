@@ -17,13 +17,14 @@ class Solution:
         Space: O(1)
         '''
         cur_size = 0
-        for i in range(len(S)):
-            if S[i].isdigit():
-                cur_size *= int(S[i])
+        for i, c in enumerate(S):
+            if c.isdigit():
+                cur_size *= int(c)
             else:
                 cur_size += 1
             if cur_size >= K:
                 break
+
         for x in range(i, -1, -1):
             K %= cur_size
             c = S[x]

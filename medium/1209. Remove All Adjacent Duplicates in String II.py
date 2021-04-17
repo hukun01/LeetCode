@@ -6,6 +6,9 @@ class Solution:
         Every time we see a different char than the last char, we add
         a new counter to the stack; when the counter reaches k, we erase
         the entry.
+
+        Time: O(n)
+        Space: O(n)
         '''
         stack = []
         for c in s:

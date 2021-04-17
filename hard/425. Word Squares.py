@@ -9,8 +9,9 @@ class Solution:
         Also note that when starting filling the next row, we don't start from
         the 0th column, but from the row-th column.
 
-        Time: O(26^W) where W is the length of a word.
-        Space: O(N W) where N is the len(words).
+        Time: O(N W) where N is the len(words), W is the length of a word,
+              note that O(26^W) is correct but too loose.
+        Space: O(N W).
         '''
         Trie = lambda: defaultdict(Trie)
         root = Trie()
