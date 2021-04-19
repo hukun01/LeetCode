@@ -23,7 +23,6 @@ class MKAverage:
           is the upper bound of the data range.
     Space: O(n)
     '''
-
     _UPPER_BOUND = 10 ** 5 + 1
 
     def __init__(self, m: int, k: int):
