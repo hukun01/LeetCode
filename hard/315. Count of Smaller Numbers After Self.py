@@ -2,26 +2,10 @@
 class Solution:
     def countSmaller(self, nums: List[int]) -> List[int]:
         '''
-        1/2 Using SortedList from sortedcontainers module.
-        From right to left, insert each element into the sorted list,
-        and the insertion index is the count of the smaller elements.
-
-        Time: O(n log(n))
-        Space: O(n)
-        '''
-        from sortedcontainers import SortedList
-        seen = SortedList()
-        ans = []
-        for a in nums[::-1]:
-            ans.append(seen.bisect_left(a))
-            seen.add(a)
-        return ans[::-1]
-
-        '''
-        2/2. Fenwick tree/Binary Indexed Tree.
-        A trick here is to convert the original numbers into relative
-        ranks, this is to avoid making the BIT's array too big. This technique
-        is called Discretization.
+        Fenwick tree/Binary Indexed Tree.
+        A trick here is to convert the original numbers into relative ranks,
+        this is to avoid making the BIT's array too big when the element value
+        range can be big. This technique is called Discretization.
 
         Time: O(n log(n))
         Space: O(n)
