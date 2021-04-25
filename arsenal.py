@@ -2,17 +2,18 @@
 A collection of useful data structures.
 '''
 
-'''
-One-dimensional binary indexed tree. An optional initialize() is provided
-to initialize the tree in O(n) time.
-
-See more in https://www.topcoder.com/thrive/articles/Binary%20Indexed%20Trees
-'''
 class BinaryIndexedTree:
+    '''
+    One-dimensional binary indexed tree. An optional initialize() is provided
+    to initialize the tree in O(n) time.
+
+    See more in https://www.topcoder.com/thrive/articles/Binary%20Indexed%20Trees
+    '''
+
     def __init__(self, n):
         self.sums = [0] * (n + 1)
 
-    # O(n) initialization. Better than using add() which leads to O(Ologn).
+    # O(n) initialization. Better than using add() which leads to O(n log(n)).
     def initialize(self, nums):
         assert len(nums) + 1 == len(self.sums)
 
