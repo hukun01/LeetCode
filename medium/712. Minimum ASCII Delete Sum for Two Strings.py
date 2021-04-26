@@ -9,7 +9,7 @@ class Solution:
         Let f[i][j] be the max sum of common subseq between s1[:i] and s2[:j].
 
         Transitions:
-        f[i][j] = max(f[i-1][j-1] + 1, max(f[i-1][j], f[i][j-1])).
+        f[i][j] = max(f[i-1][j-1] + ord(s1[i-1]), max(f[i-1][j], f[i][j-1])).
         First option is we take s1[i-1] and s2[j-1] if s1[i-1] == s2[j-1];
         Second option is we skip s1[i-1] or s2[j-1] if s1[i-1] != s2[j-1].
 

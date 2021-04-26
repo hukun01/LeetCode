@@ -6,7 +6,11 @@ class Solution:
         Use ladders for the largest height diffs, use bricks for the rest.
         Use a heap to store the k largest height diffs, where k == len(ladders).
         Every time we get more than k heigh diffs, pop out the smallest diff,
-        and use bricks for it.
+        and replace that ladder with bricks. Whenever we run out of bricks, we
+        have already made the most out of the ladders.
+
+        Time: O(n log(L)) where n is len(heights), L is ladders.
+        Space: O(L)
         '''
         heap = []
         n = len(heights)
