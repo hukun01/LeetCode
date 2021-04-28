@@ -1,9 +1,4 @@
-# 212. Word Search II
-class Node:
-    def __init__(self):
-        self.children = {}
-        self.word = None
-    
+# 212. Word Search II    
 class Solution:
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
         '''
@@ -42,3 +37,8 @@ class Solution:
             for c in range(len(board[0])):
                 dfs(r, c, root)
         return ans
+
+class Node:
+    def __init__(self):
+        self.children = {}
+        self.word = None

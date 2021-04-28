@@ -11,6 +11,7 @@ class Solution:
         the roots with min heights. It's one or two because either can
         form a tree where we can find min height trees, it can't go up to
         3 otherwise the graph must have a cycle.
+
         One edge case is that if there is 0 edges and just 1 node, [0]
         is the answer.
         '''
@@ -19,14 +20,14 @@ class Solution:
             tree[a].add(b)
             tree[b].add(a)
         leaves = [node for node, neighbors in tree.items() if len(neighbors) == 1]
-        while n > 2:
-            n -= len(leaves)
+        while len(tree) > 2:
             new_leaves = []
             for l in leaves:
-                for neighbor in tree[l]:
+                for neighbor in tree.pop(l):
                     tree[neighbor].remove(l)
                     if len(tree[neighbor]) == 1:
                         new_leaves.append(neighbor)
-                tree.pop(l)
+
             leaves = new_leaves
+
         return leaves or [0]

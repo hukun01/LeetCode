@@ -7,7 +7,9 @@ class CustomStack:
 
     To do O(1) increment, let inc[i] be the added value from stack[0] to
     stack[i]. When poping out an element, add inc[i] to it, and, add inc[i]
-    to inc[i - 1] to propagate the added value to the next pop.
+    to inc[i - 1] to propagate the added value to the next pop. This is
+    similar to the difference array technique where we propagate the difference
+    to accumulate the updates.
     '''
 
     def __init__(self, maxSize: int):
