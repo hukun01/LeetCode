@@ -8,16 +8,18 @@ class Solution:
         min deletion.
         To get the deletion count efficiently, count the total number of 'a'.
         Then at each position, the deletion count will be
-        left_b + (num_a - left_a).
+        left_b + (total_a - left_a).
 
         Time: O(n) where n is the length of s.
         Space: O(1)
         '''
-        num_a = sum(c == 'a' for c in s)
-        freq = Counter()
-        ans = freq['b'] + num_a - freq['a']
+        total_a = sum(c == 'a' for c in s)
+        seen = Counter()
+        ans = total_a
         for c in s:
-            freq[c] += 1
-            ans = min(ans, freq['b'] + num_a - freq['a'])
+            seen[c] += 1
+            left_b = seen['b']
+            right_a = total_a - seen['a']
+            ans = min(ans, left_b + right_a)
 
         return ans
