@@ -59,24 +59,24 @@ class BinaryIndexedTree2D:
         Isolate the last bit from i.
         '''
         return i & (-i)
-    
+
     def add(self, r, c, v):
         while r < self.R:
             self.add_c(r, c, v)
             r += self.low_bit(r)
-            
+
     def add_c(self, r, c, v):
         while c < self.C:
             self.data[r][c] += v
             c += self.low_bit(c)
-    
+
     def query(self, r, c):
         ans = 0
         while 0 < r:
             ans += self.query_c(r, c)
             r -= self.low_bit(r)
         return ans
-    
+
     def query_c(self, r, c):
         ans = 0
         while 0 < c:
