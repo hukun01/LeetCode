@@ -100,7 +100,6 @@ class MKAverage:
     '''
     2/2 Heaps.
 
-
     arr:    [a0, a1, a2, a3, a4, a5, a6]
     right1:                     [a5, a6]
     left1:  [a0, a1, a2, a3, a4]
