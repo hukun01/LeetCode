@@ -24,21 +24,21 @@ class Solution:
         k = len(queries)
         ans = [-1] * k
         reversed_sorted_queries = sorted((m, p, j) for j, (p, m) in enumerate(queries))[::-1]
-        available_room_idxs = SortedList()
+        feasible_room_idxs = SortedList()
 
         r_i = 0
         for min_size, prefered_idx, j in reversed_sorted_queries:
             while r_i < len(reversed_sorted_rooms) and reversed_sorted_rooms[r_i][0] >= min_size:
                 _, idx = reversed_sorted_rooms[r_i]
-                available_room_idxs.add(idx)
+                feasible_room_idxs.add(idx)
                 r_i += 1
 
-            idx = available_room_idxs.bisect_right(prefered_idx)
+            idx = feasible_room_idxs.bisect_right(prefered_idx)
             candidates = []
             if idx > 0:
-                candidates.append(available_room_idxs[idx-1])
-            if idx < len(available_room_idxs):
-                candidates.append(available_room_idxs[idx])
+                candidates.append(feasible_room_idxs[idx-1])
+            if idx < len(feasible_room_idxs):
+                candidates.append(feasible_room_idxs[idx])
 
             ans[j] = min(candidates, key=lambda x: abs(prefered_idx - x), default=-1)
 
