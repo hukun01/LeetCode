@@ -15,9 +15,8 @@ class Solution:
         Time: O(n log(n)) where n is len(coins)
         Space: O(n)
         '''
-        coins.sort()
         cur = 1
-        for c in coins:
+        for c in sorted(coins):
             if c <= cur:
                 cur += c
             else:

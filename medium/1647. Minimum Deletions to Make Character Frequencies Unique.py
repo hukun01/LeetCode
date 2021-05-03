@@ -5,12 +5,15 @@ class Solution:
         Greedy.
         Start deletion from the most frequent chars.
 
-        Each available frequency a can be used once.
-        If a < f, we need to delete (f - a) of current chars.
-        Each round, a will be used, the next a is the
-        min of (a-1) and (f-1) where f is the current freq.
+        Each available frequency 'a' can be used once.
+        If 'a' < 'f', we need to delete ('f' - 'a') current chars.
+        Each round, 'a' will be used, the next 'a' is the
+        min of ('a'-1) and ('f'-1) where 'f' is the current freq.
 
-        Note that min a is 0, meaning deleting all of current chars.
+        Note that min 'a' is 0, meaning deleting all of current chars.
+
+        Time: O(n) where n is len(s), as we need to build Counter(s).
+        Space: O(1) as we only have at most 26 letters.
         '''
         freqs = sorted(Counter(s).values(), reverse=True)
         ans = 0

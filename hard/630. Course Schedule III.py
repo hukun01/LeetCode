@@ -18,6 +18,9 @@ class Solution:
         At the end we get a list of course days while maintaining the fact
         that the total days doesn't exceed any deadline. Hence, the length
         of the list is the number of courses we can take.
+
+        Time: O(n log(n)) where n is len(courses)
+        Space: O(n)
         '''
         taken = []
         cur_day = 0

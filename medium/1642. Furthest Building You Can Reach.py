@@ -11,6 +11,10 @@ class Solution:
 
         Time: O(n log(L)) where n is len(heights), L is ladders.
         Space: O(L)
+
+        The idea behind replacing ladder with bricks is similar to that in the
+        630. Course Schedule III where we replace a longer course with a
+        shorter one, and keep the current time before deadline.
         '''
         heap = []
         n = len(heights)

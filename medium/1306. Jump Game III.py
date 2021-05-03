@@ -2,9 +2,11 @@
 class Solution:
     def canReach(self, arr: List[int], start: int) -> bool:
         '''
-        DFS with cycle detection.
-        Regular DFS, except that we need to check whether the current position
-        has been visited before. If so, we are in a cycle and need to return.
+        Graph traversal.
+
+        Regular DFS with 'visited' set.
+        Any graph traversal can solve this.
+
         Time: O(n) where n is the length of the array.
         Space: O(n)
         '''
