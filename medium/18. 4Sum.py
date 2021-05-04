@@ -10,19 +10,19 @@ class Solution:
         can improve the runtime from 40% to 90% on the ranking.
         ''' 
         nums.sort()
-        
+
         def threeSum(start, array, target):
             result = []
             if target < array[start] * 3 or target > array[-1] * 3:
                 return result
-            for i in range(start, len(array) - 2):
-                if i > start and nums[i] == nums[i - 1]:
+            for m in range(start, len(array) - 2):
+                if m > start and nums[m] == nums[m - 1]:
                     continue
-                l = i + 1
+                l = m + 1
                 r = len(array) - 1
-                newTarget = target - array[i]
+                newTarget = target - array[m]
                 ''' perf only
-                if newTarget < 2 * array[i]:
+                if newTarget < 2 * array[m]:
                     break
                 if newTarget > 2 * array[-1]:
                     continue
@@ -30,7 +30,7 @@ class Solution:
                 while l < r:
                     s = array[l] + array[r]
                     if s == newTarget:
-                        result.append([array[i], array[l], array[r]])
+                        result.append([array[m], array[l], array[r]])
                         while l < r and nums[l] == nums[l + 1]:
                             l += 1
                         while l < r and nums[r] == nums[r - 1]:
@@ -41,9 +41,9 @@ class Solution:
                         l += 1
                     else:
                         r -= 1
-                        
+
             return result
-        
+
         ans = []
         for i in range(len(nums) - 3):
             if i > 0 and nums[i] == nums[i - 1]:
