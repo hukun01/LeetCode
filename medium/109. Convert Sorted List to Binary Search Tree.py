@@ -26,7 +26,7 @@ class Solution:
             m = (l + r) // 2
             left = build(l, m-1)
             root = TreeNode(self.node.val, left=left)
-            
+
             '''
             Every time when we create a new TreeNode which uses node.val, we
             move the node to the next. whenever we are done building the left
@@ -34,14 +34,14 @@ class Solution:
             head will point to the middle node.
             '''
             self.node = self.node.next
-            
+
             root.right = build(m+1, r)
             return root
-    
+
         n = 0
         cur = head
         while cur:
             n += 1
             cur = cur.next
-        
+
         return build(1, n)
