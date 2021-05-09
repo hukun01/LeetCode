@@ -4,7 +4,11 @@ class Solution:
         '''
         Mono stack.
 
-        Same as 84. Largest Rectangle in Histogram
+        Same as 84. Largest Rectangle in Histogram, just change the histogram
+        width with sum.
+
+        Time: O(n)
+        Space: O(n)
         '''
         prefix_sums = list(accumulate([0] + nums + [0]))
         left = []
@@ -16,4 +20,5 @@ class Solution:
                 maxArea = max(maxArea, (prefix_sums[i] - prefix_sums[prevStart]) * prevH)
                 start = prevStart
             left.append((h, start))
+
         return maxArea % (10 ** 9 + 7)
