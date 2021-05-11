@@ -20,7 +20,9 @@ class MedianFinder:
         # Flip the number to make the largest one become the smallest;
         # Always add to small heap first, and balance the size of two heaps,
         # making sure that len(large) >= len(small)
-        heappush(small, -heappushpop(large, num))
+        heappush(large, num)
+        cur_min = heappop(large)
+        heappush(small, -cur_min)
         if len(large) < len(small):
             heappush(large, -heappop(small))
 
