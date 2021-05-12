@@ -13,8 +13,8 @@ class Solution:
 
         Note that in the tuple we store in the heap, value comes first,
         aka, use (priority, task) tuples.
-        Time: O(k * log n),
-        Space complexity is O(n)
+        Time: O(k * log C) where C is the number of columns
+        Space complexity is O(C)
         '''
         # Init a heap with the first row
         heap = []
