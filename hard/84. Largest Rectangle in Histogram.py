@@ -44,7 +44,7 @@ class Solution:
         ans = 0
         for i, h in enumerate(heights + [0]):
             start = i
-            while left and h <= left[-1][0]:
+            while left and left[-1][0] >= h:
                 prev_h, prev_start = left.pop()
                 ans = max(ans, (i - prev_start) * prev_h)
                 start = prev_start

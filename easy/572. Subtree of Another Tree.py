@@ -12,9 +12,11 @@ class Solution:
         Transform trees into strings and do string match.
         Transform the two trees into string, and use built-in str.find() to
         check if t is a substring of s.
+
         To convert the tree into string, do any traversal, but remember to add
         null nodes as well to ensure the tree structure is consistent.
-        Also, add an empty char to the begnning of the tree array, this is to
+
+        Also, add an EMPTY char to the begnning of the tree array, this is to
         ensure we don't mistakenly match "12,x,x" with "2,x,x", by changing it
         to ",12,x,x" and ",2,x,x".
 

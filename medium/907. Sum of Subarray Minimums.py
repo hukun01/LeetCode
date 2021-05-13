@@ -6,11 +6,15 @@ class Solution:
 
         Similar to 84. Largest Rectangle in Histogram.
         Here, instead of computing the max area, we compute the number of
-        subarrays whose min is 'prev_val'. This number is 'left' * 'right',
-        where 'left' is the number of subarrays whose min is 'prev_val' and
-        ends at 'prev_i';
-        'right' is the number of subarrays whose min is 'prev_val' and starts
-        at 'prev_i'.
+        subarrays whose min is 'prev_val'. To count the subarrays, we need
+        two info: 'left' * 'right', 
+            'left' is the number of subarrays whose min is 'prev_val' and ends
+            at 'prev_i', the original index of 'prev_val'. This is
+            'prev_i - prev_start + 1', where 'prev_start' is the start of the
+            range in which 'prev_val' is the min.
+
+            'right' is the number of subarrays whose min is 'prev_val' and
+            starts at 'prev_i'. This is 'i - prev_i'.
 
         Time: O(n)
         Space: O(n)
