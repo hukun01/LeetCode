@@ -32,3 +32,27 @@ class Solution:
         for i, j in Q:
             ans.append(graph[i][j])
         return ans
+        '''
+        3/3 Topological sort.
+
+
+        Time: O(np) where p is the average number of prerequisites for a node.
+        Space: O(n^2)
+        '''
+        graph = defaultdict(list)
+        in_degree = [0] * n
+        pres = [set() for _ in range(n)]
+        for pre, course in P:
+            graph[pre].append(course)
+            in_degree[course] += 1
+            pres[course].add(pre)
+        queue = deque(course for course, degree in enumerate(in_degree)
+                      if degree == 0)
+        while queue:
+            pre = queue.popleft()
+            for course in graph[pre]:
+                pres[course] |= pres[pre]
+                in_degree[course] -= 1
+                if in_degree[course] == 0:
+                    queue.append(course)
+        return [pre in pres[course] for pre, course in Q]
