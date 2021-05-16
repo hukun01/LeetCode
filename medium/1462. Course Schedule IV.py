@@ -2,7 +2,7 @@
 class Solution:
     def checkIfPrerequisite(self, n: int, P: List[List[int]], Q: List[List[int]]) -> List[bool]:
         '''
-        1/2 DFS
+        1/3 DFS
         Build a graph with each prereq mapping to its next.
         DFS from node a and see if b is one of its nexts, or its next's next.
         '''
@@ -17,24 +17,25 @@ class Solution:
             return any(dfs(nex, end) for nex in next_nodes[start])
         return [dfs(a, b) for a, b in Q]
         '''
-        2/2 Floyd-Marshall algorithm.
+        2/3 Floyd-Marshall algorithm.
         '''
         graph = [[False] * n for _ in range(n)]
-        for i in range(n):
-            graph[i][i] = True
-        for i, j in P:
-            graph[i][j] = True
-        for k in range(n):
-            for i in range(n):
-                for j in range(n):
-                    graph[i][j] = graph[i][j] or (graph[i][k] and graph[k][j])
+        for a in range(n):
+            graph[a][a] = True
+        for a, b in P:
+            graph[a][b] = True
+        for c in range(n):
+            for a in range(n):
+                for b in range(n):
+                    graph[a][b] = graph[a][b] or (graph[a][c] and graph[c][b])
         ans = []
-        for i, j in Q:
-            ans.append(graph[i][j])
+        for a, b in Q:
+            ans.append(graph[a][b])
         return ans
         '''
-        3/3 Topological sort.
-
+        3/3 Topological sort in BFS style.
+        Do a topological sort, during which we collect the prerequisites set
+        for each node.
 
         Time: O(np) where p is the average number of prerequisites for a node.
         Space: O(n^2)
@@ -42,17 +43,17 @@ class Solution:
         graph = defaultdict(list)
         in_degree = [0] * n
         pres = [set() for _ in range(n)]
-        for pre, course in P:
-            graph[pre].append(course)
-            in_degree[course] += 1
-            pres[course].add(pre)
-        queue = deque(course for course, degree in enumerate(in_degree)
+        for a, b in P:
+            graph[a].append(b)
+            in_degree[b] += 1
+            pres[b].add(a)
+        queue = deque(b for b, degree in enumerate(in_degree)
                       if degree == 0)
         while queue:
-            pre = queue.popleft()
-            for course in graph[pre]:
-                pres[course] |= pres[pre]
-                in_degree[course] -= 1
-                if in_degree[course] == 0:
-                    queue.append(course)
-        return [pre in pres[course] for pre, course in Q]
+            a = queue.popleft()
+            for b in graph[a]:
+                pres[b] |= pres[a]
+                in_degree[b] -= 1
+                if in_degree[b] == 0:
+                    queue.append(b)
+        return [a in pres[b] for a, b in Q]
