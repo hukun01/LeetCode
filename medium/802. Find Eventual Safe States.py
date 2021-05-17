@@ -24,5 +24,6 @@ class Solution:
             ans.append(a)
             for p in pre[a]:
                 succ_count[p] -= 1
-                succ_count[p] or safe.add(p)
+                if succ_count[p] == 0:
+                    safe.add(p)
         return sorted(ans)
