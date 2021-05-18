@@ -17,9 +17,10 @@ class Solution:
         '''
         @cache
         def dfs(x, y):
-            if x + y == 0:
+            if x == y == 0:
                 return 0
             if x + y == 2:
                 return 2
             return 1 + min(dfs(abs(x - 1), abs(y - 2)), dfs(abs(x - 2), abs(y - 1)))
+
         return dfs(abs(x), abs(y))
