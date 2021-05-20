@@ -3,16 +3,19 @@ class Solution:
         '''
         DFS with memoization and pruning.
         '''
-        @lru_cache(None)
-        def dfs(pos, stepsLeft):
-            if pos < 0 or pos == arrLen:
+        M = 10 ** 9 + 7
+        @cache
+        def dfs(pos, step):
+            if step == 0:
+                return int(pos == 0)
+            if abs(pos) > step:
                 return 0
-            if stepsLeft == 0:
-                return pos == 0
-            if pos > stepsLeft:
+            if not 0 <= pos < arrLen:
                 return 0
-            a1 = dfs(pos - 1, stepsLeft - 1)
-            a2 = dfs(pos + 1, stepsLeft - 1)
-            a3 = dfs(pos, stepsLeft - 1)
-            return (a1 + a2 + a3) % (10 ** 9 + 7)
+
+            a1 = dfs(pos - 1, step - 1)
+            a2 = dfs(pos + 1, step - 1)
+            a3 = dfs(pos, step - 1)
+            return (a1 + a2 + a3) % M
+
         return dfs(0, steps)

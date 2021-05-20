@@ -36,8 +36,7 @@ class Solution:
             size += 1
             cur = cur.next
 
-        dummy = ListNode(0)
-        dummy.next = head
+        dummy = ListNode(0, next=head)
         step = 1
         while step < size:
             sorting_head = dummy.next

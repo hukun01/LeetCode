@@ -33,8 +33,8 @@ class Solution:
                 ans.append(path)
             for i in range(start + 1, n + 1):
                 if i == start + 1 or num[start] != '0':
-                    cur = int(num[start:i])
                     exp = num[start: i]
+                    cur = int(exp)
                     if prev is None:
                         dfs(i, exp, cur, cur)
                     else:
