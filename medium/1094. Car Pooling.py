@@ -22,7 +22,7 @@ class Solution:
         '''
         2/3 Sort + Priority queue.
 
-        If T is huge, 1/2 may not be the best option, in this case, we sort
+        If T is huge, 1/3 may not be the best option, in this case, we sort
         the trips by start and end time, and use a heap to track the used
         capacity and when it will be restored. This is similar to the scan
         logic in 218. The Skyline Problem.

@@ -5,35 +5,38 @@ class Solution:
         1/2 BFS.
         The key is to stop further BFS once the longest valid parens are found.
         '''
-        def isValid(s):
-            count = 0
-            for c in s:
+        def valid(x):
+            left = 0
+            for c in x:
                 if c == '(':
-                    count += 1
+                    left += 1
                 elif c == ')':
-                    if count == 0:
+                    if left == 0:
                         return False
-                    count -= 1
-            return count == 0
+                    left -= 1
 
-        ans = []
-        used = set([s])
+            return left == 0
+
         q = deque([s])
+        used = set()
         found = False
+        ans = []
         while q and not found:
             for _ in range(len(q)):
-                s = q.popleft()
-                if isValid(s):
-                    ans.append(s)
+                node = q.popleft()
+                if node in used:
+                    continue
+                used.add(node)
+                if valid(node):
                     found = True
+                    ans.append(node)
 
-                for i, c in enumerate(s):
-                    if c not in "()":
+                for i in range(len(node)):
+                    if node[i] not in '()':
                         continue
-                    t = s[0:i] + s[i+1:]
-                    if t not in used:
-                        q.append(t)
-                        used.add(t)
+                    new = node[:i] + node[i+1:]
+                    q.append(new)
+
         return ans
         '''
         2/2 Recursive DFS.

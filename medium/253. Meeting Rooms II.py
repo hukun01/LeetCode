@@ -15,7 +15,7 @@ class Solution:
         Space: O(n)
 
         Similar to the scan logic in 218. The Skyline Problem, and
-        1235. Maximum Profit in Job Scheduling.
+        1235. Maximum Profit in Job Scheduling, and 1094. Car Pooling.
         '''
         rooms = 0
         heap = []
@@ -27,32 +27,19 @@ class Solution:
         return rooms
         '''
         2/2
-        Decompose the intervals into start times and end times, and scan them
-        based on time.
-
-        Sort the starts and ends in two arrays, scan through starts array. 
-
-        When we see a start time, we have a new meeting with newStart, 
-        if newStart < currentEnd, we need a new room, because the other meeting 
-        with currentEnd has not ended; 
-
-        if newStart >= currentEnd, that means the meeting with currentEnd has
-        ended, we have one empty room, the new meeting can happen in this empty
-        room, so no need to increase the total number of rooms, and we will go
-        to the next room start time. Also, as newStart >= currentEnd, the time
-        has passed, so we need to move to the next end time.
+        Line sweep. Same as 1094. Car Pooling.
 
         Time: O(n log(n)) where n is len(intervals).
         Space: O(n)
         '''
-        ans = cur = 0
-        starts = sorted([i[0] for i in intervals])
-        ends = sorted([i[1] for i in intervals])
-        end_idx = 0
-        for s in starts:
-            if s < ends[end_idx]:
-                cur += 1
-            else:
-                end_idx += 1
+        events = []
+        for s, e in intervals:
+            events.append((s, 1))
+            events.append((e, -1))
+
+        cur = ans = 0
+        for e, d in sorted(events):
+            cur += d
             ans = max(ans, cur)
+
         return ans
