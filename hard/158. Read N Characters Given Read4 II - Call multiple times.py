@@ -9,22 +9,22 @@ class Solution:
     leftover chars.
     '''
     def __init__(self):
+        self._reset()
+
+    def _reset(self):
         self.buf4 = [''] * 4
-        self.buf4_len = 0
-        self.buf4_idx = 0
+        self.last_i = 0
+        self.end = read4(self.buf4)
 
     def read(self, buf: List[str], n: int) -> int:
-        cur_idx = 0
-        while cur_idx < n:
-            if self.buf4_len == 0:
-                self.buf4_len = read4(self.buf4)
-            if self.buf4_len == 0:
-                break
-            while cur_idx < n and self.buf4_idx < self.buf4_len:
-                buf[cur_idx] = self.buf4[self.buf4_idx]
-                cur_idx += 1
-                self.buf4_idx += 1
-            if self.buf4_idx == self.buf4_len:
-                self.buf4_idx = 0
-                self.buf4_len = 0
-        return cur_idx
+        i = 0
+        while i < n and self.last_i < self.end:
+            if self.last_i < 4:
+                buf[i] = self.buf4[self.last_i]
+                self.last_i += 1
+                i += 1
+
+            if self.last_i == 4:
+                self._reset()
+
+        return i
