@@ -1,39 +1,47 @@
 # 943. Find the Shortest Superstring
 class Solution:
     def shortestSuperstring(self, A: List[str]) -> str:
-        def findSuperString(a, b):
-            n = min(len(a), len(b))
-            res = ''
-            maxl = 0 # max shared length
-            for i in range(1, n + 1):
-                if a.endswith(b[:i]):
-                    if maxl < i:
-                        res = a + b[i:]
-                        maxl = i
-            for i in range(1, 1 + n):
-                if b.endswith(a[:i]):
-                    if maxl < i:
-                        res = b + a[i:]
-                        maxl = i
-            return res, maxl
-        p, q = -1, -1
-        l = len(A)
-        while l != 1:
-            # print(A)
-            res = ''
-            maxl = 0
-            for i in range(l):
-                for j in range(i + 1, l):
-                    res1, cur = findSuperString(A[i], A[j])
-                    if maxl < cur:
-                        maxl = cur
-                        res = res1
-                        p = j
-                        q = i
-            l -= 1
-            if len(res) > 0:
-                A[p] = res
-                A[q] = A[l]
+        def overlap(p, n):
+            l=min(len(p), len(n))
+            for i in range(l-1, -1, -1):
+                if p[len(p)-i:]==n[:i]:
+                    return i
+            return 0
+
+        l=len(A)
+        dist=[[0]*l for _ in range(l)]
+        for i in range(l):
+            for j in range(i+1, l):
+                dist[i][j]=overlap(A[i], A[j])
+                dist[j][i]=overlap(A[j], A[i])
+
+        dp=[[0]*l for _ in range(1<<l)] # total overlap
+        parent=[[None]*l for _ in range(1<<l)]
+
+        for mask in range(1<<l):
+            for bit in range(l):
+                if mask&(1<<bit):
+                    pmask=mask^(1<<bit)
+                    if pmask==0:
+                        continue
+                    for pbit in range(l):
+                        if pmask&(1<<pbit):
+                            if dp[pmask][pbit]+dist[pbit][bit]>=dp[mask][bit]:
+                                dp[mask][bit]=dp[pmask][pbit]+dist[pbit][bit]
+                                parent[mask][bit]=pbit
+
+        mask=(1<<l)-1
+        bit=dp[mask].index(max(dp[mask]))
+        idxList=[]
+        while bit is not None:
+            idxList.append(bit)
+            bit, mask=parent[mask][bit], mask^(1<<bit)
+        idxList=idxList[::-1]
+
+        resList=[]
+        for i in range(len(idxList)):
+            if i==0:
+                resList.append(A[idxList[i]])
             else:
-                A[0] += A[l]
-        return A[0]
+                resList.append(A[idxList[i]][dist[idxList[i-1]][idxList[i]]:])
+        return ''.join(resList)
