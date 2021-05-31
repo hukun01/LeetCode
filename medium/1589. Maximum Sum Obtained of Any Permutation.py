@@ -12,16 +12,15 @@ class Solution:
         '''
         MOD = 10 **9 + 7
         n = len(nums)
-        count = [0] * n
+        diffs = [0] * n
         for s, e in requests:
-            count[s] += 1
+            diffs[s] += 1
             if e + 1 < n:
-                count[e + 1] -= 1
-        for i in range(1, n):
-            count[i] += count[i-1]
-        count.sort()
+                diffs[e + 1] -= 1
+
+        counts = sorted(accumulate(diffs))
         nums.sort()
         ans = 0
-        for c, a in zip(count, nums):
+        for c, a in zip(counts, nums):
             ans = (ans + c * a) % MOD
         return ans
