@@ -23,6 +23,10 @@ class Solution:
         each interval is updated up to n times. Then find the smallest updated
         point after all updates are done.
 
+        Note that even if a == 1, we can still count [2, 1] += 2, because we
+        will immediately do [2, 1+b) -= 2 for the next interval, countering the
+        unnecessary added value.
+
         We can update moves[c] for every A[i], by adding corresponding update
         to the above 5 intervals, but it's O(n*k) time. When we do frequent
         updates to various intervals, and get the final result, it is where
