@@ -7,10 +7,10 @@ class Solution:
         let scores[k] be the total score with rotation k.
 
         Every A[i] has up to two intervals of k, in which it will get 1 point:
-            1. A[i] <= i, intervals are
+            1. A[i] <= i, the intervals of k can be
                 a. [0, i - A[i]], A[i] moves left until A[i] reaches i-th.
                 b. [i+1, n-1], A[i] wraps around until A[i] reaches (i+1)th.
-            2. A[i] > i, interval is [i+1, i - A[i] + n], A[i] wraps around.
+            2. A[i] > i, k-interval is [i+1, i - A[i] + n], A[i] wraps around.
 
         Given the intervals of k for each A[i] that gains one point, our goal
         is to find the most overlapped intervals. It's similar to applying +1
