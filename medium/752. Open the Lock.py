@@ -18,9 +18,9 @@ class Solution:
                     next_node = list(node)
                     next_node[i] = str((int(next_node[i]) + move) % 10)
                     yield ''.join(next_node)
-        
+
         while begins and ends:
-            if steps % 2 == 0:
+            if len(begins) > len(ends):
                 begins, ends = ends, begins
             next_level = set()
             for node in begins:
