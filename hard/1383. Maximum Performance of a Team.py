@@ -9,14 +9,14 @@ class Solution:
 
         Similar to 857. Minimum Cost to Hire K Workers.
         '''
-        engineers = sorted(zip(efficiency, speed), reverse=True)
-        ans = 0
-        totalSp = 0
-        mySpeed = []
-        for e, s in engineers:
-            heappush(mySpeed, s)
-            totalSp += s
-            if len(mySpeed) > k:
-                totalSp -= heappop(mySpeed)
-            ans = max(ans, totalSp * e)
+        people = sorted(zip(efficiency, speed), reverse=True)
+        total_speed = ans = 0
+        used_speeds = []
+        for e, s in people:
+            total_speed += s
+            heappush(used_speeds, s)
+            if len(used_speeds) > k:
+                total_speed -= heappop(used_speeds)
+            ans = max(ans, total_speed * e)
+
         return ans % (10 ** 9 + 7)
