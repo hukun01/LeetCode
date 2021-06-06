@@ -16,9 +16,7 @@ class Solution:
         Time: O(n) where n is len(nums)
         Space: O(1)
         '''
-        xor = 0
-        for num in nums:
-            xor ^= num
+        xor = reduce(lambda a, b: a ^ b, nums)
 
         lowest_bit = xor & (-xor)
 

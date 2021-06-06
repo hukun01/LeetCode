@@ -2,7 +2,7 @@
 class Solution:
     def maxPoints(self, points: List[List[int]]) -> int:
         '''
-        1/2 Math and hashmap.
+        Math and hashmap.
         A straightforward way is to try every point pair that forms a line,
         and collect all line to points mapping, and find the line with most
         points. The trick here is to deal with floating point precision. We
@@ -18,68 +18,36 @@ class Solution:
             a*x1 + b*y1 = a*x2 + b*y2, hence
             a*(x1 - x2) = b*(y2 - y1), so we know
             a = y2 - y1
-            b = x1 - x2, then we know
-            c = x1*(y1 - y2) + y1*(x2 - x1) = x2*y1 - x1*y2
-        Note that (a, b, c) is equivalent to (-a, -b, -c), so we ensure 'a' is
-        always positive, by flipping (a, b, c) when 'a' is negative.
-        Also note that (5, 15, 25) is equivalent to (1, 3, 5), so we need to
-        find the gcd() among (a, b, c) and use the smallest possible numbers to
-        represent the line.
+            b = x1 - x2
 
-        Two edge cases:
-        1. when x1 == x2 and y1 == y2, we can't calculate gcd(a, b, c) as it
-           would be g(0, 0, c) and we can't have 2 zeros. Hence, we need to
-           set the line with (a, b, c) being (1, 0, -x1).
-        2. when there's no lines found (due to 0 points, or all points being
-           the same), line_to_points would be empty, we need to return the
-           len(points) as result.
+        We can fix one point, and traverse the next set of points. This way,
+        we only need to collect the slopes (a, b), but not the intercept (c).
+
+        One edge case is that when (x1 - x2) == 0, we need to track the
+        abs(y1 - y2), so the gcd would be abs(y1 - y2), and the slope would be
+        (0, 1).
 
         Time: O(n^2)
-        Space: O(n^2)
+        Space: O(n)
         '''
-        line_to_points = defaultdict(set)
+        if len(points) < 2:
+            return len(points)
+
+        def slope(i, j):
+            dx = points[i][0] - points[j][0]
+            dy = points[i][1] - points[j][1]
+            if dx < 0:
+                dx, dy = -dx, -dy
+            if dx == 0:
+                dy = abs(dy)
+            g = gcd(dx, dy)
+            return dx // g, dy // g
+
         n = len(points)
-        for i1 in range(n):
-            x1, y1 = points[i1]
-            for i2 in range(i1+1, n):
-                x2, y2 = points[i2]
-                if x1 == x2 and y1 == y2:
-                    a = 1
-                    b = 0
-                    c = -x1
-                else:
-                    a = y2 - y1
-                    b = x1 - x2
-                    c = x2 * y1 - x1 * y2
-                    if a < 0:
-                        a, b, c = -a, -b, -c
-                    g = gcd(a, b, c)
-                    a, b, c = a/g, b/g, c/g
-                line = (a, b, c)
-                line_to_points[line].add(i1)
-                line_to_points[line].add(i2)
+        max_points = 2
 
-        return max((len(v) for v in line_to_points.values()), default = len(points))
-        '''
-        2/2 Deduplicate points before processing.
-        Optimized space and reduce the first edge case.
-        '''
-        points = Counter([tuple(p) for p in points])
-        n = len(points)
-        if n <= 1:
-            return max(points.values(), default = 0)
-        line_to_points = defaultdict(set)
+        for i in range(n - 1):
+            slope_counter = Counter(slope(i, j) for j in range(i + 1, n))
+            max_points = max(max_points, max(slope_counter.values()) + 1)
 
-        for (x1, y1), (x2, y2) in combinations(points, 2):
-            a = y2 - y1
-            b = x1 - x2
-            c = x2 * y1 - x1 * y2
-            if a < 0:
-                a, b, c = -a, -b, -c
-            g = gcd(a, b, c)
-            a, b, c = a/g, b/g, c/g
-            line = (a, b, c)
-            line_to_points[line].add((x1, y1))
-            line_to_points[line].add((x2, y2))
-
-        return max(sum(points[p] for p in v) for v in line_to_points.values())
+        return max_points
