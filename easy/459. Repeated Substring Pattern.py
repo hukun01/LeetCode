@@ -2,7 +2,22 @@
 class Solution:
     def repeatedSubstringPattern(self, s: str) -> bool:
         '''
-        KMP.
+        1/2 Concat string.
+
+        Concat the string and take [1:-1] part of it, this way, we essentially
+        test whether s can be reformed by some of its middle parts, which would
+        be the repeated pattern.
+
+        Time: O(n)
+        Space: O(n)
+        '''
+        if not s:
+            return False
+
+        ss = (s + s)[1:-1]
+        return s in ss
+        '''
+        2/2 KMP.
         If the input string s consists of repeated pattern p, then we can
         treat it as 'pp...pp'.
         The lps table from KMP helps identify the proper prefix which is the

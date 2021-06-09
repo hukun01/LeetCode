@@ -8,11 +8,11 @@ class Solution:
               maze, and each heappop takes log(RC) time.
         Space: O(RC) for visited.
         '''
-        visited = set() # pos
         dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
         pq = [(0, tuple(start))] # steps, pos
         dest = tuple(destination)
         R, C = len(maze), len(maze[0])
+        visited = set() # pos
         while pq:
             steps, pos = heappop(pq)
             if pos == dest:
