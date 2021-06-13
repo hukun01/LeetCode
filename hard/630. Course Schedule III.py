@@ -2,7 +2,7 @@
 class Solution:
     def scheduleCourse(self, courses: List[List[int]]) -> int:
         '''
-        Greedy.
+        Greedy + heap.
         Similar to other interval schedule problems, and also intuitively,
         we prefer the courses with earlier deadlines, so we sort them using
         their deadlines. Then as we go through the courses, keep track of the

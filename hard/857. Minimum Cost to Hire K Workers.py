@@ -2,6 +2,7 @@
 class Solution:
     def mincostToHireWorkers(self, quality: List[int], wage: List[int], K: int) -> float:
         '''
+        Heap.
         A price is the wage/quality ratio, note that it's per quality unit.
         
         We pay each worker based on his price or a bigger one, so we want to start trying 
