@@ -11,36 +11,39 @@ class Solution:
         There are 4 cases in which words form a P
         1. w2 is P, w1 is empty, then w1 + w2 is a P, and w2 + w1 is a P;
         2. w2 is the reversed w1, then w1 + w2 is a P
-        3. w1[0:x] is a P, w2 is the reversed w1[x:], then w2 + w1 is a P. This covers case 2 when x is 0.
-        4. w1[x:] is a P, w2 is the reversed w1[0:x], then w1 + w2 is a P. This covers case 1 when x is len(w1).
+        3. w1[0:k] is a P, w2 is the reversed w1[k:], then w2 + w1 is a P. This covers case 2 when k is 0.
+        4. w1[k:] is a P, w2 is the reversed w1[0:k], then w1 + w2 is a P. This covers case 1 when k is len(w1).
         '''
+        w_pos = {}
+        for i, w in enumerate(words):
+            w_pos[w] = i
+
         def is_palin(w):
             return w == w[::-1]
-        word_to_idx = { w: i for i, w in enumerate(words) }
-        ans = []
 
-        # 1/2 A shorter translation of the last 2 cases above with extented coverages.
-        for w, i in word_to_idx.items():
-            for cut in range(len(w) + 1):
-                left = w[:cut]
-                right = w[cut:]
-                if is_palin(left) and (right_reversed := right[::-1]) in word_to_idx:
-                    # case 2 and 3
-                    if (j := word_to_idx[right_reversed]) != i:
-                        ans.append([j, i])
-                # We already checked the case (left == "", right == w), no need to check
-                # the case (left == w, right == "").
-                if cut != len(w) and is_palin(right) and (left_reversed := left[::-1]) in word_to_idx:
-                    # case 1 and 4
-                    ans.append([i, word_to_idx[left_reversed]])
+        ans = []
+        for i, w in enumerate(words):
+            for k in range(len(w)):
+                p1 = w[:k]
+                r_p1 = p1[::-1]
+                p2 = w[k:]
+                r_p2 = p2[::-1]
+                # case 2 and 3
+                if is_palin(p1) and r_p2 in w_pos and w_pos[r_p2] != i:
+                    ans.append([w_pos[r_p2], i])
+                # case 1 and 4, already checked cases for p2 == '' in above
+                # condition, when p1 == w, r_p2 == ''.
+                if p2 != '' and is_palin(p2) and r_p1 in w_pos and w_pos[r_p1] != i:
+                    ans.append([i, w_pos[r_p1]])
+
         return ans
 
         '''
         2/2 A more straightforward translation of the 4 cases above.
         '''
         # case 1
-        if "" in word_to_idx:
-            a = word_to_idx[""]
+        if "" in w_pos:
+            a = w_pos[""]
             for b, w in enumerate(words):
                 if is_palin(w) and a != b:
                     ans.append([a, b])
@@ -48,19 +51,19 @@ class Solution:
         # case 2
         for a, w in enumerate(words):
             r = w[::-1]
-            if r in word_to_idx:
-                b = word_to_idx[r]
+            if r in w_pos:
+                b = w_pos[r]
                 if a != b:
                     ans.append([a, b])
         # case 3 and 4
         for a, w in enumerate(words):
-            for x in range(1, len(w)):
-                left = w[:x]
-                right = w[x:]
-                right_reversed = right[::-1]
-                if is_palin(left) and right_reversed in word_to_idx:
-                    ans.append([word_to_idx[right_reversed], a])
-                left_reversed = left[::-1]
-                if is_palin(right_reversed) and left_reversed in word_to_idx:
-                    ans.append([a, word_to_idx[left_reversed]])
+            for k in range(1, len(w)):
+                p1 = w[:k]
+                p2 = w[k:]
+                r_p2 = p2[::-1]
+                if is_palin(p1) and r_p2 in w_pos:
+                    ans.append([w_pos[r_p2], a])
+                r_p1 = p1[::-1]
+                if is_palin(r_p2) and r_p1 in w_pos:
+                    ans.append([a, w_pos[r_p1]])
         return ans
