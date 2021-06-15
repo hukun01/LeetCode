@@ -29,13 +29,13 @@ class Solution:
                     stack.append(stack.pop() * num)
                 elif last_sign == '/':
                     stack.append(int(stack.pop() / num))
+
+                num = 0
                 if c == ')':
-                    num = 0
                     while (val := stack.pop()) != '(':
                         num += val
                     last_sign = stack.pop()
                 else:
-                    num = 0
                     last_sign = c
 
         return sum(stack)
