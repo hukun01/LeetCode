@@ -7,9 +7,9 @@ class Solution:
         Second, we can start with the biggest number nums[0], because it must
         be in either sub-array.
         '''
-        if (total := sum(nums)) % 2 == 1:
+        target, remainder = divmod(sum(nums), 2)
+        if remainder != 0:
             return False
-        target = total // 2
 
         @lru_cache(None)
         def dfs(i, curr_sum):
@@ -18,6 +18,7 @@ class Solution:
             if curr_sum >= target:
                 return curr_sum == target
             return dfs(i + 1, curr_sum + nums[i]) or dfs(i + 1, curr_sum)
+
         return dfs(0, 0)
         '''
         2/2 DP.

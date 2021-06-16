@@ -16,17 +16,17 @@ class Codec:
         '''
         1/2 Recursive: build the string list in preorder.
         '''
-        def buildString(node, values):
-            if node:
-                values.append(str(node.val))
-                buildString(node.left, values)
-                buildString(node.right, values)
-            else:
-                values.append("#")
+        ans = []
+        def preorder(node):
+            if not node:
+                ans.append('#')
+                return
+            ans.append(str(node.val))
+            preorder(node.left)
+            preorder(node.right)
 
-        values = []
-        buildString(root, values)
-        return ','.join(values)
+        preorder(root)
+        return ','.join(ans)
         '''
         2/2 Iterative: build the string list in level order. 
         Use a nullCount to avoid adding '#' for the last level.

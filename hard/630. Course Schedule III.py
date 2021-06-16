@@ -6,29 +6,29 @@ class Solution:
         Similar to other interval schedule problems, and also intuitively,
         we prefer the courses with earlier deadlines, so we sort them using
         their deadlines. Then as we go through the courses, keep track of the
-        total days, and a sorted list of taken course days.
-        For each course, after taking it, if the total days exceeds the
+        current days, and a sorted list of taken course durations.
+        For each course, after taking it, if the current days exceeds the
         current deadline, we remove the longest course. This means that we
         do one of below:
         1. replace the longest course with the current course, while both
            have deadlines less than or equal to the current deadline. The
-           total number of courses remain, but the total days decreases.
+           total courses count remains, and the current days decreases.
         2. add the current course initially, but remove it instantly as its
-           days is too long.
-        At the end we get a list of course days while maintaining the fact
-        that the total days doesn't exceed any deadline. Hence, the length
-        of the list is the number of courses we can take.
+           duration is too long, the courses count and current days remains.
+        At the end we get a list of course durations while maintaining the fact
+        that the current days doesn't exceed any deadline. Hence, the length
+        of the list is the courses count we need.
 
         Time: O(n log(n)) where n is len(courses)
         Space: O(n)
         '''
         taken = []
         cur_day = 0
-        for t, end in sorted(courses, key=lambda c: c[1]):
-            cur_day += t
-            heappush(taken, -t)
+        for duration, end in sorted(courses, key=lambda c: c[1]):
+            cur_day += duration
+            heappush(taken, -duration)
             if cur_day > end:
-                pre_t = -heappop(taken)
-                cur_day -= pre_t
+                prev_duration = -heappop(taken)
+                cur_day -= prev_duration
 
         return len(taken)
