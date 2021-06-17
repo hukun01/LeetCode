@@ -1,6 +1,6 @@
 # 787. Cheapest Flights Within K Stops
 class Solution:
-    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, k: int) -> int:
         '''
         Dijkstra.
 
@@ -14,15 +14,22 @@ class Solution:
         Time: O(n log(n))
         Space: O(n)
         '''
-        maps = defaultdict(list)
-        for city, nextCity, price in flights:
-            maps[city].append((price, nextCity))
-        trips = [(0, src, K + 1)]
+        graph = defaultdict(list)
+        for city, next_city, price in flights:
+            graph[city].append((next_city, price))
+
+        trips = [(0, src, k + 1)]
+        visited = set()
         while trips:
-            cost, city, hops = heappop(trips)
-            if city == dst:
+            cost, pos, stops = heappop(trips)
+            if pos == dst:
                 return cost
-            if hops > 0:
-                for price, nextCity in maps[city]:
-                    heappush(trips, (cost + price, nextCity, hops - 1))
+            if (pos, stops) in visited:
+                continue
+            visited.add((pos, stops))
+            if stops == 0:
+                continue
+            for nex, price in graph[pos]:
+                heappush(trips, (cost + price, nex, stops - 1))
+
         return -1
