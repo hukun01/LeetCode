@@ -2,10 +2,15 @@
 class Solution:
     def maxPerformance(self, n: int, speed: List[int], efficiency: List[int], k: int) -> int:
         '''
+        Greedy + Heap.
+
         The team efficiency is dominated by the lowest efficiency,
         so we try each efficiency, from high to low, with accumulating
         total speed.
         If we need to remove people, remove the person with lowest speed.
+
+        Time: O(n log(n))
+        Space: O(n)
 
         Similar to 857. Minimum Cost to Hire K Workers.
         '''
