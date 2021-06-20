@@ -6,8 +6,10 @@ class Solution:
 
         The team efficiency is dominated by the lowest efficiency,
         so we try each efficiency, from high to low, with accumulating
-        total speed.
-        If we need to remove people, remove the person with lowest speed.
+        total speed. At each efficiency, since we try from high to low, we
+        know that all people so far can be taken, so if we need to remove
+        anyone, remove the person with the lowest speed as he contributes the
+        least.
 
         Time: O(n log(n))
         Space: O(n)
