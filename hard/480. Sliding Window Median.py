@@ -55,7 +55,7 @@ class Solution:
 
         Then check the heap top and pop out outdated elements per indices.
         
-        Time: O(n log(n)) where n is len(nums), as we do lazy deletion, we can
+        Time: O(n log(k)) where n is len(nums), as we do lazy deletion, we can
               have O(n) elements in the heaps.
         Space: O(n)
         '''
