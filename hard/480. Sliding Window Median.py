@@ -38,14 +38,13 @@ class Solution:
         1. if x >= large[0][0], we should add x to large.
             Once we add x to large, check the out-of-window element nums[i-k],
             if nums[i-k] < large[0][0], it means the nums[i-k] is in small,
-            due to the variant #1.
+            due to the above invariant #1.
             Since we just added to large and are going to remove from small,
             move one effective element (large[0]) from large to small, to keep
-            balance.
+            them balance.
             We also do above re-balance if nums[i-k] == large[0][0], because
             it covers the case that small[0][0] == large[0][0] and
-            large[0][0] is older (smaller index due to initialization). And
-            even if small[0][0] != large[0][0], moving doesn't hurt.
+            large[0][0] is older (smaller index due to initialization).
 
             If the nums[i-k] > large[0][0], we don't move large[0], because it
             is not valid to move to small, and we will get to large[0] later
@@ -53,7 +52,13 @@ class Solution:
 
         2. else, add x to small, and do similar movement.
 
-        Then check the heap top and pop out outdated elements per indices.
+        Then do lazy deletion: check the heap top and pop out outdated
+        elements based on the boundary index.
+
+        One key is when computing the median, we can't use the len() of small
+        and large, becaues they can contain invalid elements. Instead, we just
+        check whether k is odd, if so, we take from the large, otherwise we
+        take the average between small and large.
         
         Time: O(n log(k)) where n is len(nums), as we do lazy deletion, we can
               have O(n) elements in the heaps.
@@ -74,24 +79,23 @@ class Solution:
         def get_med():
             return large[0][0] if k & 1 else (large[0][0] - small[0][0]) / 2
 
-        def lazy_delete(h):
-            while h and h[0][1] <= i-k:
+        def lazy_delete(h, left_bound):
+            while h and h[0][1] <= left_bound:
                 heappop(h)
 
         ans = [get_med()]
         for i, a in enumerate(nums[k:], start=k):
-            cur_med = ans[-1]
-            if a >= cur_med:
+            if a >= large[0][0]:
                 heappush(large, (a, i))
-                if nums[i-k] <= cur_med:
+                if nums[i-k] <= large[0][0]:
                     move(large, small)
             else:
                 heappush(small, (-a, i))
-                if nums[i-k] >= cur_med:
+                if nums[i-k] >= large[0][0]:
                     move(small, large)
 
-            lazy_delete(small)
-            lazy_delete(large)
+            lazy_delete(small, i-k)
+            lazy_delete(large, i-k)
 
             ans.append(get_med())
 

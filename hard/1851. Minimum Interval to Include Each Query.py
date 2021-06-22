@@ -10,12 +10,15 @@ class Solution:
 
         Process each query from small to big. For each query q, update the
         'availables' to remove the minimum (size, end) if end < q.
+        Note that when removing things from heap, we use lazy deletion, similar
+        to 480. Sliding Window Median.
+
         Then take out the current interval if its start <= q, and if its
         end >= q, we add the (size, end) to the 'availables' heap.
 
         Now if there's anything in availables, that's answer for query q.
 
-        One small trick is to use a set to dedup queries.
+        One small trick is to use a set to dedup queries, it's not done here.
 
         Time: O(Q log(Q) + N log(N) + Q log(N)) where Q is len(queries), N is
             len(intervals).
