@@ -3,7 +3,11 @@ class Solution:
     def numSimilarGroups(self, A: List[str]) -> int:
         '''
         Union Find.
+
         We need to put similar words in their groups with UF.
+
+        The key is to identify the complexity formula, and have different
+        strategies for different input structure.
 
         We can either enumerate all the possible similar word with time N(W^3),
         or we can iterate through all the other words to find the similar ones with
