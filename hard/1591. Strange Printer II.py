@@ -32,14 +32,13 @@ class Solution:
                         nexts[color].add(A[r][c])
         visited = set()
         def hasCycle(color):
-            visited.add(color)
             for nex in nexts[color]:
                 if nex in visited:
                     return True
                 visited.add(nex)
                 if hasCycle(nex):
                     return True
-            visited.remove(color)
+                visited.remove(nex)
             return False
 
         return not any(hasCycle(color) for color in colors)
