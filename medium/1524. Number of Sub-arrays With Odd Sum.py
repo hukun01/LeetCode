@@ -4,7 +4,7 @@ class Solution:
         '''
         1/2 Prefix sum.
         1. The sum of a subarray [i:j] is prefix[j] - prefix[i].
-        2. A odd sum is from (even sum - odd sum) or (odd sum - even sum).
+        2. An odd sum is from (even sum - odd sum) or (odd sum - even sum).
         3. Track the current total prefix sum, and previous sums' odd/even
            counts, if prefix_sum is odd, add the previous even count to ans,
            otherwise, add previous odd count.
@@ -14,18 +14,14 @@ class Solution:
         Time: O(n) where n is len(arr)
         Space: O(1)
         '''
-        MOD = 10 ** 9 + 7
-        ans = 0
-        count = Counter({0: 1})
-        prefix_sum = 0
+        M = 10 ** 9 + 7
+        freq = [1, 0]
+        ans = cur = 0
         for a in arr:
-            prefix_sum += a
-            if prefix_sum % 2 == 1:
-                ans += count[0]
-            else:
-                ans += count[1]
-            ans %= MOD
-            count[prefix_sum % 2] += 1
+            cur += a
+            bit = cur % 2
+            ans = (ans + freq[1 - bit]) % M
+            freq[bit] += 1
         return ans
         '''
         2/2 DP.
