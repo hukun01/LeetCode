@@ -5,6 +5,7 @@ class Solution:
     ]
 
     num2name = {
+        0: 'Zero',
         1:'One', 2:'Two', 3:'Three', 4:'Four', 5:'Five', 6:'Six', 7:'Seven', 8:'Eight', 9:'Nine',
         10: 'Ten', 11: 'Eleven', 12: 'Twelve', 13: 'Thirteen', 14: 'Fourteen',
         15: 'Fifteen', 16: 'Sixteen', 17: 'Seventeen', 18: 'Eighteen', 19: 'Nineteen',
@@ -15,6 +16,7 @@ class Solution:
     def numberToWords(self, num: int) -> str:
         '''
         Recursion.
+
         The number is in recursive structure, so to use recursion to handle it.
         Specifically, since we have to hardcode all ~30 distinct number names,
         we can instantly return when input num matches any of these. Then we
@@ -36,10 +38,14 @@ class Solution:
         Space: O(1)
         '''
         f = self.numberToWords
-        
+
         if num in Solution.num2name:
             return Solution.num2name[num]
-        
+
+        # num must be >= 21 to pass the above check, so (num // 10 * 10) is non-zero.
+        if num < 100:
+            return f'{f(num // 10 * 10)} {f(num % 10)}'
+
         ans = []
         for s, name in Solution.scale2name:
             if num >= s:
@@ -47,12 +53,7 @@ class Solution:
                 ans.append(name)
                 num %= s
 
-        if num >= 20: # now num is in [20, 99]
-            ty = num // 10 * 10
-            ans.append(f(ty))
-            num -= ty
-
-        if num > 0: # now num is in [1, 19]
+        if num > 0:
             ans.append(f(num))
 
         return ' '.join(ans) or "Zero"

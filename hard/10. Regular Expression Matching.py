@@ -9,16 +9,16 @@ class Solution:
             if p[n-1] in (s[m], '.'): dp[m][n] = dp[m-1][n] // a* counts as one or more a
         '''
         @lru_cache(None)
-        def isMatched(m, n):
-            result = False
+        def match(m, n):
+            ans = False
             if n == -1:
-                result = m == -1
+                ans = m == -1
             elif m >= 0 and p[n] in (s[m], '.'):
-                result |= isMatched(m-1, n-1)
+                ans |= match(m-1, n-1)
             elif p[n] == '*':
-                result |= isMatched(m, n-2) # 'a*' counts as empty
+                ans |= match(m, n-2) # 'a*' counts as empty
                 if m >= 0 and p[n-1] in (s[m], '.'):
-                    result |= isMatched(m-1, n)
-            return result
+                    ans |= match(m-1, n)
+            return ans
         
-        return isMatched(len(s)-1, len(p)-1)
+        return match(len(s)-1, len(p)-1)

@@ -12,16 +12,16 @@ class Solution:
         Time: O(l1 * l2) where l1 is len(num1), l2 is len(num2)
         Space: O(l1 + l2)
         '''
-        len1, len2 = len(num1), len(num2)
-        ans = [0] * (len1 + len2)
-        for i in range(len1 - 1, -1, -1):
-            last1 = int(num1[i])
-            for j in range(len2 - 1, -1, -1):
-                last2 = int(num2[j])
-                p1 = i + j
-                p2 = p1 + 1
-                ans[p2] += last1 * last2
-                ans[p1] += ans[p2] // 10
-                ans[p2] %= 10
+        n1 = len(num1)
+        n2 = len(num2)
+        ans = [0] * (n1 + n2)
+        for i, a in enumerate(reversed(num1)):
+            for j, b in enumerate(reversed(num2)):
+                val = int(a) * int(b)
+                ans[i+j] += val
+                carry = ans[i+j] // 10
+                ans[i+j] %= 10
+                if carry > 0:
+                    ans[i+j+1] += carry
 
-        return ''.join(str(c) for c in ans).lstrip('0') or '0'
+        return ''.join(str(c) for c in reversed(ans)).lstrip('0') or '0'

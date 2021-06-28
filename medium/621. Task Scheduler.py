@@ -6,7 +6,7 @@ class Solution:
         There are two cases, one is that the most frequent tasks
         are not frequent enough to create idle slots with given n;
         Another case is they are frequent to create idle slots.
-        
+
         In the first case, the answer is just the length of tasks.
 
         In the second case, each period's size is (n + 1), and there are
@@ -21,5 +21,5 @@ class Solution:
         freq = list(Counter(tasks).values())
         f_max = max(freq)
         n_max = sum(c == f_max for c in freq)
-        
+
         return max(len(tasks), (f_max - 1) * (n + 1) + n_max)

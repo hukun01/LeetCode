@@ -38,11 +38,11 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        data = deque(data.split(','))
+        vals = deque(data.split(','))
         def preorder():
-            if not data:
+            if not vals:
                 return None
-            val = data.popleft()
+            val = vals.popleft()
             if val == '#':
                 return None
             node = TreeNode(int(val))

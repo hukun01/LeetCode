@@ -40,8 +40,6 @@ class Solution:
         Time: O(n)
         Space: O(1)
         '''
-        if not ratings:
-            return 0
         pre = 1
         down = 0
         total = 1

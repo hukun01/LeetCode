@@ -3,12 +3,14 @@ class Solution:
     def numOfSubarrays(self, arr: List[int]) -> int:
         '''
         1/2 Prefix sum.
+
         1. The sum of a subarray [i:j] is prefix[j] - prefix[i].
         2. An odd sum is from (even sum - odd sum) or (odd sum - even sum).
-        3. Track the current total prefix sum, and previous sums' odd/even
+        3. Here we focus on even/odd property rather than the actual value.
+        4. Track the current total prefix sum, and previous sums' odd/even
            counts, if prefix_sum is odd, add the previous even count to ans,
            otherwise, add previous odd count.
-        4. Initialize the count with {0:1} to handle first subarray sum being
+        5. Initialize the count with {0:1} to handle first subarray sum being
            odd like [1].
 
         Time: O(n) where n is len(arr)
