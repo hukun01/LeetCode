@@ -1,5 +1,4 @@
 # 10. Regular Expression Matching
-
 class Solution:
     def isMatch(self, s: str, p: str) -> bool:
         '''
@@ -20,5 +19,5 @@ class Solution:
                 if m >= 0 and p[n-1] in (s[m], '.'):
                     ans |= match(m-1, n)
             return ans
-        
+
         return match(len(s)-1, len(p)-1)
