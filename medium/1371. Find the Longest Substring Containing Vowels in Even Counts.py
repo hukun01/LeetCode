@@ -19,10 +19,13 @@ class Solution:
         Space: O(n)
         '''
         vowels = 'aeiou'
-        ans = mask = 0
+        ans = 0
         seen = {0:-1}
-        for i, c in enumerate(s):
-            mask ^= 1 << (vowels.find(c) + 1) >> 1
+        mask = 0
+        for i, a in enumerate(s):
+            offset = vowels.find(a)
+            if offset != -1:
+                mask ^= 1 << offset
             if mask in seen:
                 ans = max(ans, i - seen[mask])
             else:
