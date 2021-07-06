@@ -35,13 +35,11 @@ class Solution:
             return 0
         R = 128 # radix
         mod = 10 ** 9 + 7
-        RM = 1 # (R ^ M) % mod
-        for _ in range(m):
-            RM = (RM * R) % mod
+        RM = pow(R, m, mod) # (R ^ m) % mod
 
-        pattern_hash = 0
+        h = 0 # pattern_hash
         for c in needle:
-            pattern_hash = (pattern_hash * R + ord(c)) % mod
+            h = (h * R + ord(c)) % mod
 
         txt_hash = 0
         for i in range(len(haystack)):
@@ -54,7 +52,7 @@ class Solution:
                 txt_hash = (txt_hash + mod - RM * ord(haystack[i-m]) % mod) % mod
 
             offset = i - m + 1
-            if pattern_hash == txt_hash and needle == haystack[offset:i + 1]:
+            if h == txt_hash and needle == haystack[offset:i + 1]:
                 return offset
 
         return -1
