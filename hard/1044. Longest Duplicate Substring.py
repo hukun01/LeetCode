@@ -3,30 +3,37 @@ class Solution:
     def longestDupSubstring(self, S: str) -> str:
         '''
         Binary search + Rabin Karp rolling hash.
-        Binary search the possible length of the substring, and test the length
-        using rolling hash.
+        Binary search the possible length of the substring, and check the
+        length using rolling hash.
+
+        Time: O(n log(n)) where n is len(s)
+        Space: O(n)
         '''
-        A = [ord(c) - ord('a') for c in S]
+        A = [ord(c) - ord('a') for c in s]
         mod = 2**63 - 1
 
-        def test(L):
-            p = pow(26, L, mod)
-            cur = reduce(lambda x, y: (x * 26 + y) % mod, A[:L], 0)
+        def check(L):
+            base = 26
+            p = pow(base, L, mod)
+            cur = 0
+            for i in range(L):
+                cur = (cur * base + A[i]) % mod
+
             seen = {cur}
-            for i in range(L, len(S)):
-                cur = (cur * 26 + A[i] - A[i - L] * p) % mod
+            for i in range(L, len(s)):
+                cur = (cur * base + A[i] - A[i - L] * p % mod) % mod
                 if cur in seen:
                     return i - L + 1
                 seen.add(cur)
             return 0
 
-        res, lo, hi = 0, 0, len(S)
-        while lo < hi:
-            mi = (lo + hi + 1) // 2
-            pos = test(mi)
+        ans, l, h = 0, 0, len(s)
+        while l < h:
+            m = (l + h + 1) // 2
+            pos = check(m)
             if pos:
-                lo = mi
-                res = pos
+                l = m
+                ans = pos
             else:
-                hi = mi - 1
-        return S[res:res + lo]
+                h = m - 1
+        return s[ans: ans + l]

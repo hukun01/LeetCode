@@ -20,9 +20,10 @@ class Solution:
         Time: O(n log(n)) where n is len(s), and worst case O(n^2)
         Space: O(n^2)
 
-        To improve the time and space, we can use rolling hash technique.
-        However, as hash collision can happen in this process, we will need to
-        double check the repeated strings to confirm, so complexity is added.
+        To improve the time and space, we can use Rabin Karp rolling hash
+        technique. However, as hash collision can happen in this process, we
+        will need to double check the repeated strings to confirm, so
+        complexity is added.
         '''
         n = len(s)
         def ok(window_size):
@@ -32,6 +33,34 @@ class Solution:
                 if substr in seen:
                     return True
                 seen.add(substr)
+            return False
+
+        l = 1
+        h = n
+        while l <= h:
+            m = (l + h) // 2
+            if ok(m):
+                l = m + 1
+            else:
+                h = m - 1
+        return l - 1
+        '''
+        2/2 Rabin Karp rolling hash
+        '''
+        n = len(s)
+        def ok(window_size):
+            h = 0
+            base = 26
+            M = 2 ** 24
+            for i in range(window_size):
+                h = (h * base + ord(s[i])) % M
+            R = pow(base, window_size, M)
+            seen = set([h])
+            for i in range(1, n - window_size + 1):
+                h = (h * base + ord(s[i + window_size - 1]) - ord(s[i-1]) * R % M) % M
+                if h in seen:
+                    return True
+                seen.add(h)
             return False
 
         l = 1
