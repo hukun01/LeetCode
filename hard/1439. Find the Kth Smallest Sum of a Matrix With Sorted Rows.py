@@ -21,7 +21,7 @@ class Solution:
         return ans[-1]
 
     def kSmallestPairs(self, nums1: List[int], nums2: List[int], k: int) -> List[List[int]]:
-        pq = [(a + nums2[0], a, 1) for i, a in enumerate(nums1[:min(len(nums1), k)])]
+        pq = [(a + nums2[0], a, 1) for a in nums1[:min(len(nums1), k)]]
         heapify(pq)
         ans = []
         while len(ans) < k and pq:
@@ -30,4 +30,5 @@ class Solution:
             ans.append(cur_sum)
             if i2 < len(nums2):
                 heappush(pq, (a1 + nums2[i2], a1, i2 + 1))
+
         return ans

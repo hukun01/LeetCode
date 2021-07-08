@@ -1,6 +1,6 @@
 # 1044. Longest Duplicate Substring
 class Solution:
-    def longestDupSubstring(self, S: str) -> str:
+    def longestDupSubstring(self, s: str) -> str:
         '''
         Binary search + Rabin Karp rolling hash.
         Binary search the possible length of the substring, and check the
@@ -8,6 +8,8 @@ class Solution:
 
         Time: O(n log(n)) where n is len(s)
         Space: O(n)
+
+        Similar to 718. Maximum Length of Repeated Subarray
         '''
         A = [ord(c) - ord('a') for c in s]
         mod = 2**63 - 1
