@@ -15,5 +15,5 @@ class Solution:
             b121 = 3 * a121 + 2 * a123
             b123 = 2 * a123 + 2 * a121
             a123, a121 = b123, b121
-        
+
         return (a123 + a121) % M
