@@ -32,9 +32,9 @@ class Solution:
         We don't need the global min every time, instead, we use a leaf if
         it's smaller than next element. We are looking for the next greater
         element. Use a stack to track the smallest elements so far, when the
-        current element is greater than the ones in stack, we can use the local
-        min leaf in stack. As the cost is 'a * b', we pop the min leaf out as
-        'a', and to pick 'b', we take the min of 'stack[-1]' and 'cur'.
+        current element 'cur' is greater than the ones in stack, we can use
+        the local min leaf in stack. As the cost is 'a * b', pop the min leaf
+        out as 'a', and to pick 'b', take the min of 'stack[-1]' and 'cur'.
 
         After this process, we have used all the min leaves that have next
         greater elements on their right side. Now we need to use the remaining

@@ -2,7 +2,32 @@
 class Solution:
     def findAllConcatenatedWordsInADict(self, words: List[str]) -> List[str]:
         '''
-        Trie + DFS + prune.
+        1/2 Memoized DFS.
+
+        Try breaking up each word, and see if the part is in words.
+        Two key details:
+        1. Need to avoid check the whole word as a part.
+        2. Need to discard the empty string from words.
+        '''
+        W = set(words)
+        @cache
+        def dfs(w, i):
+            if i == len(w):
+                return True
+            for j in range(i, len(w) - (i == 0)):
+                part = w[i:j+1]
+                if part in W and dfs(w, j+1):
+                    return True
+            return False
+
+        ans = []
+        W.discard('')
+        for w in W:
+            if dfs(w, 0):
+                ans.append(w)
+        return ans
+        '''
+        2/2 Trie + DFS + prune.
 
         Longer words must be built by shorter ones. Sort words by lengths.
         Add words to a Trie, when seeing a word, check whether existing words

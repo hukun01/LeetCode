@@ -17,7 +17,8 @@ class Solution:
         sort by start time, and start merging. Note that we only need to keep
         the last interval.
 
-        Time: O(n) where n is len(schedule)
+        Time: O(n) where n is len(schedule) (need to replace the sorted() with
+          merge_k_sorted_lists())
         Space: O(n) to store output
         '''
         last_interval = None

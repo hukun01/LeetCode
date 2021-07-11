@@ -53,15 +53,26 @@ class Solution:
         Let e0 be the number of decode ways of string that ends at any digit.
         Let e1 be that ends at '1' (that can be combined with the next digit).
         Let e2 be that ends at '2'.
-        Now iterating s, if char 'c' is '*', the next e0, say f0, can be
-        f0 = 9*e0 + 9*e1 + 6*e2, in which 9*e0 means we use 'c' as a single
-        char; 9*e1 means we pair 'c' with '1'; 6*e2 means we pair 'c' with '2'.
-        And f1 = f2 = e0, as there's only one possible for '1' and '2'.
+        Now iterating s, if char 'c' is '*',
+            the next e0, say f0,
+                f0 = 9*e0 + 9*e1 + 6*e2, in which 9*e0 means we use 'c' as a
+                single char; 9*e1 means we pair 'c' with '1'; 6*e2 means we
+                pair 'c' with '2'.
+            for f1,
+                f1 = e0, as we use '*' to append '1' after e0.
+            for f2,
+                f2 = e0, as we use '*' to append '2' after e0.
 
-        If 'c' is not '*', f0 can only add e0 when 'c' != '0', because a single
-        char can't be appended after '0'. And we also only add e2 to f0, if 'c'
-        is not greater than '6'.
-        And f1 = e0 only when c is '1', per e1's definition. Similar for f2.
+        If 'c' is not '*',
+            for f0,
+                we add e0 when 'c' != '0', because '0' is not a valid single
+                char.
+                we add e1 because '1' can be paired with anything.
+                we add e2 to f0, if 'c' is not greater than '6'.
+            for f1, 
+                we add e0 only when c is '1', per e1's definition.
+            for f2,
+                we add e0 only when c is '2', per e2's definition.
 
         Time: O(n)
         Space: O(1)

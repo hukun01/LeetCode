@@ -3,6 +3,7 @@ class Solution:
     def smallestRange(self, nums: List[List[int]]) -> List[int]:
         '''
         Priority queue + sliding window.
+
         Record the left positions in a heap, similar to merge k sorted list,
         so we can keep track of the left boundaries as we move the sliding
         window. And we just need to record the right position in one variable,
