@@ -8,7 +8,7 @@
 class Solution:
     def subtreeWithAllDeepest(self, root: TreeNode) -> TreeNode:
 
-        @lru_cache(None)
+        @cache(None)
         def get_depth(node):
             if not node:
                 return 0

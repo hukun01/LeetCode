@@ -50,7 +50,7 @@ class Solution:
             is to iterate 4 times, and wrap up the compass if needed. And in
             the DFS we need to propagate the current direction in dfs.
         3. Only when the potential new position is not cleaned, and robot can
-            move, we will further dfs. With checking this, we will be doing
+            move, we will further dfs. Without checking this, we will be doing
             extra backtrack, because the robot didn't actually move before.
         '''
         compass = [(0, 1), (-1, 0), (0, -1), (1, 0)]
@@ -63,14 +63,13 @@ class Solution:
                 newNode = (node[0] + dr, node[1] + dc)
                 if newNode not in cleaned and robot.move():
                     dfs(newNode, currDir, cleaned)
+                    # Go back one step, and remain the current direction
+                    robot.turnLeft()
+                    robot.turnLeft()
+                    robot.move()
+                    robot.turnLeft()
+                    robot.turnLeft()
                 robot.turnLeft()
                 currDir = (currDir+1) % 4
-
-            # Go back one step, and remain the current direction
-            robot.turnLeft()
-            robot.turnLeft()
-            robot.move()
-            robot.turnLeft()
-            robot.turnLeft()
 
         dfs((0, 0), 0, set())

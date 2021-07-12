@@ -12,9 +12,10 @@ class Solution:
         Note that one transaction consists of buy and sell, here we only increment k
         when buying.
         '''
-        T = [[[0] * 2 for k in range(3)] for i in range(len(prices) + 1)]
-        T[0][1][1] = T[0][2][1] = -math.inf
-        for i in range(1, len(prices) + 1):
+        n = len(prices)
+        T = [[[0] * 2 for k in range(3)] for i in range(n + 1)]
+        T[0][1][1] = T[0][2][1] = -inf
+        for i in range(1, n + 1):
             for k in range(1, 3):
                 T[i][k][0] = max(T[i-1][k][0], T[i-1][k][1] + prices[i-1])
                 T[i][k][1] = max(T[i-1][k][1], T[i-1][k-1][0] - prices[i-1])

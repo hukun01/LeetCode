@@ -51,8 +51,9 @@ class Solution:
         '''
         2/2 Concise DP.
         Let e0 be the number of decode ways of string that ends at any digit.
-        Let e1 be that ends at '1' (that can be combined with the next digit).
-        Let e2 be that ends at '2'.
+        Let e1 be that ends at an open '1' (that can be combined with the next
+        digit, and had NOT been used in the previous digits).
+        Let e2 be that ends at an open '2'.
         Now iterating s, if char 'c' is '*',
             the next e0, say f0,
                 f0 = 9*e0 + 9*e1 + 6*e2, in which 9*e0 means we use 'c' as a
@@ -70,9 +71,10 @@ class Solution:
                 we add e1 because '1' can be paired with anything.
                 we add e2 to f0, if 'c' is not greater than '6'.
             for f1, 
-                we add e0 only when c is '1', per e1's definition.
+                we add e0 only when c is '1', per e1's definition, to make f1
+                the number of ways that end at an open '1'.
             for f2,
-                we add e0 only when c is '2', per e2's definition.
+                we add e0 only when c is '2', similarly, per e2's definition.
 
         Time: O(n)
         Space: O(1)

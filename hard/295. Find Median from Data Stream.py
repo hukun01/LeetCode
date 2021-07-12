@@ -2,11 +2,11 @@
 class MedianFinder:
     '''
     Use two heaps, one storing the smaller half of the data stream,
-    another storing the larger half of the data stream, and the median is either on
-    one side, or the average of both sides.
+    another storing the larger half of the data stream, and the median is
+    either on one side, or the average of both sides.
     
-    Since in Python the heap is min heap, we need to flip the number when pusing numbers
-    into small heap, and need to flip it back when using it.
+    Since in Python the heap is min heap, we need to flip the number when
+    pusing numbers into small heap, and need to flip it back when using it.
     '''
     def __init__(self):
         """
@@ -16,10 +16,17 @@ class MedianFinder:
 
     def addNum(self, num: int) -> None:
         small, large = self.heaps
-        
-        # Flip the number to make the largest one become the smallest;
-        # Always add to small heap first, and balance the size of two heaps,
-        # making sure that len(large) >= len(small)
+
+        # We keep an invariant: len(large) >= len(small), and the diff <= 1.
+        # To ensure 'large' always has larger numbers, we add new numbers to
+        # 'large' first, then pop the (potentially updated) cur_min and add it
+        # to the 'small'. This way we ensure all numbers in 'small' <= that in
+        # 'large'.
+        # 
+        # Now len(large) <= len(small), to keep our invariant, we need to
+        # balance the size of two heaps. After the above operation, if
+        # len(large) < len(small), we move the largest number from 'small' to
+        # 'large'; otherwise, we know len(large) == len(small).
         heappush(large, num)
         cur_min = heappop(large)
         heappush(small, -cur_min)

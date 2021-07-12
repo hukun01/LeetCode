@@ -37,7 +37,7 @@ class Solution:
                 ans.append(curr.val)
         return ans
         '''
-        1/2 Iterative approach using 1286's methodology.
+        2/3 Iterative approach using 1286's methodology.
         '''
         '''
         Recursive method as a refernce for finding entry points.
@@ -75,7 +75,7 @@ class Solution:
         return ans
 
         """
-        2/2 Morris traversal. Similar to InOrder traversal. 
+        3/3 Morris traversal. Similar to InOrder traversal. 
         Key is to use a dummy node whose left child is root! Also need to reverse the
         whole right linked list when accessing.
         """

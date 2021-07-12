@@ -4,17 +4,19 @@ class Solution:
         Similar to 3Sum, where we need to sort the nums.
         '''
         nums.sort()
-        ans = sum(nums[0:3])
-        for left in range(len(nums)-2):
+        ans = sum(nums[:3])
+        n = len(nums)
+        for left in range(n-2):
             if left > 0 and nums[left-1] == nums[left]:
                 continue
-            middle, right = left + 1, len(nums) - 1
-            while middle < right and ans != target:
-                curr_sum = nums[left] + nums[middle] + nums[right]
-                ans = min(ans, curr_sum, key=lambda x: abs(x - target))
-                if curr_sum < target:
-                    middle += 1
+            mid = left + 1
+            right = n - 1
+            while mid < right and ans != target:
+                cur = nums[left] + nums[mid] + nums[right]
+                ans = min(ans, cur, key=lambda x: abs(x - target))
+                if cur < target:
+                    mid += 1
                 else:
                     right -= 1
-                
+
         return ans

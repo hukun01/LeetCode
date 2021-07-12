@@ -14,8 +14,8 @@ class Solution:
         '''
         seen = { 0: -1 }
         running_sum = 0
-        for i, n in enumerate(nums):
-            running_sum += n
+        for i, a in enumerate(nums):
+            running_sum += a
             if k != 0:
                 running_sum %= k
             if running_sum in seen:

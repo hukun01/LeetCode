@@ -31,15 +31,15 @@ class Solution:
         def dfs(start = 0, path = '', val = 0, prev = None):
             if start == n and val == target:
                 ans.append(path)
-            for i in range(start + 1, n + 1):
-                if i == start + 1 or num[start] != '0':
-                    exp = num[start: i]
+            for i in range(start, n):
+                if i == start or num[start] != '0':
+                    exp = num[start: i+1]
                     cur = int(exp)
                     if prev is None:
-                        dfs(i, exp, cur, cur)
+                        dfs(i+1, exp, cur, cur)
                     else:
-                        dfs(i, f'{path}+{exp}', val + cur, cur)
-                        dfs(i, f'{path}-{exp}', val - cur, -cur)
-                        dfs(i, f'{path}*{exp}', val - prev + prev * cur, prev * cur)
+                        dfs(i+1, f'{path}+{exp}', val + cur, cur)
+                        dfs(i+1, f'{path}-{exp}', val - cur, -cur)
+                        dfs(i+1, f'{path}*{exp}', val - prev + prev * cur, prev * cur)
         dfs()
         return ans

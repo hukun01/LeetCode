@@ -1,3 +1,4 @@
+# 238. Product of Array Except Self
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         '''
@@ -14,12 +15,12 @@ class Solution:
         '''
         n = len(nums)
         ans = [1] * n
-        left = 1
-        for i in range(1, n):
-            left *= nums[i-1]
-            ans[i] = left
-        right = 1
-        for i in range(n-2, -1, -1):
-            right *= nums[i+1]
-            ans[i] *= right
+        cur = 1
+        for i in range(n):
+            ans[i] *= cur
+            cur *= nums[i]
+        cur = 1
+        for i in range(n-1,-1,-1):
+            ans[i] *= cur
+            cur *= nums[i]
         return ans
