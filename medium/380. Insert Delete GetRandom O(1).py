@@ -32,12 +32,11 @@ class RandomizedSet:
         """
         if val not in self.val_to_idx:
             return False
-        idx = self.val_to_idx[val]
-        self.val_to_idx.pop(val)
+        idx = self.val_to_idx.pop(val)
         if idx < len(self.vals) - 1:
-            lastVal = self.vals[-1]
-            self.vals[idx] = lastVal
-            self.val_to_idx[lastVal] = idx
+            last_val = self.vals[-1]
+            self.vals[idx] = last_val
+            self.val_to_idx[last_val] = idx
         self.vals.pop()
         return True
 

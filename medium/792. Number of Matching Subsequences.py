@@ -13,6 +13,8 @@ class Solution:
 
         Time: O(T) where T is the total lengths of words.
         Space: O(W) where W is the number of words.
+
+        Same as 524. Longest Word in Dictionary through Deleting
         '''
         states = defaultdict(list)
         for it in map(iter, words):

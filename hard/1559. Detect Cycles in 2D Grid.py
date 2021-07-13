@@ -24,7 +24,7 @@ class Solution:
                         return True
                 for nr, nc in (r - 1, c), (r, c - 1):
                     if 0 <= nr < R and 0 <= nc < C and letter == grid[nr][nc]:
-                        uf.find_and_union(get_id(nr, nc), get_id(r, c))
+                        uf.union(get_id(nr, nc), get_id(r, c))
 
         return False
 
