@@ -2,7 +2,7 @@
 class Solution:
     def rearrangeString(self, s: str, k: int) -> str:
         '''
-        1/2 Buckets.
+        1/3 Sort + Buckets.
         Get the char count maps, sorted from high count to low.
         With highest count 'max_count', we have max_count buckets, (max_count-1)
         buckets are full.
@@ -15,7 +15,7 @@ class Solution:
         Note that if the (len(s) + (k - 1)) // k is less than the highest char
         frequency, then there's no way to reorganize.
 
-        To ensure k distance, the key is to distinguish the buckets that should
+        To ensure k distance, the KEY is to distinguish the buckets that should
         be full vs the final bucket that doesn't need to be full.
         If count == buckets, we should assign char to every bucket; Otherwise,
         only assign to the first (buckets - 1) buckets.
@@ -24,15 +24,36 @@ class Solution:
         buckets = freqs[0][1]
         if (buckets - 1) * k + sum(c[1] == buckets for c in freqs) > len(s):
             return ""
+
         ans = [[] for _ in range(buckets)]
         bucket_idx = 0
         for char, count in freqs:
             for _ in range(count):
                 ans[bucket_idx].append(char)
                 bucket_idx = (bucket_idx + 1) % (len(ans) - (count != buckets))
+
         return ''.join(chain(*ans))
         '''
-        2/2 Heap.
+        2/3 No sort + buckets.
+        '''
+        freq = Counter(s)
+        buckets = max(freq.values())
+        initial_chars = ''.join(char for char, v in freq.items() if v == buckets)
+        if k * (buckets - 1) + len(initial_chars) > len(s):
+            return ""
+
+        ans = [[initial_chars] for _ in range(buckets)]
+        bucket_idx = 0
+        for char, count in freq.items():
+            if count == buckets:
+                continue
+            for _ in range(count):
+                ans[bucket_idx].append(char)
+                bucket_idx = (bucket_idx + 1) % (buckets - 1)
+
+        return ''.join(chain(*ans))
+        '''
+        3/3 Heap.
         Use a heap to store all the (count, char) tuples from S.
         In every block we can only use one char once, so we always
         use the top k most common chars first.

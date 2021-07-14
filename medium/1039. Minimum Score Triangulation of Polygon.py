@@ -4,7 +4,7 @@ class Solution:
         '''
         1/2 DFS with memoization.
         '''
-        @lru_cache(None)
+        @cache
         def dfs(i, j):
             if i + 1 == j:
                 return 0
@@ -12,6 +12,7 @@ class Solution:
             for k in range(i + 1, j):
                 res = min(res, dfs(i, k) + A[i] * A[k] * A[j] + dfs(k, j))
             return res
+
         return dfs(0, len(A) - 1)
         '''
         2/2 DP bottom up (Interval DP)

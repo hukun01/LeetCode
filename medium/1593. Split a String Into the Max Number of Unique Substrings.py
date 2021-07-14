@@ -20,11 +20,12 @@ class Solution:
                 self.ans = max(self.ans, len(used))
                 return
 
+            if n - i + len(used) <= self.ans:
+                return
+
             for j in range(i, n):
                 part = s[i:j + 1]
                 if part in used:
-                    continue
-                if n - i + len(used) <= self.ans:
                     continue
                 used.add(part)
                 dfs(j + 1, used)

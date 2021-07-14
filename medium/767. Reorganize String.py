@@ -16,3 +16,22 @@ class Solution:
                 ans[bucket_idx].append(num)
                 bucket_idx = (bucket_idx + 1) % len(ans)
         return ''.join(chain(*ans))
+        '''
+        No sort.
+        '''
+        freq = Counter(s)
+        buckets = max(freq.values())
+        initial_chars = ''.join(char for char, v in freq.items() if v == buckets)
+        if buckets > len(s) - buckets + 1:
+            return ""
+
+        ans = [[initial_chars] for _ in range(buckets)]
+        bucket_idx = 0
+        for char, v in freq.items():
+            if v == buckets:
+                continue
+            for _ in range(v):
+                ans[bucket_idx].append(char)
+                bucket_idx = (bucket_idx + 1) % len(ans)
+
+        return ''.join(chain(*ans))

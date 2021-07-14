@@ -7,15 +7,16 @@ class Solution:
         When X < Y, if we try changing X to be greater than Y, there will be
         many cases. However, if we try changing Y to be less than X, there are
         only 2 cases:
-        1. Y is even, meaning the second last value Y' can have 2 values:
+        1. Y is even, say 2m, from X to Y, the previous Y' can have 2 values:
            a. Y' = Y / 2 = 2m / 2 = m
            b. Y' = Y + 1 = 2m + 1
-           We would never go #b, because if we go #b, the third last value
-           would be 2m+2, we have below transition sequence.
-           x ... m+1 -> 2(m+1)=2m+2 -> 2m+2-1 -> 2m+2-2=Y
+           We would never come from #b, because coming from #b means the
+           *previous previous value* would be 2m+2, and we have below
+           min transition sequence.
+           x ... m+1 -> 2(m+1)=2m+2 -> 2m + 1 = Y' -> 2m = Y
            Here from 'm+1', we did 1 multiply, 2 decrement, 3 operations.
            And we can find a shorter path as below.
-           x ... m+1 -> m+1-1=m -> 2m=Y
+           x ... m+1 -> m+1-1 = m = Y' -> 2m = Y
            Here from 'm+1', we did 1 decrement, 1 multiply, 2 operations.
            Hence, we always go #a.
         2. Y is odd, meaning the last value Y' must be Y+1.

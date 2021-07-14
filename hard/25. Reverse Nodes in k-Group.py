@@ -8,10 +8,12 @@ class Solution:
     def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
         '''
         Keep a counter, whenever we find k nodes, we start the reverse process.
-        To reverse, we pass in the prev and tail to reverse the list between
-        these 2 nodes exclusively, and return the reversed list's last node.
 
-        After each reverse, we need to update the prev and head for the next reverse.
+        One *KEY* to keep the code concise is to do below reverse.
+        Pass in the *exclusive* 'start' and 'end' of the interval to reverse
+        the list between these 2 nodes exclusively, and return the reversed
+        list's last node. The reason for doing this is to get access and be
+        able to manage the two nodes outside the reversing sublist.
 
         There is a difference between these two statements!!
         The FIRST one is wrong because 'curr' got modified after the first assignment,

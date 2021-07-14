@@ -12,13 +12,13 @@ class Solution:
         '''
         prefix_sums = list(accumulate([0] + nums + [0]))
         left = []
-        maxArea = 0
+        ans = 0
         for i, h in enumerate(nums + [0]):
             start = i
-            while left and h <= left[-1][0]:
-                prevH, prevStart = left.pop()
-                maxArea = max(maxArea, (prefix_sums[i] - prefix_sums[prevStart]) * prevH)
-                start = prevStart
+            while left and left[-1][0] > h:
+                prev_h, prev_start = left.pop()
+                ans = max(ans, (prefix_sums[i] - prefix_sums[prev_start]) * prev_h)
+                start = prev_start
             left.append((h, start))
 
-        return maxArea % (10 ** 9 + 7)
+        return ans % (10 ** 9 + 7)

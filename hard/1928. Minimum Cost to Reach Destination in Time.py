@@ -11,7 +11,7 @@ class Solution:
 
         Initially I put (cur_cost, cur_time, city) to the priority queue, but
         this results in lots of repeated access to the same cities if the cost
-        to them is small. But this doesn't help get to the target.
+        to them is small. This doesn't help get to the target.
 
         Instead, I should put (cur_time, cur_cost, city) to the priority queue,
         and just find all the paths that can be done within the time limit, in
