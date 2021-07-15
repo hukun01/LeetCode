@@ -2,8 +2,11 @@
 class Solution:
     def restoreMatrix(self, rowSum: List[int], colSum: List[int]) -> List[List[int]]:
         '''
-        Array.
+        Greedy.
+
         We greedily fill each cell (r, c) with the min(rowSum[r], colSum[c]).
+        This means the intersection of rowSum and colSum on this cell can take
+        at least the min(rowSum[r], colSum[c]) val.
         After filling the cell with value 'x', we remove 'x' from both the
         rowSum and the colSum.
 

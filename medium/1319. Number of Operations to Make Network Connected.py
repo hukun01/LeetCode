@@ -5,9 +5,10 @@ class Solution:
         1/2 Count the number of connected components in the graph
 
         To connect n machines together, we need at least n-1 cables.
-        Hence if we have n-1 or more connections, we are guaranteed to find an answer.
-        Use Union Find to find the number of connected components X, and the number of cables
-        will be X - 1.
+        Hence if we have n-1 or more connections, we are guaranteed to find an
+        answer.
+        Use Union Find to find the number of connected components X, and the
+        number of cables will be X - 1.
         Hence the key is to find out the number of connected components in the graph.
         '''
         if len(connections) < n - 1:
@@ -35,7 +36,7 @@ class Solution:
         for c1, c2 in connections:
             graph[c1].add(c2)
             graph[c2].add(c1)
-        
+
         seen = set()
         def dfs(c):
             if c in seen:
@@ -44,4 +45,5 @@ class Solution:
             for neighbor in graph[c]:
                 dfs(neighbor)
             return 1
+
         return sum(dfs(c) for c in range(n)) - 1

@@ -20,16 +20,17 @@ class Solution:
         '''
         ans = [0] * n
         logs = [log.split(':') for log in logs]
-        cur_ids = []
+        cur_ids_stack = []
         pre = 0
         for i, op, t in logs:
             time = int(t)
             if op == "start":
-                if cur_ids:
-                    ans[cur_ids[-1]] += time - pre
-                cur_ids.append(int(i))
+                if cur_ids_stack:
+                    ans[cur_ids_stack[-1]] += time - pre
+                cur_ids_stack.append(int(i))
                 pre = time
             else:
-                ans[cur_ids.pop()] += time - pre + 1
+                ans[cur_ids_stack.pop()] += time + 1 - pre
                 pre = time + 1
+
         return ans

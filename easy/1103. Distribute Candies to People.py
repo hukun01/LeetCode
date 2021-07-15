@@ -8,8 +8,8 @@ class Solution:
         Let x be the count of complete gifts, which is also the last/biggest
         number of gifts we have even given. Then we have
         candies >= x * (1+x) / 2 > x*x / 2, so sqrt(2 * candies) > x,
-        note that int((2 * candies) ** 0.5) is in range [x, x+1], so
-        need to double check in case it's x+1 instead of x.
+        note that int((2 * candies) ** 0.5) is in range [x-1, x], so
+        need to double check in case it's x-1 instead of x.
 
         Once we get x, we can list the complete gifts as a matrix, and
         we know the rows and cols and leftover partial gift.
