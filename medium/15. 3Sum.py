@@ -6,9 +6,20 @@ class Solution:
         ensure that triplets are internally ordered. And in each iteration, we
         fix the current number, and find the twoSum tuples from the rest of
         the array.
-        One key about this is to dedup without using hashset. We need to skip
-        the current element if it's the same as the previous one. Same applies
-        to the inner loop that finds the twoSum tuples.
+
+        One key is that the fixed index we choose helps us reduce the problem
+        space into a decision on either to shrink the left or the right
+        boundary, from 'b, c' if we fix 'a' in "a + b + c == 0, a == -(b + c)".
+        In this problem it may not matter if we choose 'a' (the left index) or
+        'c', but in problems like 611. Valid Triangle Number, it's 'a+b>c',
+        where 'c' is on the other side of the equation. In that case, we have
+        to choose to fix 'c', because choosing 'a' means we have 'a>c-b', where
+        we don't know which side to shrink in 'b, c', because increasing 'b'
+        and decreasing 'c' has the same effect.
+
+        Another key about this is to dedup without using hashset. We need to
+        skip the current element if it's the same as the previous one. Same
+        applies to the inner loop that finds the twoSum tuples.
 
         Time: O(n^2) where n is len(nums)
         Space: O(n) we can construct an array like [-4,-3,-2,-1,0,1,2,3,4] that

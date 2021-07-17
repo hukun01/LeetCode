@@ -4,14 +4,19 @@ class Solution:
         '''
         Stack.
 
-        Use a stack to only track positive and negative numbers and '('.
+        Use a stack to track 3 things:
+            1. numbers,
+            2. last sign before the previous '(',
+            3. '(' as a barrier for the future ')'.
         When seeing '(', add the last sign and '(', and reset last sign.
         When seeing number, add it or its negative value based on last sign.
-        When seeing ')', we need to pop out every number until we hit '('.
+        When seeing ')', we need to pop out every number until we hit '(', and
+        restore the last sign as we always push (last_sign and '(') together.
 
         Also, we append a special char '$' to end of 's', just to make tail
         handling cleaner. Without treating the last char specially, we can miss
         adding the last number if it ends with the expression, like "1 + 3".
+        This is the same as checking the last index, which needs more code.
 
         Finally, the stack has all flatten numbers with signs in values, we
         just need to sum it.
