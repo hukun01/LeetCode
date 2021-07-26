@@ -23,20 +23,20 @@ class Solution:
         heapify(free_servers)
 
         # heap of (task_finish_time, server_idx)
-        working_servers = []
+        busy_servers = []
         ans = []
         cur_time = 0
         for task_idx, task_time in enumerate(tasks):
+            if not free_servers:
+                cur_time = busy_servers[0][0]
+            while busy_servers and busy_servers[0][0] <= cur_time:
+                _, server_idx = heappop(busy_servers)
+                heappush(free_servers, (servers[server_idx], server_idx))
+
             _, server_idx = heappop(free_servers)
-            heappush(working_servers, (cur_time + task_time, server_idx))
+            heappush(busy_servers, (cur_time + task_time, server_idx))
             ans.append(server_idx)
 
             cur_time = max(task_idx + 1, cur_time)
-
-            if not free_servers:
-                cur_time = working_servers[0][0]
-            while working_servers and working_servers[0][0] <= cur_time:
-                _, server_idx = heappop(working_servers)
-                heappush(free_servers, (servers[server_idx], server_idx))
 
         return ans

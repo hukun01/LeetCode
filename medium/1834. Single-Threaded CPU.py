@@ -12,16 +12,16 @@ class Solution:
         heapify(tasks_by_e)
         ans = []
         time = 1
-        available = []
-        while tasks_by_e or available:
-            if not available:
+        available_tasks = []
+        while tasks_by_e or available_tasks:
+            if not available_tasks:
                 time = max(time, tasks_by_e[0][0])
             while tasks_by_e and tasks_by_e[0][0] <= time:
-                _, processing, i = heappop(tasks_by_e)
-                heappush(available, (processing, i))
-            
-            processing, i = heappop(available)
-            ans.append(i)
+                _, processing, task_idx = heappop(tasks_by_e)
+                heappush(available_tasks, (processing, task_idx))
+
+            processing, task_idx = heappop(available_tasks)
+            ans.append(task_idx)
             time += processing
 
         return ans
