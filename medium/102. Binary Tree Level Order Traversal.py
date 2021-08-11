@@ -17,7 +17,7 @@ class Solution:
         """
         if not root:
             return []
-        queue = collections.deque([root])
+        queue = deque([root])
         values = []
         while queue:
             currentLevel = []
