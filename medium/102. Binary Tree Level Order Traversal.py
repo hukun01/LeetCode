@@ -1,20 +1,17 @@
+# 102. Binary Tree Level Order Traversal
 # Definition for a binary tree node.
 # class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
-
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
 class Solution:
-    def levelOrder(self, root):
-        """
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        '''
         Use collections.deque as queue.
         Cache the length of the current queue as the size of current level, so we 
         don't need a new list to separate the current level and the next one.
-
-        :type root: TreeNode
-        :rtype: List[List[int]]
-        """
+        '''
         if not root:
             return []
         queue = deque([root])
