@@ -27,5 +27,5 @@ def level_order(root)
         ans.push(level)
     end
 
-    return ans
+    ans
 end

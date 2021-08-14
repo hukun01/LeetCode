@@ -16,5 +16,5 @@ def longest_diverse_string(a, b, c)
         end
     end
 
-    return buckets[...[num_buckets, bucket_idx+1].min].join
+    buckets[...[num_buckets, bucket_idx+1].min].join
 end

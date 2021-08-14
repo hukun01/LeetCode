@@ -10,14 +10,14 @@ class Solution:
             pre_count[b] += 1
             succs[a].append(b)
         free = set(range(numCourses)) - set(pre_count)
-        taken = []
+        taken = 0
         while free:
             a = free.pop()
-            taken.append(a)
+            taken += 1
             for b in succs[a]:
                 pre_count[b] -= 1
                 pre_count[b] or free.add(b)
-        return len(taken) == numCourses
+        return taken == numCourses
         '''
         2/2 DFS.
         Build the graph, and ensure no cycles.

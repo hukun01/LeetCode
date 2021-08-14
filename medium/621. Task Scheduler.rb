@@ -8,5 +8,5 @@ def least_interval(tasks, n)
     max_f = freqs.values.max
     max_f_key_num = (freqs.select {|k,v| v == max_f }).length
 
-    return [tasks.length, (max_f - 1) * (n + 1) + max_f_key_num].max
+    [tasks.length, (max_f - 1) * (n + 1) + max_f_key_num].max
 end
