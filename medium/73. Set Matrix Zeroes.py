@@ -8,9 +8,9 @@ class Solution:
         Note that the first row and the first col will use the same cell, the
         origin, so use that cell for the first row, and use a single var for
         the first col. Since we handle the first col separately, we need to
-        skip the first col when iterating. Also note that when we use the
-        states, we need to go from bottom to top, such that we don't erase our
-        own footprint.
+        skip the first col when iterating.
+        Also note that when we use the states, we need to go from bottom to
+        top, such that we don't erase our own footprint.
 
         Time: O(RC)
         Space: O(1)
