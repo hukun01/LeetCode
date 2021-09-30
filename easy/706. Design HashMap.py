@@ -1,3 +1,4 @@
+# 706. Design HashMap
 class Node:
 
     def __init__(self, key, val=None):
