@@ -22,13 +22,13 @@ class Solution:
         Overall, in any problem that boils down to comparing two nearby
         elements, mono stack is a good thing to try.
         '''
-        n = len(num)
-        keep = n - k
-
         stack = []
-        for i, a in enumerate(num):
-            while stack and stack[-1] > a and len(stack) - 1 + n - i >= keep:
+        for a in num:
+            while stack and k and stack[-1] > a:
                 stack.pop()
-            if len(stack) < keep:
-                stack.append(a)
+                k -= 1
+            stack.append(a)
+
+        if k > 0:
+            stack = stack[:-k]
         return ''.join(stack).lstrip('0') or '0'
