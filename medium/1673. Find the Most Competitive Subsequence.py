@@ -6,10 +6,10 @@ class Solution:
         Identical to 402. Remove K Digits.
         '''
         stack = []
-        n = len(nums)
-        for i, a in enumerate(nums):
-            while stack and stack[-1] > a and len(stack) - 1 + n - i >= k:
+        remove = len(nums) - k
+        for a in nums:
+            while stack and remove and stack[-1] > a:
                 stack.pop()
-            if len(stack) < k:
-                stack.append(a)
-        return stack
+                remove -= 1
+            stack.append(a)
+        return stack[:-remove] if remove else stack
