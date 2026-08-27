@@ -6,6 +6,9 @@ class Solution:
         index we can reach by i + nums[i].
         Once i reaches the end, we need to make a jump, and the new end is updated with
         furthest as the next reachable-by-jumping position.
+
+        Time: O(n)
+        Space: O(1)
         '''
         ans = furthest = currEnd = i = 0
         while currEnd < len(nums) - 1:
