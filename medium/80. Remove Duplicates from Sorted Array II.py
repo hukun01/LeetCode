@@ -10,3 +10,21 @@ class Solution:
                 nums[i] = a
                 i += 1
         return i
+'''
+Another more generic approach that can handle any number of allowed duplicates.
+'''
+class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        i = 0
+        j = 0
+        while j < len(nums):
+            counter = 0
+            while j + counter < len(nums) and nums[j + counter] == nums[j]:
+                if counter < 2:
+                    nums[i] = nums[j]
+                    i += 1
+                counter += 1
+            
+            j += counter
+            
+        return i
