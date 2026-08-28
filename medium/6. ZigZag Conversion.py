@@ -4,7 +4,7 @@ class Solution:
         '''
         Use two inner loop to handle vertical row and oblique row.
         Use the first (numRows) chars to build the first (numRows) rows;
-        Use the (numRows+x)th char for the (numRows-2-x)th row, x in [0, numRows-2)
+        Use the (numRows+x)th char for the oblique (numRows-2-x)th row, x in [0, numRows-2)
 
         Time: O(n) where n is len(s)
         Space: O(n)
