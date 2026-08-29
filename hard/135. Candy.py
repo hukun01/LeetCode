@@ -2,7 +2,7 @@
 class Solution:
     def candy(self, ratings: List[int]) -> int:
         '''
-        1/2 Greedy.
+        1/3 Greedy.
         Scan the ratings array from left to right, ensure candies[i] has one
         more candy than candies[i-1] if i-th rating is higher.
         Similarly, scan ratings from right to left, ensure candies[i] has one
@@ -22,7 +22,24 @@ class Solution:
         return sum(candies)
 
         '''
-        2/2 Array scan.
+        2/3 Recursion.
+        Simply code the problem statements and cache the recursion to avoid duplicate computation.
+        '''
+        @cache
+        def solve(i):
+            if not 0 <= i < len(ratings):
+                return 0
+            ans = 1
+            if i + 1 < len(ratings) and ratings[i] > ratings[i + 1]:
+                ans = max(ans, solve(i + 1) + 1)
+            if i - 1 >= 0 and ratings[i] > ratings[i - 1]:
+                ans = max(ans, solve(i - 1) + 1)
+            return ans
+        
+        return sum(solve(i) for i in range(len(ratings)))
+
+        '''
+        3/3 Array scan.
         When rating is decreasing, increment 'down' that tracks the length of
         decreasing area.
         Keep track of previous highest candies as 'pre'.
