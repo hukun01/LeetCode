@@ -7,8 +7,6 @@ class Solution:
         step size when iterating over the input string. Also, our starting
         point is from [0, word_len), instead of all indicies.
         '''
-        if not words:
-            return []
         word_len = len(words[0])
         ans = []
         expected = Counter(words)
