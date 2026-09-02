@@ -5,7 +5,9 @@ class Solution:
         Sliding window.
         A key is that all words share the length, so we can use the same
         step size when iterating over the input string. Also, our starting
-        point is from [0, word_len), instead of all indicies.
+        point is from [0, word_len), instead of all indicies, because we will
+        visit indicies like `word_len` when visiting `0`, and `word_len + 1` 
+        when visiting `1`, etc.
         '''
         word_len = len(words[0])
         ans = []
