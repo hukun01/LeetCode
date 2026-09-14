@@ -6,13 +6,13 @@ class Solution:
         Find the insertion point with binary search, then do normal interval
         merge.
         '''
-        start = bisect(intervals, newInterval)
+        start = bisect.bisect(intervals, newInterval)
         ans = []
         for s, e in intervals[:start] + [newInterval] + intervals[start:]:
-            if not ans or s > ans[-1][1]:
-                ans.append([s, e])
+            if ans and ans[-1][1] >= s:
+                ans[-1][1] = max(e, ans[-1][1])
             else:
-                ans[-1][1] = max(ans[-1][1], e)
+                ans.append([s, e])
         return ans
         '''
         2/2 Binary search both boundaries
