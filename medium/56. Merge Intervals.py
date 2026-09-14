@@ -11,11 +11,11 @@ class Solution:
         Time: O(nlog(n)) where n is the length of intervals list.
         Space: O(n)
         '''
-        answer = []
+        ans = []
         for i in sorted(intervals, key = lambda x: x[0]):
-            if answer and answer[-1][1] >= i[0]:
-                answer[-1][1] = max(i[1], answer[-1][1])
+            if ans and ans[-1][1] >= i[0]:
+                ans[-1][1] = max(i[1], ans[-1][1])
             else:
-                answer.append(i)
+                ans.append(i)
                 
-        return answer
+        return ans
