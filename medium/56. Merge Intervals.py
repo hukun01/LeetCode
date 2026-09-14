@@ -12,10 +12,9 @@ class Solution:
         Space: O(n)
         '''
         ans = []
-        for i in sorted(intervals, key = lambda x: x[0]):
-            if ans and ans[-1][1] >= i[0]:
-                ans[-1][1] = max(i[1], ans[-1][1])
+        for s, e in sorted(intervals, key = lambda x: x[0]):
+            if ans and ans[-1][1] >= s:
+                ans[-1][1] = max(e, ans[-1][1])
             else:
-                ans.append(i)
-                
+                ans.append([s, e])
         return ans
