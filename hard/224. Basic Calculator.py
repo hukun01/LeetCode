@@ -21,6 +21,13 @@ class Solution:
         Finally, the stack has all flatten numbers with signs in values, we
         just need to sum it.
 
+        A few keys:
+        1. store '(' to know the processing scope when seeing a ')';
+        2. store '$' at the end to handle the end cleanly;
+        3. instead of handling the + and - operators like normal math, treat them
+           as ternary operators, and sum the stack for the final result.
+        4. remember to multiple the current number by 10 when seeing a new digit.
+
         Time: O(n) where n is the numer of chars in str s.
         Space: O(n)
         '''
