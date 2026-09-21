@@ -8,7 +8,19 @@
 class Solution:
     def sumNumbers(self, root: TreeNode) -> int:
         '''
-        1/2 Recursion by tracking the root to leaf path
+        1/2 Recursion by tracking the running sums
+        '''
+        def sum_tree(node, curr_sum):
+            if not node:
+                return 0
+            new_sum = curr_sum * 10 + node.val
+            if node.left == node.right == None:
+                return new_sum
+            return sum_tree(node.left, new_sum) + sum_tree(node.right, new_sum)
+            
+        return sum_tree(root, 0)
+        '''
+        2/2 Recursion by tracking the root to leaf path
         '''
         self.ans = 0
         def dfs(node, path):
@@ -24,14 +36,3 @@ class Solution:
             path.pop()
         dfs(root, [])
         return self.ans
-        '''
-        2/2 Recursion by tracking the running sums
-        '''
-        def sum_tree(node, curr_sum):
-            if not node:
-                return 0
-            if node.left == node.right == None:
-                return curr_sum * 10 + node.val
-            new_sum = curr_sum * 10 + node.val
-            return sum(sum_tree(child, new_sum) for child in [node.left, node.right])
-        return sum_tree(root, 0)
