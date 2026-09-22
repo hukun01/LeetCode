@@ -14,8 +14,9 @@ class Solution:
         height h, left subtree is full at the h-th level, and we can add
         the full count of left subtree nodes, and continue the process on
         the right subtree.
-        Otherwise, the right subtree is full, we can add the count of right
-        subtree (2**right_subtree_h), and continue the process on the left subtree.
+        Otherwise, the right subtree is full but one less than the left subtree,
+        we can add the count of right subtree (2**right_subtree_h), and
+        continue the process on the left subtree.
         
         Each subtree includes the current root.
         '''
@@ -36,7 +37,8 @@ class Solution:
                 nodes += 1 << left_subtree_h
                 root = root.right
             else:
-                # right subtree is full, count all the nodes including current root
+                # right subtree is also full but one level less than the left subtree
+                assert right_subtree_h == left_subtree_h - 1
                 nodes += 1 << right_subtree_h
                 root = root.left
             h -= 1
