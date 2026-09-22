@@ -5,7 +5,8 @@ class Solution:
         Union Find.
         This can be solved by DFS/BFS as well, but UF is more natural, and
         UF can solve follow-ups like how to merge/break islands, or count new
-        ones if we can make lands or fill the sea.
+        ones if we can make lands (aka, fill the sea).
+        
         With UF, one thing to notice is that we need to connect the left cell
         to the current cell first (current cell is parent), then connect current
         cell to its top cell (top cell is parent). This is to ensure the cells
