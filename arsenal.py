@@ -127,16 +127,14 @@ class MinQueue:
         return self.queue[0][0]
 
 '''
-Array based union find with path compression and rank based union.
-Need the count of nodes to initialize.
-Usually to apply UF in a 2d matrix, user can write a get_id(r, c) to compute
-the unique id of each position in the 2d matrix.
+Dictionary based union find with path compression and rank based union.
+Initialize with 0 component, so you need to add component count when adding new nodes.
 '''
 class UnionFind:
-    def __init__(self, n):
-        self.component_count = n
-        self.parents = list(range(n))
-        self.size = [1] * n
+    def __init__(self):
+        self.component_count = 0
+        self.parents = {}
+        self.size = defaultdict(lambda: 1)
 
     def find(self, x):
         if self.parents[x] != x:
