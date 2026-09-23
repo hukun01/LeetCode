@@ -4,17 +4,24 @@ class Solution:
         '''
         Topological sorting.
         '''
-        pre = defaultdict(int)
-        suc = defaultdict(list)
+        preCount = Counter()
+        successors = defaultdict(list)
         for a, b in prerequisites:
-            pre[a] += 1
-            suc[b].append(a)
-        free = set(range(numCourses)) - set(pre)
+            preCount[a] += 1
+            successors[b].append(a)
+        
         ans = []
+        taken = 0
+        free = set(range(numCourses)) - preCount.keys()
         while free:
-            a = free.pop()
-            ans.append(a)
-            for b in suc[a]:
-                pre[b] -= 1
-                pre[b] or free.add(b)
-        return ans if len(ans) == numCourses else []
+            b = free.pop()
+            taken += 1
+            ans.append(b)
+            for a in successors[b]:
+                preCount[a] -= 1
+                if preCount[a] == 0:
+                    free.add(a)
+        
+        if taken == numCourses:
+            return ans
+        return []
