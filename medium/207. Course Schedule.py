@@ -3,24 +3,23 @@ class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         '''
         1/2 Topological sorting
-        Note that the original problem description has a confusing prerequisite
-        order. [a, b] means "b is a prereq for a". In our code we model it as 
-        "a -> b" aka "a is a prereq for b", so we use [b, a] when traversing prerequisites.
         '''
-        pre_count = defaultdict(int)
-        succs = defaultdict(list)
-        for b, a in prerequisites:
-            pre_count[b] += 1
-            succs[a].append(b)
-        free = set(range(numCourses)) - set(pre_count)
+        preCount = Counter()
+        successors = defaultdict(list)
+        for a, b in prerequisites:
+            preCount[a] += 1
+            successors[b].append(a)
+        
         taken = 0
+        free = set(range(numCourses)) - preCount.keys()
         while free:
-            a = free.pop()
+            b = free.pop()
             taken += 1
-            for b in succs[a]:
-                pre_count[b] -= 1
-                if pre_count[b] == 0:
-                    free.add(b)
+            for a in successors[b]:
+                preCount[a] -= 1
+                if preCount[a] == 0:
+                    free.add(a)
+        
         return taken == numCourses
         '''
         2/2 DFS.
