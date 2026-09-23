@@ -3,6 +3,9 @@ class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
         '''
         1/2 Topological sorting
+        Note that the original problem description has a confusing prerequisite
+        order. [a, b] means "b is a prereq for a". In our code we model it as 
+        "a -> b" aka "a is a prereq for b", so we use [b, a] when traversing prerequisites.
         '''
         pre_count = defaultdict(int)
         succs = defaultdict(list)
@@ -16,7 +19,8 @@ class Solution:
             taken += 1
             for b in succs[a]:
                 pre_count[b] -= 1
-                pre_count[b] or free.add(b)
+                if pre_count[b] == 0:
+                    free.add(b)
         return taken == numCourses
         '''
         2/2 DFS.
