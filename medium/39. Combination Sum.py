@@ -3,6 +3,8 @@ class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         '''
         DFS with backtracking.
+        Use an index parameter to avoid going back to the smaller numbers, but
+        we can keep using the same number multiple times.
         '''
         ans = []
         def dfs(idx, currList, currSum):
