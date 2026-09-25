@@ -1,42 +1,20 @@
-class Solution(object):
-    def search(self, nums, target):
-        """
-        Use infinity to mask the side we don't need to check.
-        Let's say nums looks like this: [12, 13, 14, 15, 0, 1, 2, 3].
-        If target is let's say 14, then we adjust nums to this, where "inf" means infinity:
-        [12, 13, 14, 15, inf, inf, inf, inf]
+class Solution:
+    def mySqrt(self, x: int) -> int:
+        '''
+        Be careful with the boundary and when to bump the m.
 
-        If target is let's say 2, then we adjust nums to this:
-        [-inf, -inf, -inf, -inf, 0, 1, 2, 3]
-        
-        :type nums: List[int]
-        :type target: int
-        :rtype: int
-        """
-        l, h = 0, len(nums) - 1
-        while l <= h:
-            mid = (l + h) // 2
-            # compare target to nums[0], and then compare mid to nums[0],
-            # to determine if target and mid is on the same side (skewed or not).
-            # temp is used to represent the inf or -inf as the boundary
-            if target < nums[0]: 
-                if nums[mid] < nums[0]: 
-                    temp = nums[mid]
-                else:
-                    temp = -float('inf')
-            elif target == nums[0]:
-                return 0
-            else: 
-                if nums[mid] >= nums[0]: 
-                    temp = nums[mid]
-                else:
-                    temp = float('inf')
-            
-            if temp < target:
-                l = mid + 1
-            elif temp > target: 
-                h = mid -1 
+        We always try to round up 'm', and if its square exceeds 'x',
+        we exclude 'm' from our search by `h = m - 1`.
+
+        If we don't round up 'm', when x = 8, l = 2, h = 3, we always get 2
+        and assign it to 'l', and get stuck.
+        '''
+        l = 0
+        h = x
+        while l < h:
+            m = (l + h + 1) // 2
+            if m * m > x:
+                h = m - 1
             else:
-                return mid
-            
-        return -1
+                l = m
+        return h
