@@ -8,9 +8,13 @@
 
 class Solution(object):
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        ''' 1/2 Recursive: return the node if any of p or q is found, return None otherwise.
-        Based on this, if we found non-Null results from both sides, 
-        then the result is the current root. Otherwise would be the non-Null result.
+        ''' 1/2 Recursive: 
+        Let the recursion return the LCA for p and q from the current node 'root'.
+        
+        Base: return the node if any of p or q is found, return None otherwise.
+        
+        Recursion: if we found non-Null results from both sides, then the result is
+        the current root. Otherwise there's a lower ancestor from the non-Null side.
         '''
         if root in [None, p, q]:
             return root
