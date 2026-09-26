@@ -30,7 +30,11 @@ class Solution:
                 heappush(heap, (node.next.val, idx, node.next))
         return dummy.next
         '''
-        2/2 Merge sort.
+        2/2 Merge sort. Divide and Conquer.
+
+        Do't merge list1 and list2, then list3, this time complexity will be bad.
+        Instead, merge every two lists from the end of the list to the start of the
+        list, and keep shrinking the range until we reduce the range to [0].
 
         Time: O(n log(k))
         Space: O(1)
