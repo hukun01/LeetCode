@@ -8,20 +8,21 @@
 class Solution:
     def maxPathSum(self, root: TreeNode) -> int:
         '''
-        We need a helper function to return the current max path that ends at the current node,
-        and while we are exploring, we update the global maxPath by combining the 2 subtrees
-        and the current value.
-        It's important to return 0 if the current max path is less than 0, so we can do the 
-        combining without worrying about the negative subtree sums.
+        Use a helper function to return the max sum from a single path that starts
+        from the current node.
+        While traversing the tree, we update the global answer by combining the 2
+        single paths and the current value. We use max(0, left) and max(0, right)
+        to exclude the single paths if their sums are negative.
         '''
-        answer = -float('inf')
-        def dfs(node):
+        answer = -inf
+        def singlePathSum(node):
             if not node:
                 return 0
-            left = dfs(node.left)
-            right = dfs(node.right)
+            left = singlePathSum(node.left)
+            right = singlePathSum(node.right)
             nonlocal answer
-            answer = max(answer, left + right + node.val)
-            return max(0, max(left, right) + node.val)
-        dfs(root)
+            answer = max(answer, max(0, left) + max(0, right) + node.val)
+            return max(left, right, 0) + node.val
+            
+        singlePathSum(root)
         return answer
