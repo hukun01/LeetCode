@@ -11,12 +11,8 @@ class Solution:
 
         Note: according to Python3 doc, tuple in heapq may collide.
         Tuple comparison breaks for (priority, task) pairs if the priorities
-        are equal and the tasks do not have a default comparison order.
-
-        Also note that this tuple is not only the 2-element tuple, it's
-        anything in parenthesis. Hence, make a triplet (node.val, index, node),
-        such that there is no two (node.val, index) combination that can
-        collide within the heapq.
+        are equal and the tasks (ListNode) do not have a default comparison order.
+        So we use (priority, listIndex, listHead) as the tuple.
 
         Time: O(n log(k)) where n is the total number of nodes
         Space: O(k)
