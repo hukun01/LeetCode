@@ -38,7 +38,7 @@ class Solution:
             # A[a-1] is too big, we decrease 'a' to make A[a-1] <= B[b]
             if a > 0 and A[a - 1] > B[b]:
                 h = a - 1
-            # B[b-1] is too big, we increase 'a' to make A[a] >= B[b-1]
+            # B[b-1] is too big, we decrease 'b' by increasing 'a', to make A[a] >= B[b-1]
             elif a < m and B[b - 1] > A[a]:
                 l = a + 1
             else:
