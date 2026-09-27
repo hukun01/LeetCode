@@ -12,11 +12,12 @@ class Solution:
         """
         A, B = nums1, nums2
         m, n = len(A), len(B)
-        # m must be smaller or equal to n, so later b can be non-negative.
+        # Ensure m <= n, so the 'b' below can be non-negative.
         if m > n:
             A, B, m, n = B, A, n, m
         
-        # we have to ensure: a + b == m - a + n - b (or: m - a + n - b + 1), both (m + n) and (m + n + 1) works,
+        # we have to ensure: a + b == m - a + n - b (or: m - a + n - b + 1), 
+        # both (m + n) and (m + n + 1) works,
         # we just prefer (m + n + 1) so we return leftMax if the (m + n) is odd;
         # note that if we use (m + n) as the length here, we return rightMin if the length is odd.
         halfLen = (m + n + 1) // 2
