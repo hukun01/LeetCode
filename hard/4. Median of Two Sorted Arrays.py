@@ -32,6 +32,8 @@ class Solution:
         halfLen = (m + n + 1) // 2
         
         l, h = 0, m
+        # Note that we need 'l <= h' not 'l < h', because when l == h, it means
+        # that we have found a good 'a', and we need to process the final results.
         while l <= h:
             a = (l + h) // 2
             b = halfLen - a
