@@ -8,31 +8,38 @@ class Solution:
         Divide all elements in {A, B} into two parts, ensure that both are equal length, 
         and left part is always smaller than right part. 
         Then median = (max(left_part) + min(right_part))/2.
+
+        Let 'a' be the length of A's left partition, 'b' be the length of B's left partition.
+        Our goal is to find out the proper 'a' and 'b' such that
+        1. a + b == m + n - (a + b)
+           both (m + n) and (m + n + 1) works,
+           we use (m + n + 1) so we return leftMax if the (m + n) is odd;
+        
+        2. max(A[a-1], B[b-1]) <= min(A[a], B[b])
+
+        Because we can derive 'b' from 'a' given the above conditions, we just
+        need to find out the proper 'a'. 
+
         https://leetcode.com/problems/median-of-two-sorted-arrays/discuss/2481/Share-my-O(log(min(mn))-solution-with-explanation
         """
         A, B = nums1, nums2
         m, n = len(A), len(B)
-        # Ensure m <= n, so the 'b' below can be non-negative.
+        # Ensure m <= n, so the 'b' below will not exceed the B's index range.
+        # A simple example can prove why this is necessary: A=[1,3], B=[2]
         if m > n:
             A, B, m, n = B, A, n, m
         
-        # we have to ensure: a + b == m - a + n - b (or: m - a + n - b + 1), 
-        # both (m + n) and (m + n + 1) works,
-        # we just prefer (m + n + 1) so we return leftMax if the (m + n) is odd;
-        # note that if we use (m + n) as the length here, we return rightMin if the length is odd.
         halfLen = (m + n + 1) // 2
         
-        # Pay close attention to the below 2 lines: 
-        # the search space for i must be [0, m], 
-        # and l <= h to make sure we never break the while loop!
         l, h = 0, m
         while l <= h:
             a = (l + h) // 2
             b = halfLen - a
+            # A[a-1] is too big, we decrease 'a' to make A[a-1] <= B[b]
             if a > 0 and A[a - 1] > B[b]:
                 h = a - 1
+            # B[b-1] is too big, we increase 'a' to make A[a] >= B[b-1]
             elif a < m and B[b - 1] > A[a]:
-                # B[b - 1] is too big, to decrease b, we can increase a
                 l = a + 1
             else:
                 # a is good, 
