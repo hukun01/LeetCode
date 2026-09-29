@@ -41,7 +41,12 @@ class Solution:
             while sorting_head:
                 list1 = sorting_head
                 list2 = self.split(list1, step)
+                
+                # Split out the list2, and use the return value to
+                # set the new sorting_head, aka, the node after list2.
                 sorting_head = self.split(list2, step)
+                
+                # tail is the last node of the merged list.
                 tail = self.mergeToTail(list1, list2, tail)
             step <<= 1
         return dummy.next
