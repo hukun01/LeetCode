@@ -47,6 +47,7 @@ class Solution:
         return dummy.next
 
     def split(self, head, n):
+        # Note that we start from 1, as step=1 means returning the current node.
         for _ in range(1, n):
             if head:
                 head = head.next
