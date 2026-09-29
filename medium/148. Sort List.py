@@ -53,11 +53,11 @@ class Solution:
                 head = head.next
         if not head:
             return None
-        second = head.next
+        tail = head.next
         # This is important - we need to 'split' the list so the merge()
         # can stop at the right boundary.
         head.next = None
-        return second
+        return tail
     
     def mergeToTail(self, l1, l2, tail):
         cur = tail
