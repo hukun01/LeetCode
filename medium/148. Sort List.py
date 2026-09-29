@@ -27,9 +27,6 @@ class Solution:
         Time: O(n log(n)) where n is len(list)
         Space: O(1)
         '''
-        if not head or not head.next:
-            return head
-
         cur = head
         size = 0
         while cur:
@@ -45,7 +42,7 @@ class Solution:
                 list1 = sorting_head
                 list2 = self.split(list1, step)
                 sorting_head = self.split(list2, step)
-                tail = self.merge(list1, list2, tail)
+                tail = self.mergeToTail(list1, list2, tail)
             step <<= 1
         return dummy.next
 
@@ -56,10 +53,12 @@ class Solution:
         if not head:
             return None
         second = head.next
+        # This is important - we need to 'split' the list so the merge()
+        # can stop at the right boundary.
         head.next = None
         return second
     
-    def merge(self, l1, l2, tail):
+    def mergeToTail(self, l1, l2, tail):
         cur = tail
         while l1 and l2:
             if l1.val > l2.val:
